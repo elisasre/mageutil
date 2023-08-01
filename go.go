@@ -10,17 +10,17 @@ import (
 	"fmt"
 	"os"
 	"path"
+	"strings"
 
 	"github.com/magefile/mage/mg"
 	"github.com/magefile/mage/sh"
 )
 
 const (
-	GoVersion        = "go1.20.5"
-	CmdDir           = "./cmd/"
-	TargetDir        = "./target/"
-	UnitCoverProfile = TargetDir + "reports/unit-test-coverage.out"
-	BinDir           = TargetDir + "bin/"
+	GoVersion = "go1.20.5"
+	CmdDir    = "./cmd/"
+	TargetDir = "./target/"
+	BinDir    = TargetDir + "bin/"
 )
 
 // Go is shorthand for go executable provided by system.
@@ -118,13 +118,12 @@ func Run(ctx context.Context, name string, args ...string) error {
 	return sh.RunV(binaryPath, args...)
 }
 
-// UnitTest executes all unit tests with default flags.
-func UnitTest(ctx context.Context) error {
-	err := os.MkdirAll(path.Dir(UnitCoverProfile), 0755)
+// GoList lists all packages in given target.
+func GoList(ctx context.Context, target string) ([]string, error) {
+	pkgsRaw, err := sh.Output("go", "list", target)
 	if err != nil {
-		return err
+		return nil, err
 	}
-
-	env := map[string]string{"CGO_ENABLED": "1"}
-	return GoWith(ctx, env, "test", "-race", "-covermode", "atomic", "-coverprofile="+UnitCoverProfile, "./...")
+	pkgs := strings.Split(strings.ReplaceAll(pkgsRaw, "\r\n", ","), "\n")
+	return pkgs, nil
 }

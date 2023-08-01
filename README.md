@@ -19,17 +19,22 @@ package mageutil provides util functions for [Magefile](<https://magefile.org/>)
 - [func BuildForMac\(ctx context.Context, name string\) error](<#BuildForMac>)
 - [func CGO\(enabled bool\)](<#CGO>)
 - [func Clean\(ctx context.Context\) error](<#Clean>)
+- [func CoverInfo\(ctx context.Context, profile string\) error](<#CoverInfo>)
 - [func DefaultLabels\(title, url, desc string\) map\[string\]string](<#DefaultLabels>)
 - [func Docker\(ctx context.Context, args ...string\) error](<#Docker>)
 - [func DockerBuild\(ctx context.Context, platform, dockerfile, buildCtx string, tags \[\]string, extraCtx, labels map\[string\]string\) error](<#DockerBuild>)
 - [func DockerBuildDefault\(ctx context.Context, name, url string, tags \[\]string\) error](<#DockerBuildDefault>)
 - [func Git\(ctx context.Context, args ...string\) error](<#Git>)
 - [func Go\(ctx context.Context, args ...string\) error](<#Go>)
+- [func GoList\(ctx context.Context, target string\) \(\[\]string, error\)](<#GoList>)
 - [func GoV\(\)](<#GoV>)
 - [func GoWith\(ctx context.Context, env map\[string\]string, args ...string\) error](<#GoWith>)
 - [func GolangCILint\(ctx context.Context, args ...string\) error](<#GolangCILint>)
+- [func IntegrationTest\(ctx context.Context, pkg string\) error](<#IntegrationTest>)
 - [func LicenseCheck\(ctx context.Context, w io.Writer, targets ...string\) error](<#LicenseCheck>)
 - [func LintAll\(ctx context.Context\) error](<#LintAll>)
+- [func MergeCover\(ctx context.Context, coverFiles \[\]string, w io.Writer\) error](<#MergeCover>)
+- [func MergeCoverProfiles\(ctx context.Context\) error](<#MergeCoverProfiles>)
 - [func MustSetEnv\(k, v string\)](<#MustSetEnv>)
 - [func Run\(ctx context.Context, name string, args ...string\) error](<#Run>)
 - [func Targets\(ctx context.Context\) \(\[\]string, error\)](<#Targets>)
@@ -81,6 +86,16 @@ const (
 )
 ```
 
+<a name="UnitCoverProfile"></a>
+
+```go
+const (
+    UnitCoverProfile        = TargetDir + "reports/unit-test-coverage.out"
+    IntegrationCoverProfile = TargetDir + "reports/integration-test-coverage.out"
+    MergedCoverProfile      = TargetDir + "reports/merged-test-coverage.out"
+)
+```
+
 <a name="UNKNOWN"></a>
 
 ```go
@@ -90,7 +105,7 @@ const (
 ```
 
 <a name="Build"></a>
-## func Build
+## func [Build](<https://github.com/elisasre/mageutil/blob/main/go.go#L75>)
 
 ```go
 func Build(ctx context.Context, name string) error
@@ -99,7 +114,7 @@ func Build(ctx context.Context, name string) error
 Build binary using settings from system env.
 
 <a name="BuildAll"></a>
-## func BuildAll
+## func [BuildAll](<https://github.com/elisasre/mageutil/blob/main/go.go#L61>)
 
 ```go
 func BuildAll(ctx context.Context) error
@@ -108,7 +123,7 @@ func BuildAll(ctx context.Context) error
 BuildAll binaries for targets returned by utils.Targets using utils.Build.
 
 <a name="BuildFor"></a>
-## func BuildFor
+## func [BuildFor](<https://github.com/elisasre/mageutil/blob/main/go.go#L90>)
 
 ```go
 func BuildFor(ctx context.Context, goos, goarch, name string) error
@@ -117,7 +132,7 @@ func BuildFor(ctx context.Context, goos, goarch, name string) error
 BuildDefault binary using settings from system env.
 
 <a name="BuildForArmMac"></a>
-## func BuildForArmMac
+## func [BuildForArmMac](<https://github.com/elisasre/mageutil/blob/main/go.go#L111>)
 
 ```go
 func BuildForArmMac(ctx context.Context, name string) error
@@ -126,7 +141,7 @@ func BuildForArmMac(ctx context.Context, name string) error
 BuildForArmMac builds binary for arm64 based mac systems.
 
 <a name="BuildForLinux"></a>
-## func BuildForLinux
+## func [BuildForLinux](<https://github.com/elisasre/mageutil/blob/main/go.go#L101>)
 
 ```go
 func BuildForLinux(ctx context.Context, name string) error
@@ -135,7 +150,7 @@ func BuildForLinux(ctx context.Context, name string) error
 BuildForLinux builds binary for amd64 based linux systems.
 
 <a name="BuildForMac"></a>
-## func BuildForMac
+## func [BuildForMac](<https://github.com/elisasre/mageutil/blob/main/go.go#L106>)
 
 ```go
 func BuildForMac(ctx context.Context, name string) error
@@ -144,7 +159,7 @@ func BuildForMac(ctx context.Context, name string) error
 BuildForMac builds binary for amd64 based mac systems.
 
 <a name="CGO"></a>
-## func CGO
+## func [CGO](<https://github.com/elisasre/mageutil/blob/main/env.go#L23>)
 
 ```go
 func CGO(enabled bool)
@@ -153,7 +168,7 @@ func CGO(enabled bool)
 CGO can be used to enable of disable CGO. By default this package will disable CGO.
 
 <a name="Clean"></a>
-## func Clean
+## func [Clean](<https://github.com/elisasre/mageutil/blob/main/git.go#L15>)
 
 ```go
 func Clean(ctx context.Context) error
@@ -161,8 +176,17 @@ func Clean(ctx context.Context) error
 
 Clean removes all files ignored by git.
 
+<a name="CoverInfo"></a>
+## func [CoverInfo](<https://github.com/elisasre/mageutil/blob/main/testing.go#L88>)
+
+```go
+func CoverInfo(ctx context.Context, profile string) error
+```
+
+CoverInfo prints function level cover stats from given profile.
+
 <a name="DefaultLabels"></a>
-## func DefaultLabels
+## func [DefaultLabels](<https://github.com/elisasre/mageutil/blob/main/docker.go#L68>)
 
 ```go
 func DefaultLabels(title, url, desc string) map[string]string
@@ -171,7 +195,7 @@ func DefaultLabels(title, url, desc string) map[string]string
 DefaultLabels provides labels for Elisa SoSe/SRE organization.
 
 <a name="Docker"></a>
-## func Docker
+## func [Docker](<https://github.com/elisasre/mageutil/blob/main/docker.go#L32>)
 
 ```go
 func Docker(ctx context.Context, args ...string) error
@@ -180,7 +204,7 @@ func Docker(ctx context.Context, args ...string) error
 Docker runs systems docker cmd with given args.
 
 <a name="DockerBuild"></a>
-## func DockerBuild
+## func [DockerBuild](<https://github.com/elisasre/mageutil/blob/main/docker.go#L51>)
 
 ```go
 func DockerBuild(ctx context.Context, platform, dockerfile, buildCtx string, tags []string, extraCtx, labels map[string]string) error
@@ -189,7 +213,7 @@ func DockerBuild(ctx context.Context, platform, dockerfile, buildCtx string, tag
 DockerBuild is a short hand for docker buildx build with saine default flags
 
 <a name="DockerBuildDefault"></a>
-## func DockerBuildDefault
+## func [DockerBuildDefault](<https://github.com/elisasre/mageutil/blob/main/docker.go#L37>)
 
 ```go
 func DockerBuildDefault(ctx context.Context, name, url string, tags []string) error
@@ -198,7 +222,7 @@ func DockerBuildDefault(ctx context.Context, name, url string, tags []string) er
 DockerBuildDefault build image with sane defaults.
 
 <a name="Git"></a>
-## func Git
+## func [Git](<https://github.com/elisasre/mageutil/blob/main/git.go#L10>)
 
 ```go
 func Git(ctx context.Context, args ...string) error
@@ -207,7 +231,7 @@ func Git(ctx context.Context, args ...string) error
 Git is shorthand for git executable provided by system.
 
 <a name="Go"></a>
-## func Go
+## func [Go](<https://github.com/elisasre/mageutil/blob/main/go.go#L27>)
 
 ```go
 func Go(ctx context.Context, args ...string) error
@@ -215,8 +239,17 @@ func Go(ctx context.Context, args ...string) error
 
 Go is shorthand for go executable provided by system.
 
+<a name="GoList"></a>
+## func [GoList](<https://github.com/elisasre/mageutil/blob/main/go.go#L122>)
+
+```go
+func GoList(ctx context.Context, target string) ([]string, error)
+```
+
+GoList lists all packages in given target.
+
 <a name="GoV"></a>
-## func GoV
+## func [GoV](<https://github.com/elisasre/mageutil/blob/main/go.go#L34>)
 
 ```go
 func GoV()
@@ -225,7 +258,7 @@ func GoV()
 GoV prints wanted go version. Currently this is hardcoded in this library but in in go1.21.0 this could be defined by toolchain directive in go.mod file. So once go1.21 is out this has to be revised.
 
 <a name="GoWith"></a>
-## func GoWith
+## func [GoWith](<https://github.com/elisasre/mageutil/blob/main/go.go#L39>)
 
 ```go
 func GoWith(ctx context.Context, env map[string]string, args ...string) error
@@ -234,7 +267,7 @@ func GoWith(ctx context.Context, env map[string]string, args ...string) error
 GoWith is shorthand for go executable provided by system.
 
 <a name="GolangCILint"></a>
-## func GolangCILint
+## func [GolangCILint](<https://github.com/elisasre/mageutil/blob/main/lint.go#L18>)
 
 ```go
 func GolangCILint(ctx context.Context, args ...string) error
@@ -242,8 +275,17 @@ func GolangCILint(ctx context.Context, args ...string) error
 
 LintNative imports golangci\-lint and runs it as a helper library.
 
+<a name="IntegrationTest"></a>
+## func [IntegrationTest](<https://github.com/elisasre/mageutil/blob/main/testing.go#L34>)
+
+```go
+func IntegrationTest(ctx context.Context, pkg string) error
+```
+
+IntegrationTest executes all tests in given pkg with default flags.
+
 <a name="LicenseCheck"></a>
-## func LicenseCheck
+## func [LicenseCheck](<https://github.com/elisasre/mageutil/blob/main/licenses.go#L20>)
 
 ```go
 func LicenseCheck(ctx context.Context, w io.Writer, targets ...string) error
@@ -252,7 +294,7 @@ func LicenseCheck(ctx context.Context, w io.Writer, targets ...string) error
 LicenseCheck runs github.com/google/go\-licenses/licenses for given targets and writes toe output into w.
 
 <a name="LintAll"></a>
-## func LintAll
+## func [LintAll](<https://github.com/elisasre/mageutil/blob/main/lint.go#L13>)
 
 ```go
 func LintAll(ctx context.Context) error
@@ -260,8 +302,28 @@ func LintAll(ctx context.Context) error
 
 LintAll uses golangci\-lint library to lint all go files.
 
+<a name="MergeCover"></a>
+## func [MergeCover](<https://github.com/elisasre/mageutil/blob/main/testing.go#L52>)
+
+```go
+func MergeCover(ctx context.Context, coverFiles []string, w io.Writer) error
+```
+
+MergeCover merges multiple go test \-cover profiles and writes the combined coverage into out.
+
+coverage merging is adapted from https://github.com/wadey/gocovmerge
+
+<a name="MergeCoverProfiles"></a>
+## func [MergeCoverProfiles](<https://github.com/elisasre/mageutil/blob/main/testing.go#L72>)
+
+```go
+func MergeCoverProfiles(ctx context.Context) error
+```
+
+MergeCoverProfiles merges default unit and integration cover profile.
+
 <a name="MustSetEnv"></a>
-## func MustSetEnv
+## func [MustSetEnv](<https://github.com/elisasre/mageutil/blob/main/env.go#L31>)
 
 ```go
 func MustSetEnv(k, v string)
@@ -270,7 +332,7 @@ func MustSetEnv(k, v string)
 
 
 <a name="Run"></a>
-## func Run
+## func [Run](<https://github.com/elisasre/mageutil/blob/main/go.go#L116>)
 
 ```go
 func Run(ctx context.Context, name string, args ...string) error
@@ -279,7 +341,7 @@ func Run(ctx context.Context, name string, args ...string) error
 Run builds and executes app binary from default path.
 
 <a name="Targets"></a>
-## func Targets
+## func [Targets](<https://github.com/elisasre/mageutil/blob/main/go.go#L45>)
 
 ```go
 func Targets(ctx context.Context) ([]string, error)
@@ -288,7 +350,7 @@ func Targets(ctx context.Context) ([]string, error)
 Targets returns list of main pkgs under utils.CmdDir.
 
 <a name="UnitTest"></a>
-## func UnitTest
+## func [UnitTest](<https://github.com/elisasre/mageutil/blob/main/testing.go#L23>)
 
 ```go
 func UnitTest(ctx context.Context) error
@@ -297,7 +359,7 @@ func UnitTest(ctx context.Context) error
 UnitTest executes all unit tests with default flags.
 
 <a name="Verbose"></a>
-## func Verbose
+## func [Verbose](<https://github.com/elisasre/mageutil/blob/main/env.go#L18>)
 
 ```go
 func Verbose(enabled bool)
@@ -306,7 +368,7 @@ func Verbose(enabled bool)
 Verbose can be used to control mage's verbose state. By default this package will set mage in verbose state.
 
 <a name="VulnCheck"></a>
-## func VulnCheck
+## func [VulnCheck](<https://github.com/elisasre/mageutil/blob/main/vulncheck.go#L10>)
 
 ```go
 func VulnCheck(ctx context.Context, args ...string) error
@@ -315,7 +377,7 @@ func VulnCheck(ctx context.Context, args ...string) error
 VulnChek runs golang.org/x/vuln/scan with given args.
 
 <a name="VulnCheckAll"></a>
-## func VulnCheckAll
+## func [VulnCheckAll](<https://github.com/elisasre/mageutil/blob/main/vulncheck.go#L20>)
 
 ```go
 func VulnCheckAll(ctx context.Context) error
