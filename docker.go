@@ -2,6 +2,10 @@ package mageutil
 
 import (
 	"context"
+	"fmt"
+	"os"
+	"path"
+	"strings"
 	"time"
 
 	"github.com/magefile/mage/sh"
@@ -21,11 +25,10 @@ const (
 )
 
 const (
-	DefaultImageTagPrefix = "quay.io/elisaoyj/sre-"
-	DefaultPlatform       = "linux/amd64"
-	DefaultDockerfile     = "Dockerfile"
-	DefaultBuildCtx       = "."
-	DefaultExtraCtx       = BinDir + "linux/amd64/"
+	DefaultPlatform   = "linux/amd64"
+	DefaultDockerfile = "Dockerfile"
+	DefaultBuildCtx   = "."
+	DefaultExtraCtx   = BinDir + "linux/amd64/"
 )
 
 // Docker runs systems docker cmd with given args.
@@ -33,17 +36,16 @@ func Docker(ctx context.Context, args ...string) error {
 	return sh.RunV("docker", args...)
 }
 
+// DockerPushAllTags push all tags for given image.
+func DockerPushAllTags(ctx context.Context, imageName string) error {
+	return Docker(ctx, "push", "--all-tags", imageName)
+}
+
 // DockerBuildDefault build image with sane defaults.
-func DockerBuildDefault(ctx context.Context, name, url string, tags []string) error {
-	imageName := DefaultImageTagPrefix + name
-	fullTags := make([]string, 0, len(tags))
-	for _, tag := range tags {
-		fullTags = append(fullTags, imageName+tag)
-	}
-
+func DockerBuildDefault(ctx context.Context, imageName, url string) error {
+	fullTags := DockerTags(imageName)
 	extraCtx := map[string]string{"bin": DefaultExtraCtx}
-	labels := DefaultLabels(name, url, "")
-
+	labels := DefaultLabels(imageName, url, "")
 	return DockerBuild(ctx, DefaultPlatform, DefaultDockerfile, DefaultBuildCtx, fullTags, extraCtx, labels)
 }
 
@@ -64,10 +66,29 @@ func DockerBuild(ctx context.Context, platform, dockerfile, buildCtx string, tag
 	return Docker(ctx, args...)
 }
 
+// DockerTags creates slice of tags usign `tags` variable and DOCKER_IMAGE_TAGS env var.
+func DockerTags(imageName string, tags ...string) []string {
+	envTag := os.Getenv("DOCKER_IMAGE_TAGS")
+	if envTag != "" {
+		tags = append(tags, strings.Split(envTag, " ")...)
+	}
+
+	// If no tags were provided `snapshot` is used.
+	if len(tags) == 0 {
+		tags = append(tags, "snapshot")
+	}
+
+	fullTags := make([]string, 0, len(tags))
+	for _, tag := range tags {
+		fullTags = append(fullTags, fmt.Sprintf("%s:%s", imageName, tag))
+	}
+	return fullTags
+}
+
 // DefaultLabels provides labels for Elisa SoSe/SRE organization.
-func DefaultLabels(title, url, desc string) map[string]string {
+func DefaultLabels(imageName, url, desc string) map[string]string {
 	return map[string]string{
-		OCILabelTitle:       title,
+		OCILabelTitle:       path.Base(imageName),
 		OCILabelURL:         url,
 		OCILabelVersion:     "",
 		OCILabelDescription: desc,
