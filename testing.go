@@ -14,9 +14,9 @@ import (
 )
 
 const (
-	UnitCoverProfile        = TargetDir + "reports/unit-test-coverage.out"
-	IntegrationCoverProfile = TargetDir + "reports/integration-test-coverage.out"
-	MergedCoverProfile      = TargetDir + "reports/merged-test-coverage.out"
+	UnitCoverProfile        = ReportsDir + "unit-test-coverage.out"
+	IntegrationCoverProfile = ReportsDir + "integration-test-coverage.out"
+	MergedCoverProfile      = ReportsDir + "merged-test-coverage.out"
 )
 
 // UnitTest executes all unit tests with default flags.

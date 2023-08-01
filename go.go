@@ -17,10 +17,11 @@ import (
 )
 
 const (
-	GoVersion = "go1.20.5"
-	CmdDir    = "./cmd/"
-	TargetDir = "./target/"
-	BinDir    = TargetDir + "bin/"
+	GoVersion  = "go1.20.5"
+	CmdDir     = "./cmd/"
+	TargetDir  = "./target/"
+	BinDir     = TargetDir + "bin/"
+	ReportsDir = TargetDir + "reports/"
 )
 
 // Go is shorthand for go executable provided by system.
