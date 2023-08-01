@@ -17,7 +17,6 @@ import (
 )
 
 const (
-	GoVersion  = "go1.20.5"
 	CmdDir     = "./cmd/"
 	TargetDir  = "./target/"
 	BinDir     = TargetDir + "bin/"
@@ -27,13 +26,6 @@ const (
 // Go is shorthand for go executable provided by system.
 func Go(ctx context.Context, args ...string) error {
 	return GoWith(ctx, nil, args...)
-}
-
-// GoV prints wanted go version.
-// Currently this is hardcoded in this library but in in go1.21.0 this could be defined
-// by toolchain directive in go.mod file. So once go1.21 is out this has to be revised.
-func GoV() {
-	fmt.Println(GoVersion)
 }
 
 // GoWith is shorthand for go executable provided by system.

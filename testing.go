@@ -86,7 +86,7 @@ func MergeCoverProfiles(ctx context.Context) error {
 
 // CoverInfo prints function level cover stats from given profile.
 func CoverInfo(ctx context.Context, profile string) error {
-	return Go(ctx, "cover", "-func", profile)
+	return Go(ctx, "tool", "cover", "-func", profile)
 }
 
 func addProfile(profiles []*cover.Profile, p *cover.Profile) ([]*cover.Profile, error) {
