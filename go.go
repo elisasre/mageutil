@@ -16,10 +16,11 @@ import (
 )
 
 const (
-	GoVersion = "go1.20.5"
-	CmdDir    = "./cmd/"
-	TargetDir = "./target/"
-	BinDir    = TargetDir + "bin/"
+	GoVersion        = "go1.20.5"
+	CmdDir           = "./cmd/"
+	TargetDir        = "./target/"
+	UnitCoverProfile = TargetDir + "reports/unit-test-coverage.out"
+	BinDir           = TargetDir + "bin/"
 )
 
 // Go is shorthand for go executable provided by system.
@@ -119,6 +120,11 @@ func Run(ctx context.Context, name string, args ...string) error {
 
 // UnitTest executes all unit tests with default flags.
 func UnitTest(ctx context.Context) error {
+	err := os.MkdirAll(path.Dir(UnitCoverProfile), 0755)
+	if err != nil {
+		return err
+	}
+
 	env := map[string]string{"CGO_ENABLED": "1"}
-	return GoWith(ctx, env, "test", "-race", "-covermode", "atomic", "-coverprofile=target/reports/unit-test-coverage.out", "./...")
+	return GoWith(ctx, env, "test", "-race", "-covermode", "atomic", "-coverprofile="+UnitCoverProfile, "./...")
 }
