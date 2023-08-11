@@ -6,7 +6,9 @@
 import "github.com/elisasre/mageutil"
 ```
 
-package mageutil provides util functions for [Magefile](<https://magefile.org/>). For usage please refer to [documentation](<https://magefile.org/importing/>) provided by Magefile.
+package mageutil provides util functions for \[Magefile\]. For usage please refer to \[documentation\] provided by Magefile. For autocompletions see \[completions\].
+
+\[Magefile\]: https://magefile.org/ \[documentation\]: https://magefile.org/importing/ \[completions\]: /completions/README.md
 
 ## Index
 

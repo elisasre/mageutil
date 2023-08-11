@@ -1,11 +1,14 @@
 module github.com/elisasre/mageutil
 
-go 1.20
+go 1.21
+
+toolchain go1.21.0
 
 require (
 	github.com/golangci/golangci-lint v1.53.3
 	github.com/google/go-licenses v1.6.0
 	github.com/magefile/mage v1.15.0
+	golang.org/x/tools v0.9.3
 	golang.org/x/vuln v1.0.0
 	k8s.io/klog/v2 v2.100.1
 )
@@ -188,7 +191,6 @@ require (
 	golang.org/x/sync v0.2.0 // indirect
 	golang.org/x/sys v0.8.0 // indirect
 	golang.org/x/text v0.9.0 // indirect
-	golang.org/x/tools v0.9.3 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/src-d/go-billy.v4 v4.3.2 // indirect
