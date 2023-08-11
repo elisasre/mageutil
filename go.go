@@ -4,7 +4,7 @@
 //
 // [Magefile]: https://magefile.org/
 // [documentation]: https://magefile.org/importing/
-// [completions]: /completions/README.md
+// [completions]: https://github.com/elisasre/mageutil/tree/main/completions
 package mageutil
 
 import (

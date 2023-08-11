@@ -9,9 +9,9 @@ cp mage.zsh /usr/share/zsh/site-functions/_mage
 Start a new shell and auto completions should work properly.
 
 # TODO:
-    - [ ] bash completion
-    - [ ] completion for flags
-    - [ ] completion for default commands
-    - [ ] description for each command
-    - [ ] handle non-mage directories without error
-    - [ ] upstream pr
+ - [ ] bash completion
+ - [ ] completion for flags
+ - [ ] completion for default commands
+ - [ ] description for each command
+ - [ ] handle non-mage directories without error
+ - [ ] upstream pr
