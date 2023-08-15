@@ -28,7 +28,7 @@ const (
 	DefaultPlatform   = "linux/amd64"
 	DefaultDockerfile = "Dockerfile"
 	DefaultBuildCtx   = "."
-	DefaultExtraCtx   = BinDir + "linux/amd64/"
+	DefaultExtraCtx   = TargetDir + "bin/" + "linux/amd64/"
 )
 
 // Docker runs systems docker cmd with given args.
