@@ -21,7 +21,6 @@ import (
 const (
 	CmdDir     = "./cmd/"
 	TargetDir  = "./target/"
-	BinDir     = TargetDir + "bin/"
 	ReportsDir = TargetDir + "reports/"
 )
 
@@ -84,7 +83,7 @@ func Build(ctx context.Context, name string) error {
 // BuildDefault binary using settings from system env.
 func BuildFor(ctx context.Context, goos, goarch, name string) error {
 	cmdPath := CmdDir + name
-	binaryPath := path.Join(BinDir, goos, goarch, name)
+	binaryPath := path.Join(TargetDir, "bin", goos, goarch, name)
 	env := map[string]string{
 		"GOOS":   goos,
 		"GOARCH": goarch,
@@ -107,9 +106,14 @@ func BuildForArmMac(ctx context.Context, name string) error {
 	return BuildFor(ctx, "darwin", "arm64", name)
 }
 
-// Run builds and executes app binary from default path.
+// Run executes app binary from default path.
 func Run(ctx context.Context, name string, args ...string) error {
-	binaryPath := BinDir + name
+	bd, err := BinDir()
+	if err != nil {
+		return err
+	}
+
+	binaryPath := path.Join(bd, name)
 	return sh.RunV(binaryPath, args...)
 }
 
@@ -121,4 +125,19 @@ func GoList(ctx context.Context, target string) ([]string, error) {
 	}
 	pkgs := strings.Split(strings.ReplaceAll(pkgsRaw, "\r\n", ","), "\n")
 	return pkgs, nil
+}
+
+// BinDir returns path in format of target/bin/{GOOS}/{GOARCH}
+func BinDir() (string, error) {
+	goos, err := sh.Output("go", "env", "GOOS")
+	if err != nil {
+		return "", err
+	}
+
+	goarch, err := sh.Output("go", "env", "GOARCH")
+	if err != nil {
+		return "", err
+	}
+
+	return path.Join(TargetDir, "bin", goos, goarch), nil
 }
