@@ -11,6 +11,7 @@ package mageutil provides util functions for [Magefile](<https://magefile.org/>)
 ## Index
 
 - [Constants](<#constants>)
+- [func BinDir\(\) \(string, error\)](<#BinDir>)
 - [func Build\(ctx context.Context, name string\) error](<#Build>)
 - [func BuildAll\(ctx context.Context\) error](<#BuildAll>)
 - [func BuildFor\(ctx context.Context, goos, goarch, name string\) error](<#BuildFor>)
@@ -38,6 +39,7 @@ package mageutil provides util functions for [Magefile](<https://magefile.org/>)
 - [func MergeCoverProfiles\(ctx context.Context\) error](<#MergeCoverProfiles>)
 - [func MustSetEnv\(k, v string\)](<#MustSetEnv>)
 - [func Run\(ctx context.Context, name string, args ...string\) error](<#Run>)
+- [func SHA256Sum\(ctx context.Context, name string\) error](<#SHA256Sum>)
 - [func Targets\(ctx context.Context\) \(\[\]string, error\)](<#Targets>)
 - [func UnitTest\(ctx context.Context\) error](<#UnitTest>)
 - [func Verbose\(enabled bool\)](<#Verbose>)
@@ -71,7 +73,7 @@ const (
     DefaultPlatform   = "linux/amd64"
     DefaultDockerfile = "Dockerfile"
     DefaultBuildCtx   = "."
-    DefaultExtraCtx   = BinDir + "linux/amd64/"
+    DefaultExtraCtx   = TargetDir + "bin/" + "linux/amd64/"
 )
 ```
 
@@ -81,7 +83,6 @@ const (
 const (
     CmdDir     = "./cmd/"
     TargetDir  = "./target/"
-    BinDir     = TargetDir + "bin/"
     ReportsDir = TargetDir + "reports/"
 )
 ```
@@ -103,6 +104,15 @@ const (
     UNKNOWN = "Unknown"
 )
 ```
+
+<a name="BinDir"></a>
+## func BinDir
+
+```go
+func BinDir() (string, error)
+```
+
+BinDir returns path in format of target/bin/\{GOOS\}/\{GOARCH\}
 
 <a name="Build"></a>
 ## func Build
@@ -347,7 +357,16 @@ func MustSetEnv(k, v string)
 func Run(ctx context.Context, name string, args ...string) error
 ```
 
-Run builds and executes app binary from default path.
+Run executes app binary from default path.
+
+<a name="SHA256Sum"></a>
+## func SHA256Sum
+
+```go
+func SHA256Sum(ctx context.Context, name string) error
+```
+
+SHA256Sum calculates sum for single file and stores it in file. Output should be compatible with sha256sum program.
 
 <a name="Targets"></a>
 ## func Targets
