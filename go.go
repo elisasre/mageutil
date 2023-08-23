@@ -1,6 +1,13 @@
 // package mageutil provides util functions for [Magefile].
 // For usage please refer to [documentation] provided by Magefile.
 // For autocompletions see [completions].
+// Since this package is private it is recommended to set GOPRIVATE env variable:
+//
+// go env -w GOPRIVATE=github.com/elisasre
+//
+// With GOPRIVATE beeing set you can update mageutils by running:
+//
+// go get github.com/elisasre/mageutil@main
 //
 // [Magefile]: https://magefile.org/
 // [documentation]: https://magefile.org/importing/

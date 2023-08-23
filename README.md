@@ -6,7 +6,13 @@
 import "github.com/elisasre/mageutil"
 ```
 
-package mageutil provides util functions for [Magefile](<https://magefile.org/>). For usage please refer to [documentation](<https://magefile.org/importing/>) provided by Magefile. For autocompletions see [completions](<https://github.com/elisasre/mageutil/tree/main/completions>).
+package mageutil provides util functions for [Magefile](<https://magefile.org/>). For usage please refer to [documentation](<https://magefile.org/importing/>) provided by Magefile. For autocompletions see [completions](<https://github.com/elisasre/mageutil/tree/main/completions>). Since this package is private it is recommended to set GOPRIVATE env variable:
+
+go env \-w GOPRIVATE=github.com/elisasre
+
+With GOPRIVATE beeing set you can update mageutils by running:
+
+go get github.com/elisasre/mageutil@main
 
 ## Index
 
