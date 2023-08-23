@@ -87,6 +87,12 @@ func Build(ctx context.Context, name string) error {
 	return BuildFor(ctx, goos, goarch, name)
 }
 
+// BuildDefault binary and SHA256 sum using settings from system env
+func BuildWithSHA(ctx context.Context, goos, goarch, name string) {
+	mg.SerialCtxDeps(ctx, mg.F(BuildFor, goos, goarch, name))
+	mg.SerialCtxDeps(ctx, mg.F(SHA256Sum, path.Join(TargetDir, "bin", goos, goarch, name)))
+}
+
 // BuildDefault binary using settings from system env.
 func BuildFor(ctx context.Context, goos, goarch, name string) error {
 	cmdPath := CmdDir + name
@@ -99,18 +105,18 @@ func BuildFor(ctx context.Context, goos, goarch, name string) error {
 }
 
 // BuildForLinux builds binary for amd64 based linux systems.
-func BuildForLinux(ctx context.Context, name string) error {
-	return BuildFor(ctx, "linux", "amd64", name)
+func BuildForLinux(ctx context.Context, name string) {
+	BuildWithSHA(ctx, "linux", "amd64", name)
 }
 
 // BuildForMac builds binary for amd64 based mac systems.
-func BuildForMac(ctx context.Context, name string) error {
-	return BuildFor(ctx, "darwin", "amd64", name)
+func BuildForMac(ctx context.Context, name string) {
+	BuildWithSHA(ctx, "darwin", "amd64", name)
 }
 
 // BuildForArmMac builds binary for arm64 based mac systems.
-func BuildForArmMac(ctx context.Context, name string) error {
-	return BuildFor(ctx, "darwin", "arm64", name)
+func BuildForArmMac(ctx context.Context, name string) {
+	BuildWithSHA(ctx, "darwin", "arm64", name)
 }
 
 // Run executes app binary from default path.
