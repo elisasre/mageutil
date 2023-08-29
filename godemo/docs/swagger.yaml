@@ -1,0 +1,49 @@
+definitions:
+  godemo_api.HelloResponse:
+    properties:
+      msg:
+        example: hello
+        type: string
+    type: object
+info:
+  contact:
+    email: devops@elisa.fi
+    name: Software Services / SRE Team
+    url: http://www.elisa.fi
+  description: Demo service
+  license:
+    name: Elisa Proprietary License
+    url: http://www.elisa.fi
+  termsOfService: http://swagger.io/terms/
+  title: Demo
+  version: "1.0"
+paths:
+  /api/doc:
+    get:
+      description: Get OpenAPI documentation
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+  /api/hello:
+    get:
+      description: Get hello message
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Hello message
+          schema:
+            $ref: '#/definitions/godemo_api.HelloResponse'
+  /ready:
+    get:
+      description: Readiness endpoint
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ready
+          schema:
+            type: string
+swagger: "2.0"
