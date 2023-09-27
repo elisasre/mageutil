@@ -23,7 +23,7 @@ jobs:
       run: git config --global url."https://dops-sre:${{ secrets.DOPS_SRE_PAT }}@github.com/".insteadOf "https://github.com/"
 
     - name: Setup Go and Mage
-      uses: elisasre/setup-go-and-mage@v1
+      uses: elisa-actions/setup-go-and-mage@v1
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
