@@ -74,6 +74,9 @@ func VulnCheck(ctx context.Context) error {
 
 // LicenseCheck all files.
 func LicenseCheck(ctx context.Context) error {
+	if err := os.MkdirAll(mageutil.ReportsDir, 0755); err != nil {
+		return fmt.Errorf("failed to create reports dir: %w", err)
+	}
 	licenseFile, err := os.Create(fmt.Sprintf("%s%s", mageutil.ReportsDir, "licenses.csv"))
 	if err != nil {
 		return err
