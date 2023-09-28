@@ -48,6 +48,8 @@ jobs:
     - run: mage vulncheck
       continue-on-error: true
       working-directory: ./godemo
+    - run: mage licensecheck
+      working-directory: ./godemo
     - run: mage unittest
       working-directory: ./godemo
     - run: mage integrationtest
@@ -65,8 +67,6 @@ jobs:
     - run: mage buildimage
       working-directory: ./godemo
     - run: mage pushimage
-      working-directory: ./godemo
-    - run: mage licensecheck
       working-directory: ./godemo
     - run: test -x godemo/target/bin/linux/amd64/godemo
     - run: test -f godemo/target/bin/linux/amd64/godemo.sha256
