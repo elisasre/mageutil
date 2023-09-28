@@ -1,0 +1,7 @@
+/.tools/
+/bin/
+/*.out
+/vendor
+licenses.csv
+go-main.mk
+target/
