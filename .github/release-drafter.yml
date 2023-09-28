@@ -1,0 +1,48 @@
+name-template: '$NEXT_PATCH_VERSION'
+tag-template: '$NEXT_PATCH_VERSION'
+categories:
+  - title: 'Features'
+    labels:
+      - 'feature'
+      - 'enhancement'
+  - title: 'Bug Fixes'
+    labels:
+      - 'fix'
+      - 'bugfix'
+      - 'bug'
+  - title: 'Maintenance'
+    labels:
+      - 'chore'
+      - 'dependencies'
+  - title: 'Security'
+    labels:
+      - 'security'
+exclude-labels:
+  - 'skip-changelog'
+change-template: '* $TITLE @$AUTHOR (#$NUMBER)'
+autolabeler:
+  - label: 'chore'
+    files:
+      - '*.md'
+      - '.github/*'
+    branch:
+      - '/chore\/.+/'
+      - '/docs{0,1}\/.+/'
+  - label: 'bug'
+    branch:
+      - '/fix\/.+/'
+    title:
+      - '/fix/i'
+  - label: 'enhancement'
+    branch:
+      - '/feature\/.+/'
+      - '/feat\/.+/'
+  - label: 'security'
+    branch:
+      - '/security\/.+/'
+      - '/cve\/.+/'
+category-template: '### $TITLE'
+template: |
+  ## Changes
+
+  $CHANGES
