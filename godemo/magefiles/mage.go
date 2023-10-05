@@ -31,6 +31,11 @@ func BuildForMac(ctx context.Context) {
 	mageutil.BuildForMac(ctx, AppName)
 }
 
+// Build for amd64 MacOS
+func BuildForWindows(ctx context.Context) {
+	mageutil.BuildForWindows(ctx, AppName)
+}
+
 // Build for arm64 MacOS
 func BuildForArmMac(ctx context.Context) {
 	mageutil.BuildForArmMac(ctx, AppName)

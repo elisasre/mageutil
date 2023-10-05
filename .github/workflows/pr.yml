@@ -64,6 +64,8 @@ jobs:
       working-directory: ./godemo
     - run: mage buildforarmmac
       working-directory: ./godemo
+    - run: mage buildforwindows
+      working-directory: ./godemo
     - run: mage buildimage
       working-directory: ./godemo
     - run: mage pushimage
@@ -74,6 +76,8 @@ jobs:
     - run: test -f godemo/target/bin/linux/amd64/godemo.sha256
     - run: test -x godemo/target/bin/darwin/arm64/godemo
     - run: test -f godemo/target/bin/linux/amd64/godemo.sha256
+    - run: test -x godemo/target/bin/windows/amd64/godemo
+    - run: test -f godemo/target/bin/windows/amd64/godemo.sha256
     - run: test -f godemo/target/reports/unit-test-coverage.out
     - run: test -f godemo/target/reports/integration-test-coverage.out
     - run: test -f godemo/target/reports/merged-test-coverage.out
