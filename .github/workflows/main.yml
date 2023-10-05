@@ -35,6 +35,11 @@ jobs:
         username: ${{ secrets.QUAY_USERNAME }}
         password: ${{ secrets.QUAY_TOKEN }}
 
+    - name: Verify dependencies
+      run: |
+        go mod tidy
+        git diff --exit-code -- go.mod go.sum || (echo "Deps are not up to date: run 'go mod tidy' before commit" && exit 1)
+        
     - run: mage lint
       working-directory: ./godemo
       env:

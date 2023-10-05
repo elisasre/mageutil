@@ -37,9 +37,10 @@ jobs:
         username: ${{ secrets.QUAY_USERNAME }}
         password: ${{ secrets.QUAY_TOKEN }}
 
-    - name: Ensure README.md is up to date
-      run: |-
-        go run github.com/princjef/gomarkdoc/cmd/gomarkdoc@v1.1.0 -vv --repository.default-branch main --output README.md -c
+    - name: Verify dependencies
+      run: |
+        go mod tidy
+        git diff --exit-code -- go.mod go.sum || (echo "Deps are not up to date: run 'go mod tidy' before commit" && exit 1)
 
     - run: mage lint
       working-directory: ./godemo
