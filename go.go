@@ -119,6 +119,11 @@ func BuildForArmMac(ctx context.Context, name string) {
 	BuildWithSHA(ctx, "darwin", "arm64", name)
 }
 
+// BuildForWindows builds binary for amd64 based windows systems.
+func BuildForWindows(ctx context.Context, name string) {
+	BuildWithSHA(ctx, "windows", "amd64", name)
+}
+
 // Run executes app binary from default path.
 func Run(ctx context.Context, name string, args ...string) error {
 	bd, err := BinDir()
