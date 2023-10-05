@@ -1,0 +1,24 @@
+name: Release
+
+on:
+  release:
+    types:
+    - published
+
+jobs:
+  build-release:
+    runs-on:
+    - self-hosted
+    - kaas
+    timeout-minutes: 5
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 1
+
+    - uses: elisa-actions/setup-go-and-mage@v1
+
+    - name: publish package
+      run: |
+        GOPROXY=proxy.golang.org go list -m github.com/elisasre/mageutil@${{ github.event.release.tag_name }}
