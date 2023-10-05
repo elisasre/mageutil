@@ -24,6 +24,7 @@ go get github.com/elisasre/mageutil@main
 - [func BuildForArmMac\(ctx context.Context, name string\)](<#BuildForArmMac>)
 - [func BuildForLinux\(ctx context.Context, name string\)](<#BuildForLinux>)
 - [func BuildForMac\(ctx context.Context, name string\)](<#BuildForMac>)
+- [func BuildForWindows\(ctx context.Context, name string\)](<#BuildForWindows>)
 - [func BuildWithSHA\(ctx context.Context, goos, goarch, name string\)](<#BuildWithSHA>)
 - [func CGO\(enabled bool\)](<#CGO>)
 - [func Clean\(ctx context.Context\) error](<#Clean>)
@@ -113,7 +114,7 @@ const (
 ```
 
 <a name="BinDir"></a>
-## func [BinDir](<https://github.com/elisasre/mageutil/blob/main/go.go#L144>)
+## func [BinDir](<https://github.com/elisasre/mageutil/blob/main/go.go#L149>)
 
 ```go
 func BinDir() (string, error)
@@ -174,6 +175,15 @@ func BuildForMac(ctx context.Context, name string)
 ```
 
 BuildForMac builds binary for amd64 based mac systems.
+
+<a name="BuildForWindows"></a>
+## func [BuildForWindows](<https://github.com/elisasre/mageutil/blob/main/go.go#L123>)
+
+```go
+func BuildForWindows(ctx context.Context, name string)
+```
+
+BuildForWindows builds binary for amd64 based windows systems.
 
 <a name="BuildWithSHA"></a>
 ## func [BuildWithSHA](<https://github.com/elisasre/mageutil/blob/main/go.go#L91>)
@@ -284,7 +294,7 @@ func Go(ctx context.Context, args ...string) error
 Go is shorthand for go executable provided by system.
 
 <a name="GoList"></a>
-## func [GoList](<https://github.com/elisasre/mageutil/blob/main/go.go#L134>)
+## func [GoList](<https://github.com/elisasre/mageutil/blob/main/go.go#L139>)
 
 ```go
 func GoList(ctx context.Context, target string) ([]string, error)
@@ -367,7 +377,7 @@ func MustSetEnv(k, v string)
 
 
 <a name="Run"></a>
-## func [Run](<https://github.com/elisasre/mageutil/blob/main/go.go#L123>)
+## func [Run](<https://github.com/elisasre/mageutil/blob/main/go.go#L128>)
 
 ```go
 func Run(ctx context.Context, name string, args ...string) error
