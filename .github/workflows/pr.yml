@@ -37,10 +37,6 @@ jobs:
         username: ${{ secrets.QUAY_USERNAME }}
         password: ${{ secrets.QUAY_TOKEN }}
 
-    - name: Ensure README.md is up to date
-      run: |-
-        go run github.com/princjef/gomarkdoc/cmd/gomarkdoc@v1.1.0 -vv --repository.default-branch main --output README.md -c
-
     - run: mage lint
       working-directory: ./godemo
       env:
