@@ -11,16 +11,10 @@ jobs:
       - self-hosted
       - kaas
     timeout-minutes: 15
-    env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      GOPRIVATE: github.com/elisasre
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
-
-      - name: Configure Personal Access Token
-        run: git config --global url."https://dops-sre:${{ secrets.DOPS_SRE_PAT }}@github.com/".insteadOf "https://github.com/"
 
       - name: Setup Go and Mage
         uses: elisa-actions/setup-go-and-mage@v1
