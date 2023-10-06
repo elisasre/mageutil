@@ -3,96 +3,98 @@ name: Pull Request
 on:
   pull_request:
     types:
-    - opened
-    - synchronize
-    - reopened
+      - opened
+      - synchronize
+      - reopened
 
 jobs:
   test-go:
     runs-on:
-    - self-hosted
-    - kaas
+      - self-hosted
+      - kaas
     timeout-minutes: 15
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GOPRIVATE: github.com/elisasre
     steps:
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: 1
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
 
-    - name: Configure Personal Access Token
-      run: git config --global url."https://dops-sre:${{ secrets.DOPS_SRE_PAT }}@github.com/".insteadOf "https://github.com/"
+      - name: Configure Personal Access Token
+        run: git config --global url."https://dops-sre:${{ secrets.DOPS_SRE_PAT }}@github.com/".insteadOf "https://github.com/"
 
-    - name: Setup Go and Mage
-      uses: elisa-actions/setup-go-and-mage@v1
+      - name: Setup Go and Mage
+        uses: elisa-actions/setup-go-and-mage@v1
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-    - name: Login to Quay
-      uses: docker/login-action@v2
-      with:
-        registry: quay.io
-        username: ${{ secrets.QUAY_USERNAME }}
-        password: ${{ secrets.QUAY_TOKEN }}
+      - name: Login to Quay
+        uses: docker/login-action@v2
+        with:
+          registry: quay.io
+          username: ${{ secrets.QUAY_USERNAME }}
+          password: ${{ secrets.QUAY_TOKEN }}
 
-    - name: Verify dependencies
-      run: |
-        go mod tidy
-        git diff --exit-code -- go.mod go.sum || (echo "Deps are not up to date: run 'go mod tidy' before commit" && exit 1)
+      - name: Verify dependencies
+        run: |
+          go mod tidy
+          git diff --exit-code -- go.mod go.sum || (echo "Deps are not up to date: run 'go mod tidy' before commit" && exit 1)
 
-    - run: mage lint
-      working-directory: ./godemo
-      env:
-        GOLANGCI_LINT_FLAGS: --out-format=github-actions
-    - run: mage vulncheck
-      continue-on-error: true
-      working-directory: ./godemo
-    - run: mage licensecheck
-      working-directory: ./godemo
-    - run: mage unittest
-      working-directory: ./godemo
-    - run: mage integrationtest
-      working-directory: ./godemo
-    - run: mage mergecoverprofiles
-      working-directory: ./godemo
-    - run: mage build
-      working-directory: ./godemo
-    - run: mage buildforlinux
-      working-directory: ./godemo
-    - run: mage buildformac
-      working-directory: ./godemo
-    - run: mage buildforarmmac
-      working-directory: ./godemo
-    - run: mage buildforwindows
-      working-directory: ./godemo
-    - run: mage buildimage
-      working-directory: ./godemo
-    - run: mage pushimage
-      working-directory: ./godemo
-    - run: test -x godemo/target/bin/linux/amd64/godemo
-    - run: test -f godemo/target/bin/linux/amd64/godemo.sha256
-    - run: test -x godemo/target/bin/darwin/amd64/godemo
-    - run: test -f godemo/target/bin/linux/amd64/godemo.sha256
-    - run: test -x godemo/target/bin/darwin/arm64/godemo
-    - run: test -f godemo/target/bin/linux/amd64/godemo.sha256
-    - run: test -x godemo/target/bin/windows/amd64/godemo
-    - run: test -f godemo/target/bin/windows/amd64/godemo.sha256
-    - run: test -f godemo/target/reports/unit-test-coverage.out
-    - run: test -f godemo/target/reports/integration-test-coverage.out
-    - run: test -f godemo/target/reports/merged-test-coverage.out
-    - run: test -f godemo/target/reports/licenses.csv
-    - name: Validate merge coverage
-      working-directory: ./godemo
-      run: go tool cover -func target/reports/merged-test-coverage.out | grep LoadSpec | grep '100.0%'
-    - run: docker images | grep 'quay.io/elisaoyj/sre-godemo'
+      - run: mage lint
+        working-directory: ./godemo
+        env:
+          GOLANGCI_LINT_FLAGS: --out-format=github-actions
+      - run: mage vulncheck
+        continue-on-error: true
+        working-directory: ./godemo
+      - run: mage licensecheck
+        working-directory: ./godemo
+      - run: mage unittest
+        working-directory: ./godemo
+      - run: mage integrationtest
+        working-directory: ./godemo
+      - run: mage mergecoverprofiles
+        working-directory: ./godemo
+      - run: mage build
+        working-directory: ./godemo
+      - run: mage buildforlinux
+        working-directory: ./godemo
+      - run: mage buildformac
+        working-directory: ./godemo
+      - run: mage buildforarmmac
+        working-directory: ./godemo
+      - run: mage buildforwindows
+        working-directory: ./godemo
+      - run: mage buildimage
+        working-directory: ./godemo
+      - run: mage pushimage
+        working-directory: ./godemo
+      - run: mage swaggerdocs
+        working-directory: ./godemo
+      - run: test -x godemo/target/bin/linux/amd64/godemo
+      - run: test -f godemo/target/bin/linux/amd64/godemo.sha256
+      - run: test -x godemo/target/bin/darwin/amd64/godemo
+      - run: test -f godemo/target/bin/linux/amd64/godemo.sha256
+      - run: test -x godemo/target/bin/darwin/arm64/godemo
+      - run: test -f godemo/target/bin/linux/amd64/godemo.sha256
+      - run: test -x godemo/target/bin/windows/amd64/godemo
+      - run: test -f godemo/target/bin/windows/amd64/godemo.sha256
+      - run: test -f godemo/target/reports/unit-test-coverage.out
+      - run: test -f godemo/target/reports/integration-test-coverage.out
+      - run: test -f godemo/target/reports/merged-test-coverage.out
+      - run: test -f godemo/target/reports/licenses.csv
+      - name: Validate merge coverage
+        working-directory: ./godemo
+        run: go tool cover -func target/reports/merged-test-coverage.out | grep LoadSpec | grep '100.0%'
+      - run: docker images | grep 'quay.io/elisaoyj/sre-godemo'
 
-    - name: Notify failure
-      if: github.event.pull_request.draft == false &&
+      - name: Notify failure
+        if: github.event.pull_request.draft == false &&
           failure()
-      env:
-        MATTERMOST_WEBHOOK_URL: ${{ secrets.MATTERMOST_WEBHOOK_URL }}
-        MATTERMOST_TEXT: "${{ github.repository }} PR build. Please check [here](${{ github.event.pull_request.html_url }}/checks)."
-      run: |
-        send-to-mattermost
+        env:
+          MATTERMOST_WEBHOOK_URL: ${{ secrets.MATTERMOST_WEBHOOK_URL }}
+          MATTERMOST_TEXT: "${{ github.repository }} PR build. Please check [here](${{ github.event.pull_request.html_url }}/checks)."
+        run: |
+          send-to-mattermost

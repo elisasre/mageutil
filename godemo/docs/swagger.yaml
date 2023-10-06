@@ -1,5 +1,5 @@
 definitions:
-  godemo_api.HelloResponse:
+  api.HelloResponse:
     properties:
       msg:
         example: hello
@@ -35,7 +35,7 @@ paths:
         "200":
           description: Hello message
           schema:
-            $ref: '#/definitions/godemo_api.HelloResponse'
+            $ref: '#/definitions/api.HelloResponse'
   /ready:
     get:
       description: Readiness endpoint
