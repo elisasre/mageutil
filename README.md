@@ -1,5 +1,7 @@
 # mageutil
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/elisasre/mageutil.svg)](https://pkg.go.dev/github.com/elisasre/mageutil)
+
 ```go
 import "github.com/elisasre/mageutil"
 ```
