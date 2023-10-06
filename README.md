@@ -1,6 +1,6 @@
 # mageutil
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/elisasre/mageutil.svg)](https://pkg.go.dev/github.com/elisasre/mageutil) ![build](https://github.com/github/docs/actions/workflows/main.yml/badge.svg)
+[![Go Reference](https://pkg.go.dev/badge/github.com/elisasre/mageutil.svg)](https://pkg.go.dev/github.com/elisasre/mageutil) ![build](https://github.com/elisasre/mageutil/actions/workflows/main.yml/badge.svg)
 ```go
 import "github.com/elisasre/mageutil"
 ```
