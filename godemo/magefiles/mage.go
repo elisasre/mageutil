@@ -108,3 +108,8 @@ func BuildImage(ctx context.Context) error {
 func PushImage(ctx context.Context) error {
 	return mageutil.DockerPushAllTags(ctx, ImageName)
 }
+
+// SwaggerDocs generates swagger documentation files
+func SwaggerDocs(ctx context.Context) error {
+	return mageutil.SwaggerDocs(ctx, "api", "api.go", "docs")
+}

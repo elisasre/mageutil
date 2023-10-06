@@ -39,7 +39,7 @@
                     "200": {
                         "description": "Hello message",
                         "schema": {
-                            "$ref": "#/definitions/godemo_api.HelloResponse"
+                            "$ref": "#/definitions/api.HelloResponse"
                         }
                     }
                 }
@@ -63,7 +63,7 @@
         }
     },
     "definitions": {
-        "godemo_api.HelloResponse": {
+        "api.HelloResponse": {
             "type": "object",
             "properties": {
                 "msg": {
