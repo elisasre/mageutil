@@ -119,3 +119,7 @@ func Ensure(ctx context.Context) error {
 	return mageutil.Ensure(ctx)
 }
 
+// Ensure dependencies are in sync (CI)
+func EnsureInSync(ctx context.Context) error {
+	return mageutil.EnsureInSync(ctx)
+}

@@ -167,3 +167,15 @@ func Ensure(ctx context.Context) error {
 	}
 	return nil
 }
+
+// EnsureInSync checks that all dependencies are up to date
+// useful in CI/CD pipelines to validate that dependencies match go.mod
+func EnsureInSync(ctx context.Context) error {
+	if err := Ensure(ctx); err != nil {
+		return err
+	}
+	if err := Git(ctx, "diff", "--exit-code", "--", "go.mod", "go.sum"); err != nil {
+		return fmt.Errorf("go.mod and go.sum are not in sync. run `go mod tidy` and commit changes")
+	}
+	return nil
+}

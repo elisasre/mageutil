@@ -42,6 +42,8 @@ jobs:
           GOLANGCI_LINT_FLAGS: --out-format=github-actions
       - run: mage ensure
         working-directory: ./godemo
+      - run: mage ensureInSync
+        working-directory: ./godemo
       - run: mage vulncheck
         continue-on-error: true
         working-directory: ./godemo
