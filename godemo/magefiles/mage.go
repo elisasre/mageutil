@@ -113,3 +113,9 @@ func PushImage(ctx context.Context) error {
 func SwaggerDocs(ctx context.Context) error {
 	return mageutil.SwaggerDocs(ctx, "api", "api.go", "docs")
 }
+
+// Ensure dependencies
+func Ensure(ctx context.Context) error {
+	return mageutil.Ensure(ctx)
+}
+

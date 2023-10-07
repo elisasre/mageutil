@@ -159,3 +159,11 @@ func BinDir() (string, error) {
 
 	return path.Join(TargetDir, "bin", goos, goarch), nil
 }
+
+// Ensure checks that all dependencies are up to date
+func Ensure(ctx context.Context) error {
+	if err := Go(ctx, "mod", "tidy"); err != nil {
+		return err
+	}
+	return nil
+}
