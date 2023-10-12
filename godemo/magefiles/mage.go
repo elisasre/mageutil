@@ -123,3 +123,13 @@ func Ensure(ctx context.Context) error {
 func EnsureInSync(ctx context.Context) error {
 	return mageutil.EnsureInSync(ctx)
 }
+
+// YamlLint some.yaml file
+func YamlLint(ctx context.Context) error {
+	return mageutil.YamlLint(ctx, "some.yaml")
+}
+
+// YamlFmt some.yaml file
+func YamlFmt(ctx context.Context) error {
+	return mageutil.YamlFmt(ctx, "some.yaml")
+}

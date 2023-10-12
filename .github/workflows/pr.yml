@@ -71,6 +71,16 @@ jobs:
         working-directory: ./godemo
       - run: mage swaggerdocs
         working-directory: ./godemo
+      - run: |
+          if ($(mage yamlLint)) ; then
+            echo "mage yamlLint should have failed!"
+            exit 1
+          fi
+        working-directory: ./godemo
+      - run: mage yamlFmt
+        working-directory: ./godemo
+      - run: mage yamlLint
+        working-directory: ./godemo
       - run: test -x godemo/target/bin/linux/amd64/godemo
       - run: test -f godemo/target/bin/linux/amd64/godemo.sha256
       - run: test -x godemo/target/bin/darwin/amd64/godemo
@@ -87,7 +97,6 @@ jobs:
         working-directory: ./godemo
         run: go tool cover -func target/reports/merged-test-coverage.out | grep LoadSpec | grep '100.0%'
       - run: docker images | grep 'quay.io/elisaoyj/sre-godemo'
-
       - name: Notify failure
         if: github.event.pull_request.draft == false &&
           failure()
