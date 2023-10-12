@@ -8,6 +8,7 @@ import (
 	"os"
 
 	"github.com/elisasre/mageutil"
+	"github.com/magefile/mage/mg"
 	"github.com/magefile/mage/sh"
 )
 
@@ -15,6 +16,58 @@ const (
 	AppName   = "godemo"
 	ImageName = "quay.io/elisaoyj/sre-godemo"
 )
+
+type UI mg.Namespace
+type CDK mg.Namespace
+
+var (
+	uiNpm  = mageutil.NewNpmCmd("--prefix=./ui/")
+	cdkNpm = mageutil.NewNpmCmd("--prefix=./manifests/cdk/")
+)
+
+// Install installs ui deps
+func (UI) Install(ctx context.Context) error {
+	return uiNpm.Install(ctx)
+}
+
+// CleanInstall performs clean install for ui deps
+func (UI) CleanInstall(ctx context.Context) error {
+	return uiNpm.CleanInstall(ctx)
+}
+
+// Build builds ui
+func (UI) Build(ctx context.Context) error {
+	return uiNpm.Run(ctx, "build")
+}
+
+// Test runs tests for ui
+func (UI) Test(ctx context.Context) error {
+	return uiNpm.Run(ctx, "test")
+}
+
+// TestAndBuild tests and builds ui with clean install
+func (UI) TestAndBuild(ctx context.Context) {
+	mg.SerialCtxDeps(ctx,
+		UI.CleanInstall,
+		UI.Test,
+		UI.Build,
+	)
+}
+
+// CleanInstall performs clean install for cdk deps
+func (CDK) CleanInstall(ctx context.Context) error {
+	return cdkNpm.CleanInstall(ctx)
+}
+
+// Install installs cdk deps
+func (CDK) Install(ctx context.Context) error {
+	return cdkNpm.Install(ctx)
+}
+
+// Test runs tests for cdk
+func (CDK) Test(ctx context.Context) error {
+	return cdkNpm.Run(ctx, "test")
+}
 
 // Build binaries for executables under ./cmd
 func Build(ctx context.Context) error {

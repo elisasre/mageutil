@@ -1,0 +1,12 @@
+{
+  "name": "ui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo tests",
+    "build": "echo build"
+  },
+  "author": "",
+  "license": "ISC"
+}
