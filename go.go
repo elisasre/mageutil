@@ -10,6 +10,7 @@ package mageutil
 import (
 	"context"
 	"fmt"
+	"log"
 	"os"
 	"path"
 	"strings"
@@ -207,18 +208,29 @@ func BinDir() (string, error) {
 	return path.Join(TargetDir, "bin", goos, goarch), nil
 }
 
-// Ensure checks that all dependencies are up to date
+// Ensure runs Tidy checks that all dependencies are up to date
+// Deprecated: use Tidy instead
 func Ensure(ctx context.Context) error {
-	if err := Go(ctx, "mod", "tidy"); err != nil {
-		return err
-	}
-	return nil
+	log.Println("WARNING: Ensure is deprecated, use Tidy instead")
+	return Tidy(ctx)
 }
 
 // EnsureInSync checks that all dependencies are up to date
 // useful in CI/CD pipelines to validate that dependencies match go.mod
+// Deprecated: use TidyAndVerifyNoChanges instead
 func EnsureInSync(ctx context.Context) error {
-	if err := Ensure(ctx); err != nil {
+	log.Println("WARNING: EnsureInSync is deprecated, use Tidy instead")
+	return TidyAndVerifyNoChanges(ctx)
+}
+
+// Tidy runs go mod tidy
+func Tidy(ctx context.Context) error {
+	return Go(ctx, "mod", "tidy")
+}
+
+// TidyAndVerifyNoChanges runs go mod tidy and verifies that there are no changes to go.mod or go.sum
+func TidyAndVerifyNoChanges(ctx context.Context) error {
+	if err := Tidy(ctx); err != nil {
 		return err
 	}
 	if err := Git(ctx, "diff", "--exit-code", "--", "go.mod", "go.sum"); err != nil {

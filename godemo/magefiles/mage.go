@@ -168,13 +168,25 @@ func SwaggerDocs(ctx context.Context) error {
 }
 
 // Ensure dependencies
+// Deprecated: run for verifying backward compatibility
 func Ensure(ctx context.Context) error {
 	return mageutil.Ensure(ctx)
 }
 
 // Ensure dependencies are in sync (CI)
+// Deprecated: run for verifying backward compatibility
 func EnsureInSync(ctx context.Context) error {
 	return mageutil.EnsureInSync(ctx)
+}
+
+// Tidy dependencies
+func Tidy(ctx context.Context) error {
+	return mageutil.Tidy(ctx)
+}
+
+// TidyAndVerifyNoChanges dependencies
+func TidyAndVerifyNoChanges(ctx context.Context) error {
+	return mageutil.TidyAndVerifyNoChanges(ctx)
 }
 
 // YamlLint some.yaml file
