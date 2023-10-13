@@ -31,6 +31,10 @@ jobs:
           username: ${{ secrets.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_TOKEN }}
 
+      - uses: actions/setup-node@v3
+        with:
+          node-version: latest
+
       - name: Verify dependencies
         run: |
           go mod tidy
@@ -80,6 +84,8 @@ jobs:
       - run: mage yamlFmt
         working-directory: ./godemo
       - run: mage yamlLint
+        working-directory: ./godemo
+      - run: mage ui:testAndBuild
         working-directory: ./godemo
       - run: test -x godemo/target/bin/linux/amd64/godemo
       - run: test -f godemo/target/bin/linux/amd64/godemo.sha256
