@@ -229,6 +229,7 @@ func Tidy(ctx context.Context) error {
 }
 
 // TidyAndVerifyNoChanges runs go mod tidy and verifies that there are no changes to go.mod or go.sum
+// useful in CI/CD pipelines to validate that dependencies match go.mod
 func TidyAndVerifyNoChanges(ctx context.Context) error {
 	if err := Tidy(ctx); err != nil {
 		return err
