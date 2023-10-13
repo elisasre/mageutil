@@ -219,7 +219,7 @@ func Ensure(ctx context.Context) error {
 // useful in CI/CD pipelines to validate that dependencies match go.mod
 // Deprecated: use TidyAndVerifyNoChanges instead
 func EnsureInSync(ctx context.Context) error {
-	log.Println("WARNING: EnsureInSync is deprecated, use Tidy instead")
+	log.Println("WARNING: EnsureInSync is deprecated, use TidyAndVerifyNoChanges instead")
 	return TidyAndVerifyNoChanges(ctx)
 }
 
