@@ -24,7 +24,6 @@ require (
 	cloud.google.com/go/kms v1.15.2 // indirect
 	filippo.io/age v1.1.1 // indirect
 	github.com/4meepo/tagalign v1.3.2 // indirect
-	github.com/99designs/aws-vault/v6 v6.6.2 // indirect
 	github.com/99designs/aws-vault/v7 v7.2.0 // indirect
 	github.com/99designs/go-keychain v0.0.0-20191008050251-8e49817e8af4 // indirect
 	github.com/99designs/keyring v1.2.2 // indirect

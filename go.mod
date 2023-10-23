@@ -5,7 +5,6 @@ go 1.21
 toolchain go1.21.2
 
 require (
-	github.com/99designs/aws-vault/v6 v6.6.2
 	github.com/99designs/aws-vault/v7 v7.2.0
 	github.com/99designs/keyring v1.2.2
 	github.com/alecthomas/kingpin/v2 v2.3.2
