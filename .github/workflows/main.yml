@@ -7,9 +7,7 @@ on:
 
 jobs:
   test-go:
-    runs-on:
-      - self-hosted
-      - kaas
+    runs-on: elisa-normal
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
@@ -117,9 +115,7 @@ jobs:
           send-to-mattermost
 
   release-drafter:
-    runs-on:
-      - self-hosted
-      - kaas
+    runs-on: elisa-normal
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
