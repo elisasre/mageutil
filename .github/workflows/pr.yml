@@ -9,9 +9,7 @@ on:
 
 jobs:
   test-go:
-    runs-on:
-      - self-hosted
-      - kaas
+    runs-on: elisa-normal
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
