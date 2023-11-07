@@ -10,6 +10,9 @@ import (
 	"github.com/elisasre/mageutil"
 	"github.com/magefile/mage/mg"
 	"github.com/magefile/mage/sh"
+
+	//mage:import
+	_ "github.com/elisasre/mageutil/git/target"
 )
 
 const (
@@ -140,11 +143,6 @@ func LicenseCheck(ctx context.Context) error {
 		return err
 	}
 	return mageutil.LicenseCheck(ctx, licenseFile, mageutil.CmdDir+AppName)
-}
-
-// Clean removes all files ignored by git
-func Clean(ctx context.Context) error {
-	return mageutil.Clean(ctx)
 }
 
 // Build docker image
