@@ -53,7 +53,7 @@ jobs:
       - run: mage go:vulnCheck
         continue-on-error: true
         working-directory: ./godemo
-      - run: mage licensecheck
+      - run: mage go:licenses
         working-directory: ./godemo
       - run: mage unittest
         working-directory: ./godemo
@@ -102,7 +102,6 @@ jobs:
       - run: test -f godemo/target/reports/unit-test-coverage.out
       - run: test -f godemo/target/reports/integration-test-coverage.out
       - run: test -f godemo/target/reports/merged-test-coverage.out
-      - run: test -f godemo/target/reports/licenses.csv
       - name: Validate merge coverage
         working-directory: ./godemo
         run: go tool cover -func target/reports/merged-test-coverage.out | grep LoadSpec | grep '100.0%'

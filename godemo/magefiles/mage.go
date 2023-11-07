@@ -5,7 +5,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/elisasre/mageutil"
 	"github.com/magefile/mage/mg"
@@ -16,6 +15,8 @@ import (
 	_ "github.com/elisasre/mageutil/golangcilint/target"
 	//mage:import
 	_ "github.com/elisasre/mageutil/govulncheck/target"
+	//mage:import
+	_ "github.com/elisasre/mageutil/golicenses/target"
 	//mage:import
 	docker "github.com/elisasre/mageutil/docker/target"
 )
@@ -130,18 +131,6 @@ func IntegrationTest(ctx context.Context) error {
 
 func MergeCoverProfiles(ctx context.Context) error {
 	return mageutil.MergeCoverProfiles(ctx)
-}
-
-// LicenseCheck all files.
-func LicenseCheck(ctx context.Context) error {
-	if err := os.MkdirAll(mageutil.ReportsDir, 0755); err != nil {
-		return fmt.Errorf("failed to create reports dir: %w", err)
-	}
-	licenseFile, err := os.Create(fmt.Sprintf("%s%s", mageutil.ReportsDir, "licenses.csv"))
-	if err != nil {
-		return err
-	}
-	return mageutil.LicenseCheck(ctx, licenseFile, mageutil.CmdDir+AppName)
 }
 
 // SwaggerDocs generates swagger documentation files
