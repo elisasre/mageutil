@@ -2,101 +2,62 @@ package mageutil
 
 import (
 	"context"
-	"fmt"
-	"os"
-	"path"
-	"strings"
-	"time"
 
-	"github.com/magefile/mage/sh"
+	"github.com/elisasre/mageutil/docker"
 )
 
 const (
-	OCILabelTitle       = "org.opencontainers.image.title"
-	OCILabelURL         = "org.opencontainers.image.url"
-	OCILabelVersion     = "org.opencontainers.image.version"
-	OCILabelDescription = "org.opencontainers.image.description"
-	OCILabelCreated     = "org.opencontainers.image.created"
-	OCILabelSource      = "org.opencontainers.image.source"
-	OCILabelLicenses    = "org.opencontainers.image.licenses"
-	OCILabelAuthors     = "org.opencontainers.image.authors"
-	OCILabelVendor      = "org.opencontainers.image.vendor"
-	OCILabelRevision    = "org.opencontainers.image.revision"
+	OCILabelTitle       = docker.OCILabelTitle
+	OCILabelURL         = docker.OCILabelURL
+	OCILabelVersion     = docker.OCILabelVersion
+	OCILabelDescription = docker.OCILabelDescription
+	OCILabelCreated     = docker.OCILabelCreated
+	OCILabelSource      = docker.OCILabelSource
+	OCILabelLicenses    = docker.OCILabelLicenses
+	OCILabelAuthors     = docker.OCILabelAuthors
+	OCILabelVendor      = docker.OCILabelVendor
+	OCILabelRevision    = docker.OCILabelRevision
 )
 
 const (
-	DefaultPlatform   = "linux/amd64"
-	DefaultDockerfile = "Dockerfile"
-	DefaultBuildCtx   = "."
-	DefaultExtraCtx   = TargetDir + "bin/" + "linux/amd64/"
+	DefaultPlatform   = docker.DefaultPlatform
+	DefaultDockerfile = docker.DefaultDockerfile
+	DefaultBuildCtx   = docker.DefaultBuildCtx
+	DefaultExtraCtx   = docker.DefaultExtraCtx
 )
 
 // Docker runs systems docker cmd with given args.
+// Deprecated: use sub package.
 func Docker(ctx context.Context, args ...string) error {
-	return sh.RunV("docker", args...)
+	return docker.Docker(ctx, args...)
 }
 
 // DockerPushAllTags push all tags for given image.
+// Deprecated: use sub package.
 func DockerPushAllTags(ctx context.Context, imageName string) error {
-	return Docker(ctx, "push", "--all-tags", imageName)
+	return docker.PushAllTags(ctx, imageName)
 }
 
 // DockerBuildDefault build image with sane defaults.
+// Deprecated: use sub package.
 func DockerBuildDefault(ctx context.Context, imageName, url string) error {
-	fullTags := DockerTags(imageName)
-	extraCtx := map[string]string{"bin": DefaultExtraCtx}
-	labels := DefaultLabels(imageName, url, "")
-	return DockerBuild(ctx, DefaultPlatform, DefaultDockerfile, DefaultBuildCtx, fullTags, extraCtx, labels)
+	return docker.BuildDefault(ctx, imageName, url)
 }
 
 // DockerBuild is a short hand for docker buildx build with saine default flags
+// Deprecated: use sub package.
 func DockerBuild(ctx context.Context, platform, dockerfile, buildCtx string, tags []string, extraCtx, labels map[string]string) error {
-	args := []string{"buildx", "build", "--platform", platform, "-f", dockerfile, "--progress", "plain", "--load"}
-	for _, tag := range tags {
-		args = append(args, "--tag", tag)
-	}
-	for k, v := range extraCtx {
-		args = append(args, "--build-context", k+"="+v)
-	}
-	for k, v := range labels {
-		args = append(args, "--label", k+"="+v)
-	}
-	args = append(args, buildCtx)
-
-	return Docker(ctx, args...)
+	return docker.Build(ctx, platform, dockerfile, buildCtx, tags, extraCtx, labels)
 }
 
 // DockerTags creates slice of tags usign `tags` variable and DOCKER_IMAGE_TAGS env var.
+// Deprecated: use sub package.
 func DockerTags(imageName string, tags ...string) []string {
-	envTag := os.Getenv("DOCKER_IMAGE_TAGS")
-	if envTag != "" {
-		tags = append(tags, strings.Split(envTag, " ")...)
-	}
-
-	// If no tags were provided `snapshot` is used.
-	if len(tags) == 0 {
-		tags = append(tags, "snapshot")
-	}
-
-	fullTags := make([]string, 0, len(tags))
-	for _, tag := range tags {
-		fullTags = append(fullTags, fmt.Sprintf("%s:%s", imageName, tag))
-	}
-	return fullTags
+	return docker.Tags(imageName, tags...)
 }
 
 // DefaultLabels provides labels for Elisa SoSe/SRE organization.
+// Deprecated: use sub package.
 func DefaultLabels(imageName, url, desc string) map[string]string {
-	return map[string]string{
-		OCILabelTitle:       path.Base(imageName),
-		OCILabelURL:         url,
-		OCILabelVersion:     "",
-		OCILabelDescription: desc,
-		OCILabelCreated:     time.Now().String(),
-		OCILabelSource:      url,
-		OCILabelLicenses:    "",
-		OCILabelAuthors:     "SoSe/SRE",
-		OCILabelVendor:      "Elisa",
-		OCILabelRevision:    "",
-	}
+	return docker.DefaultLabels(imageName, url, desc)
 }

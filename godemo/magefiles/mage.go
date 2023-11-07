@@ -9,7 +9,6 @@ import (
 
 	"github.com/elisasre/mageutil"
 	"github.com/magefile/mage/mg"
-	"github.com/magefile/mage/sh"
 
 	//mage:import
 	_ "github.com/elisasre/mageutil/git/target"
@@ -17,12 +16,18 @@ import (
 	_ "github.com/elisasre/mageutil/golangcilint/target"
 	//mage:import
 	_ "github.com/elisasre/mageutil/govulncheck/target"
+	//mage:import
+	docker "github.com/elisasre/mageutil/docker/target"
 )
 
 const (
-	AppName   = "godemo"
-	ImageName = "quay.io/elisaoyj/sre-godemo"
+	AppName = "godemo"
 )
+
+func init() {
+	docker.ImageName = "quay.io/elisaoyj/sre-godemo"
+	docker.ProjectUrl = "https://github.com/elisasre/mageutil/tree/main/godemo"
+}
 
 type UI mg.Namespace
 type CDK mg.Namespace
@@ -137,21 +142,6 @@ func LicenseCheck(ctx context.Context) error {
 		return err
 	}
 	return mageutil.LicenseCheck(ctx, licenseFile, mageutil.CmdDir+AppName)
-}
-
-// Build docker image
-func BuildImage(ctx context.Context) error {
-	currentGitCommit, err := sh.Output("git", "rev-parse", "--short", "HEAD")
-	if err != nil {
-		return err
-	}
-	os.Setenv("DOCKER_IMAGE_TAGS", currentGitCommit)
-	return mageutil.DockerBuildDefault(ctx, ImageName, "")
-}
-
-// Push image
-func PushImage(ctx context.Context) error {
-	return mageutil.DockerPushAllTags(ctx, ImageName)
 }
 
 // SwaggerDocs generates swagger documentation files

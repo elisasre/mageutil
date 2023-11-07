@@ -71,10 +71,12 @@ jobs:
         working-directory: ./godemo
       - run: mage buildforwindows
         working-directory: ./godemo
-      - run: mage buildimage
+      - run: mage docker:build
         working-directory: ./godemo
-      - run: mage pushimage
+      - run: mage docker:push
         working-directory: ./godemo
+        env:
+          DOCKER_IMAGE_TAGS: sha-${{ github.event.pull_request.head.sha }}
       - run: mage swaggerdocs
         working-directory: ./godemo
       - run: |
