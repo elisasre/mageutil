@@ -3,20 +3,18 @@ package mageutil
 import (
 	"context"
 
-	"golang.org/x/vuln/scan"
+	"github.com/elisasre/mageutil/govulncheck"
+	"github.com/elisasre/mageutil/govulncheck/target"
 )
 
 // VulnChek runs golang.org/x/vuln/scan with given args.
+// Deprecated: use sub package.
 func VulnCheck(ctx context.Context, args ...string) error {
-	cmd := scan.Command(ctx, args...)
-	err := cmd.Start()
-	if err == nil {
-		err = cmd.Wait()
-	}
-	return err
+	return govulncheck.Run(ctx, args...)
 }
 
 // VulnChek runs golang.org/x/vuln/scan for all packages.
+// Deprecated: use sub package.
 func VulnCheckAll(ctx context.Context) error {
-	return VulnCheck(ctx, "./...")
+	return target.Go{}.VulnCheck(ctx)
 }

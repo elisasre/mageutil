@@ -15,6 +15,8 @@ import (
 	_ "github.com/elisasre/mageutil/git/target"
 	//mage:import
 	_ "github.com/elisasre/mageutil/golangcilint/target"
+	//mage:import
+	_ "github.com/elisasre/mageutil/govulncheck/target"
 )
 
 const (
@@ -123,11 +125,6 @@ func IntegrationTest(ctx context.Context) error {
 
 func MergeCoverProfiles(ctx context.Context) error {
 	return mageutil.MergeCoverProfiles(ctx)
-}
-
-// VulnCheck all go files.
-func VulnCheck(ctx context.Context) error {
-	return mageutil.VulnCheckAll(ctx)
 }
 
 // LicenseCheck all files.

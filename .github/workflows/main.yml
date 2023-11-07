@@ -48,7 +48,7 @@ jobs:
         working-directory: ./godemo
       - run: mage tidyAndVerifyNoChanges
         working-directory: ./godemo
-      - run: mage vulncheck
+      - run: mage go:vulnCheck
         continue-on-error: true
         working-directory: ./godemo
       - run: mage licensecheck
