@@ -38,10 +38,8 @@ jobs:
           go mod tidy
           git diff --exit-code -- go.mod go.sum || (echo "Deps are not up to date: run 'go mod tidy' before commit" && exit 1)
 
-      - run: mage lint
+      - run: mage go:lint
         working-directory: ./godemo
-        env:
-          GOLANGCI_LINT_FLAGS: --out-format=github-actions
       # backwards compatibility check
       - run: mage ensure
         working-directory: ./godemo

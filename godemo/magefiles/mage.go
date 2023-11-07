@@ -13,6 +13,8 @@ import (
 
 	//mage:import
 	_ "github.com/elisasre/mageutil/git/target"
+	//mage:import
+	_ "github.com/elisasre/mageutil/golangcilint/target"
 )
 
 const (
@@ -121,11 +123,6 @@ func IntegrationTest(ctx context.Context) error {
 
 func MergeCoverProfiles(ctx context.Context) error {
 	return mageutil.MergeCoverProfiles(ctx)
-}
-
-// Lint all go files.
-func Lint(ctx context.Context) error {
-	return mageutil.LintAll(ctx)
 }
 
 // VulnCheck all go files.
