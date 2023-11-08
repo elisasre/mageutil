@@ -87,8 +87,11 @@ jobs:
         working-directory: ./godemo
       - run: mage yamlLint
         working-directory: ./godemo
-      - run: mage ui:testAndBuild
+      - run: mage npm:test
         working-directory: ./godemo
+      - run: mage npm:cleanBuild
+        working-directory: ./godemo
+      - run: mage npm:lint
       - run: test -x godemo/target/bin/linux/amd64/godemo
       - run: test -f godemo/target/bin/linux/amd64/godemo.sha256
       - run: test -x godemo/target/bin/darwin/amd64/godemo

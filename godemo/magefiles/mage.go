@@ -7,6 +7,7 @@ import (
 	"fmt"
 
 	"github.com/elisasre/mageutil"
+	"github.com/elisasre/mageutil/npm"
 	"github.com/magefile/mage/mg"
 
 	//mage:import
@@ -19,53 +20,21 @@ import (
 	_ "github.com/elisasre/mageutil/golicenses/target"
 	//mage:import
 	docker "github.com/elisasre/mageutil/docker/target"
+	//mage:import
+	ui "github.com/elisasre/mageutil/npm/target"
 )
 
-const (
-	AppName = "godemo"
-)
+const AppName = "godemo"
 
 func init() {
 	docker.ImageName = "quay.io/elisaoyj/sre-godemo"
 	docker.ProjectUrl = "https://github.com/elisasre/mageutil/tree/main/godemo"
+	ui.NpmCmd = npm.NewCmd("--prefix=./ui/")
 }
 
-type UI mg.Namespace
 type CDK mg.Namespace
 
-var (
-	uiNpm  = mageutil.NewNpmCmd("--prefix=./ui/")
-	cdkNpm = mageutil.NewNpmCmd("--prefix=./manifests/cdk/")
-)
-
-// Install installs ui deps
-func (UI) Install(ctx context.Context) error {
-	return uiNpm.Install(ctx)
-}
-
-// CleanInstall performs clean install for ui deps
-func (UI) CleanInstall(ctx context.Context) error {
-	return uiNpm.CleanInstall(ctx)
-}
-
-// Build builds ui
-func (UI) Build(ctx context.Context) error {
-	return uiNpm.Run(ctx, "build")
-}
-
-// Test runs tests for ui
-func (UI) Test(ctx context.Context) error {
-	return uiNpm.Run(ctx, "test")
-}
-
-// TestAndBuild tests and builds ui with clean install
-func (UI) TestAndBuild(ctx context.Context) {
-	mg.SerialCtxDeps(ctx,
-		UI.CleanInstall,
-		UI.Test,
-		UI.Build,
-	)
-}
+var cdkNpm = mageutil.NewNpmCmd("--prefix=./manifests/cdk/")
 
 // CleanInstall performs clean install for cdk deps
 func (CDK) CleanInstall(ctx context.Context) error {
