@@ -2,7 +2,7 @@ module godemo
 
 go 1.21.0
 
-toolchain go1.21.3
+toolchain go1.21.4
 
 require (
 	github.com/elisasre/mageutil v0.0.0
