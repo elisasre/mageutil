@@ -3,15 +3,17 @@ package mageutil
 import (
 	"context"
 
-	"github.com/getsops/sops/v3/decrypt"
+	"github.com/elisasre/mageutil/sops"
 )
 
 // SopsDecryptFile decrypts sops file.
-func SopsDecryptFile(_ context.Context, file string) ([]byte, error) {
-	return decrypt.File(file, "")
+// Deprecated: use sub package.
+func SopsDecryptFile(ctx context.Context, file string) ([]byte, error) {
+	return sops.DecryptFile(ctx, file)
 }
 
 // SopsDecryptWithAwsEnv uses aws-vault to temporarily set credentials in env for decryption functionality.
+// Deprecated: use sub packages.
 func SopsDecryptWithAwsEnv(ctx context.Context, file, profile string) ([]byte, error) {
 	var data []byte
 	if err := AwsWithEnvCredentials(ctx, profile, func() error {
