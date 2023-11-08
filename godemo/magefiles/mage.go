@@ -23,6 +23,8 @@ import (
 	cdk "github.com/elisasre/mageutil/cdk/target"
 	//mage:import
 	ui "github.com/elisasre/mageutil/npm/target"
+	//mage:import
+	yaml "github.com/elisasre/mageutil/yamlfmt/target"
 )
 
 const AppName = "godemo"
@@ -32,6 +34,7 @@ func init() {
 	docker.ProjectUrl = "https://github.com/elisasre/mageutil/tree/main/godemo"
 	ui.NpmCmd = npm.NewCmd("--prefix=./ui/")
 	cdk.NpmCmd = npm.NewCmd("--prefix=./manifests/cdk/")
+	yaml.YamlFiles = []string{"some.yaml"}
 }
 
 // Build binaries for executables under ./cmd
@@ -110,14 +113,4 @@ func Tidy(ctx context.Context) error {
 // TidyAndVerifyNoChanges dependencies
 func TidyAndVerifyNoChanges(ctx context.Context) error {
 	return mageutil.TidyAndVerifyNoChanges(ctx)
-}
-
-// YamlLint some.yaml file
-func YamlLint(ctx context.Context) error {
-	return mageutil.YamlLint(ctx, "some.yaml")
-}
-
-// YamlFmt some.yaml file
-func YamlFmt(ctx context.Context) error {
-	return mageutil.YamlFmt(ctx, "some.yaml")
 }

@@ -80,14 +80,14 @@ jobs:
       - run: mage swaggerdocs
         working-directory: ./godemo
       - run: |
-          if ($(mage yamlLint)) ; then
-            echo "mage yamlLint should have failed!"
+          if ($(mage yaml:lint)) ; then
+            echo "mage yaml:lint should have failed!"
             exit 1
           fi
         working-directory: ./godemo
-      - run: mage yamlFmt
+      - run: mage yaml:fmt
         working-directory: ./godemo
-      - run: mage yamlLint
+      - run: mage yaml:lint
         working-directory: ./godemo
       - run: mage npm:test
         working-directory: ./godemo
