@@ -25,16 +25,22 @@ import (
 	ui "github.com/elisasre/mageutil/npm/target"
 	//mage:import
 	yaml "github.com/elisasre/mageutil/yamlfmt/target"
+	//mage:import
+	swaggo "github.com/elisasre/mageutil/swaggo/target"
 )
 
 const AppName = "godemo"
 
+// Configure imported targets
 func init() {
 	docker.ImageName = "quay.io/elisaoyj/sre-godemo"
 	docker.ProjectUrl = "https://github.com/elisasre/mageutil/tree/main/godemo"
 	ui.NpmCmd = npm.NewCmd("--prefix=./ui/")
 	cdk.NpmCmd = npm.NewCmd("--prefix=./manifests/cdk/")
 	yaml.YamlFiles = []string{"some.yaml"}
+	swaggo.SearchDir = "api"
+	swaggo.ApiFile = "api.go"
+	swaggo.OutputDir = "docs"
 }
 
 // Build binaries for executables under ./cmd
@@ -86,11 +92,6 @@ func IntegrationTest(ctx context.Context) error {
 
 func MergeCoverProfiles(ctx context.Context) error {
 	return mageutil.MergeCoverProfiles(ctx)
-}
-
-// SwaggerDocs generates swagger documentation files
-func SwaggerDocs(ctx context.Context) error {
-	return mageutil.SwaggerDocs(ctx, "api", "api.go", "docs")
 }
 
 // Ensure dependencies

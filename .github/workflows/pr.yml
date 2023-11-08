@@ -77,7 +77,7 @@ jobs:
         working-directory: ./godemo
         env:
           DOCKER_IMAGE_TAGS: sha-${{ github.event.pull_request.head.sha }}
-      - run: mage swaggerdocs
+      - run: mage docs:openAPI
         working-directory: ./godemo
       - run: |
           if ($(mage yaml:lint)) ; then
