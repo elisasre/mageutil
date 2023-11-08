@@ -8,7 +8,6 @@ require (
 	github.com/elisasre/mageutil v0.0.0
 	github.com/gin-gonic/gin v1.9.1
 	github.com/hashicorp/go-multierror v1.1.1
-	github.com/magefile/mage v1.15.0
 	github.com/stretchr/testify v1.8.4
 	github.com/swaggo/swag v1.16.2
 )
@@ -194,6 +193,7 @@ require (
 	github.com/lib/pq v1.10.9 // indirect
 	github.com/lufeee/execinquery v1.2.1 // indirect
 	github.com/macabu/inamedparam v0.1.2 // indirect
+	github.com/magefile/mage v1.15.0 // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/maratori/testableexamples v1.0.0 // indirect

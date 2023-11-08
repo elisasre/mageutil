@@ -8,7 +8,6 @@ import (
 
 	"github.com/elisasre/mageutil"
 	"github.com/elisasre/mageutil/npm"
-	"github.com/magefile/mage/mg"
 
 	//mage:import
 	_ "github.com/elisasre/mageutil/git/target"
@@ -21,6 +20,8 @@ import (
 	//mage:import
 	docker "github.com/elisasre/mageutil/docker/target"
 	//mage:import
+	cdk "github.com/elisasre/mageutil/cdk/target"
+	//mage:import
 	ui "github.com/elisasre/mageutil/npm/target"
 )
 
@@ -30,25 +31,7 @@ func init() {
 	docker.ImageName = "quay.io/elisaoyj/sre-godemo"
 	docker.ProjectUrl = "https://github.com/elisasre/mageutil/tree/main/godemo"
 	ui.NpmCmd = npm.NewCmd("--prefix=./ui/")
-}
-
-type CDK mg.Namespace
-
-var cdkNpm = mageutil.NewNpmCmd("--prefix=./manifests/cdk/")
-
-// CleanInstall performs clean install for cdk deps
-func (CDK) CleanInstall(ctx context.Context) error {
-	return cdkNpm.CleanInstall(ctx)
-}
-
-// Install installs cdk deps
-func (CDK) Install(ctx context.Context) error {
-	return cdkNpm.Install(ctx)
-}
-
-// Test runs tests for cdk
-func (CDK) Test(ctx context.Context) error {
-	return cdkNpm.Run(ctx, "test")
+	cdk.NpmCmd = npm.NewCmd("--prefix=./manifests/cdk/")
 }
 
 // Build binaries for executables under ./cmd
