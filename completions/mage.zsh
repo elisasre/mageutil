@@ -7,11 +7,11 @@ local -a targets
 
 _arguments -C \
   '-clean[clean out old generated binaries from CACHE_DIR]' \
-  '-compile[output a static binary to the given path]:compilepath:->compilepath' \
+  '-compile[output a static binary to the given path]:compilepath:_path_files' \
   '-init[create a starting template if no mage files exist]' \
   '-h[show help]' \
   '-l[list mage targets in this directory]' \
-  '-d[directory to read magefiles from (default "." or "magefiles" if exists)]:magepath:->magepath' \
+  '-d[directory to read magefiles from (default "." or "magefiles" if exists)]:magepath:_path_files -/' \
   '-debug[turn on debug messages]' \
   '-f[force recreation of compiled magefile]' \
   '-goarch[sets the GOARCH for the binary created by -compile (default: current arch)]' \
@@ -51,12 +51,6 @@ case "$state" in
   trg)
     _get_targets || ret=1 
     _describe 'mage' targets && ret=0
-    ;;
-  compilepath)
-    _path_files && ret=0
-    ;;
-  magepath)
-    _path_files -/ && ret=0
     ;;
 esac
 
