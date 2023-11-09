@@ -1,14 +1,56 @@
 #compdef mage
 
-local curcontext="$curcontext" state line _opts ret=1
+local curcontext="$curcontext" state line ret=1
+typeset -A opt_args
+local magepath="magefiles"
+local -a targets
 
-_arguments -C '*: :->targets' && ret=0
+_arguments -C \
+  '-clean[clean out old generated binaries from CACHE_DIR]' \
+  '-compile[output a static binary to the given path]:compilepath:_path_files' \
+  '-init[create a starting template if no mage files exist]' \
+  '-h[show help]' \
+  '-l[list mage targets in this directory]' \
+  '-d[directory to read magefiles from (default "." or "magefiles" if exists)]:magepath:_path_files -/' \
+  '-debug[turn on debug messages]' \
+  '-f[force recreation of compiled magefile]' \
+  '-goarch[sets the GOARCH for the binary created by -compile (default: current arch)]' \
+  '-gocmd[use the given go binary to compile the output (default: "go")]' \
+  '-goos[sets the GOOS for the binary created by -compile (default: current OS)]' \
+  '-ldflags[sets the ldflags for the binary created by -compile (default: "")]' \
+  '-h[show description of a target]' \
+  '-keep[keep intermediate mage files around after running]' \
+  '-t[timeout in duration parsable format (e.g. 5m30s)]' \
+  '-v[show verbose output when running mage targets]' \
+  '-w[working directory where magefiles will run (default -d value)]' \
+  '*: :->trg'
 
-case $state in
-  targets)
-    _values "mage target" \
-      $(mage | awk 'FNR > 1 {print $1}') && \
-      ret=0
+(( $+opt_args[-d] )) && magepath=$opt_args[-d]
+
+zstyle ':completion:*:mage:*' list-grouped false
+zstyle -s ':completion:*:mage:*' hash-fast hash_fast false
+
+_get_targets() {
+  # check if magefile exists
+  [[ ! -f "$magepath/mage.go" ]] && return 1
+
+  local IFS=$'\n'
+  targets=($(MAGEFILE_HASHFAST=$hash_fast mage -d $magepath -l | awk 'FNR > 1 {
+    target = $1;
+    gsub(/:/, "\\:", target);
+    gsub(/^ +| +$/, "", $0);
+  
+    description = substr($0, length(target)+1);
+    gsub(/^ +| +$/, "", description);
+  
+    print target ":" description;
+  }'))
+}
+
+case "$state" in
+  trg)
+    _get_targets || ret=1 
+    _describe 'mage' targets && ret=0
     ;;
 esac
 
