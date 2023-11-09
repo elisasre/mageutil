@@ -3,11 +3,11 @@
 package main
 
 import (
-	"context"
-	"fmt"
+	"os"
 
-	"github.com/elisasre/mageutil"
+	goutil "github.com/elisasre/mageutil/golang"
 	"github.com/elisasre/mageutil/npm"
+	"github.com/magefile/mage/mg"
 
 	//mage:import
 	_ "github.com/elisasre/mageutil/git/target"
@@ -27,12 +27,17 @@ import (
 	yaml "github.com/elisasre/mageutil/yamlfmt/target"
 	//mage:import
 	swaggo "github.com/elisasre/mageutil/swaggo/target"
+	//mage:import
+	golang "github.com/elisasre/mageutil/golang/target"
 )
 
 const AppName = "godemo"
 
 // Configure imported targets
 func init() {
+	os.Setenv(mg.VerboseEnv, "1")
+	os.Setenv("CGO_ENABLED", "0")
+
 	docker.ImageName = "quay.io/elisaoyj/sre-godemo"
 	docker.ProjectUrl = "https://github.com/elisasre/mageutil/tree/main/godemo"
 	ui.NpmCmd = npm.NewCmd("--prefix=./ui/")
@@ -41,77 +46,6 @@ func init() {
 	swaggo.SearchDir = "api"
 	swaggo.ApiFile = "api.go"
 	swaggo.OutputDir = "docs"
-}
-
-// Build binaries for executables under ./cmd
-func Build(ctx context.Context) error {
-	return mageutil.BuildAll(ctx)
-}
-
-// Build for x64 Linux
-func BuildForLinux(ctx context.Context) {
-	mageutil.BuildForLinux(ctx, AppName)
-}
-
-// Build for amd64 MacOS
-func BuildForMac(ctx context.Context) {
-	mageutil.BuildForMac(ctx, AppName)
-}
-
-// Build for amd64 MacOS
-func BuildForWindows(ctx context.Context) {
-	mageutil.BuildForWindows(ctx, AppName)
-}
-
-// Build for arm64 MacOS
-func BuildForArmMac(ctx context.Context) {
-	mageutil.BuildForArmMac(ctx, AppName)
-}
-
-// List all packages in the module
-func GoList(ctx context.Context) error {
-	packages, err := mageutil.GoList(ctx, "./cmd")
-	if err != nil {
-		return err
-	}
-	for _, pkg := range packages {
-		fmt.Println(pkg)
-	}
-	return nil
-}
-
-// UnitTest whole repo
-func UnitTest(ctx context.Context) error {
-	return mageutil.UnitTest(ctx)
-}
-
-// IntegrationTest whole repo
-func IntegrationTest(ctx context.Context) error {
-	return mageutil.IntegrationTest(ctx, "./cmd/"+AppName)
-}
-
-func MergeCoverProfiles(ctx context.Context) error {
-	return mageutil.MergeCoverProfiles(ctx)
-}
-
-// Ensure dependencies
-// Deprecated: run for verifying backward compatibility
-func Ensure(ctx context.Context) error {
-	return mageutil.Ensure(ctx)
-}
-
-// Ensure dependencies are in sync (CI)
-// Deprecated: run for verifying backward compatibility
-func EnsureInSync(ctx context.Context) error {
-	return mageutil.EnsureInSync(ctx)
-}
-
-// Tidy dependencies
-func Tidy(ctx context.Context) error {
-	return mageutil.Tidy(ctx)
-}
-
-// TidyAndVerifyNoChanges dependencies
-func TidyAndVerifyNoChanges(ctx context.Context) error {
-	return mageutil.TidyAndVerifyNoChanges(ctx)
+	golang.BuildTarget = "./cmd/godemo"
+	golang.BuildMatrix = append(golang.BuildMatrix, goutil.BuildPlatform{OS: "windows", Arch: "amd64"})
 }

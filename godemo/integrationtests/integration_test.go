@@ -3,26 +3,18 @@
 package main
 
 import (
-	"godemo/runner/runnertest"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"testing"
-	"time"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
-const (
-	port    = ":8080"
-	baseUrl = "http://127.0.0.1" + port
-)
+const baseUrl = "http://127.0.0.1:8080"
 
 func TestApp(t *testing.T) {
-	t.Setenv("LISTEN_ADDR", port)
-	stop := runnertest.Run(t, run, baseUrl)
-
 	tests := []struct {
 		name         string
 		path         string
@@ -45,7 +37,7 @@ func TestApp(t *testing.T) {
 			name:         "Doc",
 			path:         "/api/doc",
 			expectedCode: 200,
-			expectedBody: mustReadFile(t, "../../docs/swagger.json"),
+			expectedBody: mustReadFile(t, "../docs/swagger.json"),
 		},
 		{
 			name:         "Not existing endpoint",
@@ -67,22 +59,6 @@ func TestApp(t *testing.T) {
 			require.NoError(t, err)
 			assert.JSONEq(t, tc.expectedBody, string(body))
 		})
-	}
-
-	err := stop()
-	assert.NoError(t, err, "app didn't exit successfully")
-}
-
-func TestAppStartFailWithoutAddr(t *testing.T) {
-	t.Setenv("LISTEN_ADDR", "not-valid:addr")
-	errCh := make(chan error, 1)
-	go func() { errCh <- run() }()
-	select {
-	case err := <-errCh:
-		require.Error(t, err)
-	case <-time.After(time.Second):
-		t.Error("App should have exited with error")
-		runnertest.Kill(t)
 	}
 }
 

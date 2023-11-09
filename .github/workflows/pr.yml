@@ -40,36 +40,24 @@ jobs:
 
       - run: mage go:lint
         working-directory: ./godemo
-      # backwards compatibility check
-      - run: mage ensure
+      - run: mage go:tidy
         working-directory: ./godemo
-      # backwards compatibility check
-      - run: mage ensureInSync
-        working-directory: ./godemo
-      - run: mage tidy
-        working-directory: ./godemo
-      - run: mage tidyAndVerifyNoChanges
+      - run: mage go:tidyAndVerify
         working-directory: ./godemo
       - run: mage go:vulnCheck
         continue-on-error: true
         working-directory: ./godemo
       - run: mage go:licenses
         working-directory: ./godemo
-      - run: mage unittest
+      - run: mage go:unitTest
         working-directory: ./godemo
-      - run: mage integrationtest
+      - run: mage go:integrationTest
         working-directory: ./godemo
-      - run: mage mergecoverprofiles
+      - run: mage go:coverProfile
         working-directory: ./godemo
-      - run: mage build
+      - run: mage go:build
         working-directory: ./godemo
-      - run: mage buildforlinux
-        working-directory: ./godemo
-      - run: mage buildformac
-        working-directory: ./godemo
-      - run: mage buildforarmmac
-        working-directory: ./godemo
-      - run: mage buildforwindows
+      - run: mage go:crossBuild
         working-directory: ./godemo
       - run: mage docker:build
         working-directory: ./godemo
@@ -103,12 +91,13 @@ jobs:
       - run: test -f godemo/target/bin/linux/amd64/godemo.sha256
       - run: test -x godemo/target/bin/windows/amd64/godemo
       - run: test -f godemo/target/bin/windows/amd64/godemo.sha256
-      - run: test -f godemo/target/reports/unit-test-coverage.out
-      - run: test -f godemo/target/reports/integration-test-coverage.out
-      - run: test -f godemo/target/reports/merged-test-coverage.out
+      - run: test -f godemo/target/tests/bin/linux/amd64/godemo
+      - run: test -d godemo/target/tests/cover/unit/
+      - run: test -d godemo/target/tests/cover/int/
+      - run: test -f godemo/target/tests/cover/combined/cover.txt
       - name: Validate merge coverage
         working-directory: ./godemo
-        run: go tool cover -func target/reports/merged-test-coverage.out | grep LoadSpec | grep '100.0%'
+        run: go tool cover -func target/tests/cover/combined/cover.txt | grep LoadSpec | grep '100.0%'
       - run: docker images | grep 'quay.io/elisaoyj/sre-godemo'
       - name: Notify failure
         if: github.event.pull_request.draft == false && failure()

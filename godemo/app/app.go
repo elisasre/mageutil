@@ -22,8 +22,13 @@ func (a *App) Init() error {
 		return fmt.Errorf("failed to load spec: %w", err)
 	}
 
+	addr := os.Getenv("LISTEN_ADDR")
+	if addr == "" {
+		addr = ":8080"
+	}
+
 	srv := &http.Server{
-		Addr:    os.Getenv("LISTEN_ADDR"),
+		Addr:    addr,
 		Handler: api.NewRouter(spec),
 	}
 
