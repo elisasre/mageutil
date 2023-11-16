@@ -15,5 +15,6 @@ const (
 // and writes toe output into w.
 // Deprecated: use sub package.
 func LicenseCheck(ctx context.Context, w io.Writer, targets ...string) error {
+	deprecated()
 	return golicenses.Run(ctx, w, targets...)
 }
