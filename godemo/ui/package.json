@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo tests",
-    "build": "echo build"
+    "build": "echo build",
+    "lint": "echo lint",
+    "start": "echo start",
+    "typecheck": "echo typecheck"
   },
   "author": "",
   "license": "ISC"

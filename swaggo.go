@@ -3,31 +3,20 @@ package mageutil
 import (
 	"context"
 
-	"github.com/swaggo/swag"
+	"github.com/elisasre/mageutil/swaggo"
 	"github.com/swaggo/swag/gen"
 )
 
 // SwaggerDocs generates the swagger docs with sane default config.
+// Deprecated: use sub package.
 func SwaggerDocs(ctx context.Context, searchDir, apiFile, outputDir string) error {
-	return SwaggerDocsWithConf(ctx, gen.Config{
-		SearchDir:          searchDir,
-		PropNamingStrategy: swag.CamelCase,
-		MainAPIFile:        apiFile,
-		OutputDir:          outputDir,
-		ParseInternal:      true,
-		ParseVendor:        true,
-		ParseDependency:    1,
-		OutputTypes:        []string{"go", "json", "yaml"},
-		ParseDepth:         100,
-		OverridesFile:      gen.DefaultOverridesFile,
-		ParseGoList:        true,
-		LeftTemplateDelim:  "{{",
-		RightTemplateDelim: "}}",
-		CollectionFormat:   "csv",
-	})
+	deprecated()
+	return swaggo.GenerateDocs(ctx, searchDir, apiFile, outputDir)
 }
 
 // SwaggerDocsWithConf generates the swagger docs with given config.
+// Deprecated: use sub package.
 func SwaggerDocsWithConf(ctx context.Context, conf gen.Config) error {
-	return gen.New().Build(&conf)
+	deprecated()
+	return swaggo.GenerateDocsWithConf(ctx, conf)
 }

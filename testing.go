@@ -20,7 +20,9 @@ const (
 )
 
 // UnitTest executes all unit tests with default flags.
+// Deprecated: use sub package.
 func UnitTest(ctx context.Context) error {
+	deprecated()
 	err := os.MkdirAll(path.Dir(UnitCoverProfile), 0755)
 	if err != nil {
 		return err
@@ -31,7 +33,9 @@ func UnitTest(ctx context.Context) error {
 }
 
 // IntegrationTest executes all tests in given pkg with default flags.
+// Deprecated: use sub package.
 func IntegrationTest(ctx context.Context, pkg string) error {
+	deprecated()
 	pkgs, err := GoList(ctx, "./...")
 	if err != nil {
 		return err
@@ -49,7 +53,9 @@ func IntegrationTest(ctx context.Context, pkg string) error {
 // MergeCover merges multiple go test -cover profiles and writes the combined coverage into out.
 //
 // coverage merging is adapted from https://github.com/wadey/gocovmerge
+// Deprecated: use sub package.
 func MergeCover(ctx context.Context, coverFiles []string, w io.Writer) error {
+	deprecated()
 	var merged []*cover.Profile
 	for _, file := range coverFiles {
 		profiles, err := cover.ParseProfiles(file)
@@ -69,7 +75,9 @@ func MergeCover(ctx context.Context, coverFiles []string, w io.Writer) error {
 }
 
 // MergeCoverProfiles merges default unit and integration cover profile.
+// Deprecated: use sub package.
 func MergeCoverProfiles(ctx context.Context) error {
+	deprecated()
 	err := os.RemoveAll(MergedCoverProfile)
 	if err != nil {
 		return err
@@ -85,7 +93,9 @@ func MergeCoverProfiles(ctx context.Context) error {
 }
 
 // CoverInfo prints function level cover stats from given profile.
+// Deprecated: use sub package.
 func CoverInfo(ctx context.Context, profile string) error {
+	deprecated()
 	return Go(ctx, "tool", "cover", "-func", profile)
 }
 

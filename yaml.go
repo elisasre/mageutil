@@ -3,33 +3,26 @@ package mageutil
 import (
 	"context"
 
-	"github.com/google/yamlfmt"
+	"github.com/elisasre/mageutil/yamlfmt"
 	"github.com/google/yamlfmt/command"
-	"github.com/google/yamlfmt/formatters/basic"
 )
 
 // YamlFmt formats yaml files using default config.
+// Deprecated: use sub package.
 func YamlFmt(ctx context.Context, paths ...string) error {
-	return YamlOperationWithDefaultConfig(ctx, command.OperationFormat, paths...)
+	deprecated()
+	return yamlfmt.Fmt(ctx, paths...)
 }
 
 // YamlLint lints yaml files using default config.
+// Deprecated: use sub package.
 func YamlLint(ctx context.Context, paths ...string) error {
-	return YamlOperationWithDefaultConfig(ctx, command.OperationLint, paths...)
+	deprecated()
+	return yamlfmt.Lint(ctx, paths...)
 }
 
-func YamlOperationWithDefaultConfig(_ context.Context, op command.Operation, paths ...string) error {
-	conf := command.NewConfig()
-	conf.LineEnding = yamlfmt.LineBreakStyleLF
-	conf.Extensions = []string{"yaml", "yml"}
-	conf.Include = paths
-
-	c := &command.Command{
-		Operation: op,
-		Registry:  yamlfmt.NewFormatterRegistry(&basic.BasicFormatterFactory{}),
-		Quiet:     false,
-		Config:    &conf,
-	}
-
-	return c.Run()
+// Deprecated: use sub package.
+func YamlOperationWithDefaultConfig(ctx context.Context, op command.Operation, paths ...string) error {
+	deprecated()
+	return yamlfmt.Run(ctx, op, paths...)
 }

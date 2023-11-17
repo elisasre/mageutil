@@ -38,58 +38,50 @@ jobs:
           go mod tidy
           git diff --exit-code -- go.mod go.sum || (echo "Deps are not up to date: run 'go mod tidy' before commit" && exit 1)
 
-      - run: mage lint
+      - run: mage go:lint
         working-directory: ./godemo
-        env:
-          GOLANGCI_LINT_FLAGS: --out-format=github-actions
-      # backwards compatibility check
-      - run: mage ensure
+      - run: mage go:tidy
         working-directory: ./godemo
-      # backwards compatibility check
-      - run: mage ensureInSync
+      - run: mage go:tidyAndVerify
         working-directory: ./godemo
-      - run: mage tidy
-        working-directory: ./godemo
-      - run: mage tidyAndVerifyNoChanges
-        working-directory: ./godemo
-      - run: mage vulncheck
+      - run: mage go:vulnCheck
         continue-on-error: true
         working-directory: ./godemo
-      - run: mage licensecheck
+      - run: mage go:licenses
         working-directory: ./godemo
-      - run: mage unittest
+      - run: mage go:unitTest
         working-directory: ./godemo
-      - run: mage integrationtest
+      - run: mage go:integrationTest
         working-directory: ./godemo
-      - run: mage mergecoverprofiles
+      - run: mage go:coverProfile
         working-directory: ./godemo
-      - run: mage build
+      - run: mage go:build
         working-directory: ./godemo
-      - run: mage buildforlinux
+      - run: mage go:crossBuild
         working-directory: ./godemo
-      - run: mage buildformac
+      - run: mage docker:build
         working-directory: ./godemo
-      - run: mage buildforarmmac
+      - run: mage docker:push
         working-directory: ./godemo
-      - run: mage buildforwindows
-        working-directory: ./godemo
-      - run: mage buildimage
-        working-directory: ./godemo
-      - run: mage pushimage
-        working-directory: ./godemo
-      - run: mage swaggerdocs
+        env:
+          DOCKER_IMAGE_TAGS: sha-${{ github.event.pull_request.head.sha }}
+      - run: mage docs:openAPI
         working-directory: ./godemo
       - run: |
-          if ($(mage yamlLint)) ; then
-            echo "mage yamlLint should have failed!"
+          if ($(mage yaml:lint)) ; then
+            echo "mage yaml:lint should have failed!"
             exit 1
           fi
         working-directory: ./godemo
-      - run: mage yamlFmt
+      - run: mage yaml:fmt
         working-directory: ./godemo
-      - run: mage yamlLint
+      - run: mage yaml:lint
         working-directory: ./godemo
-      - run: mage ui:testAndBuild
+      - run: mage npm:test
+        working-directory: ./godemo
+      - run: mage npm:cleanBuild
+        working-directory: ./godemo
+      - run: mage npm:lint
         working-directory: ./godemo
       - run: test -x godemo/target/bin/linux/amd64/godemo
       - run: test -f godemo/target/bin/linux/amd64/godemo.sha256
@@ -99,13 +91,13 @@ jobs:
       - run: test -f godemo/target/bin/linux/amd64/godemo.sha256
       - run: test -x godemo/target/bin/windows/amd64/godemo
       - run: test -f godemo/target/bin/windows/amd64/godemo.sha256
-      - run: test -f godemo/target/reports/unit-test-coverage.out
-      - run: test -f godemo/target/reports/integration-test-coverage.out
-      - run: test -f godemo/target/reports/merged-test-coverage.out
-      - run: test -f godemo/target/reports/licenses.csv
+      - run: test -f godemo/target/tests/bin/linux/amd64/godemo
+      - run: test -d godemo/target/tests/cover/unit/
+      - run: test -d godemo/target/tests/cover/int/
+      - run: test -f godemo/target/tests/cover/combined/cover.txt
       - name: Validate merge coverage
         working-directory: ./godemo
-        run: go tool cover -func target/reports/merged-test-coverage.out | grep LoadSpec | grep '100.0%'
+        run: go tool cover -func target/tests/cover/combined/cover.txt | grep LoadSpec | grep '100.0%'
       - run: docker images | grep 'quay.io/elisaoyj/sre-godemo'
       - name: Notify failure
         if: github.event.pull_request.draft == false && failure()
