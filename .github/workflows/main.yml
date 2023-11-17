@@ -80,6 +80,7 @@ jobs:
       - run: mage npm:cleanBuild
         working-directory: ./godemo
       - run: mage npm:lint
+        working-directory: ./godemo
       - run: test -x godemo/target/bin/linux/amd64/godemo
       - run: test -f godemo/target/bin/linux/amd64/godemo.sha256
       - run: test -x godemo/target/bin/darwin/amd64/godemo
