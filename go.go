@@ -31,21 +31,18 @@ type BuildInfo struct {
 	GOARCH  string
 }
 
-// Go is shorthand for go executable provided by system.
 // Deprecated: use sub package.
 func Go(ctx context.Context, args ...string) error {
 	deprecated()
 	return golang.Go(ctx, args...)
 }
 
-// GoWith is shorthand for go executable provided by system.
 // Deprecated: use sub package.
 func GoWith(ctx context.Context, env map[string]string, args ...string) error {
 	deprecated()
 	return golang.GoWith(ctx, env, args...)
 }
 
-// Targets returns list of main pkgs under CmdDir.
 // Deprecated: use sub package.
 func Targets(ctx context.Context) ([]string, error) {
 	deprecated()
@@ -63,7 +60,6 @@ func Targets(ctx context.Context) ([]string, error) {
 	return targets, nil
 }
 
-// BuildAll binaries for targets returned by utils.Targets using utils.Build.
 // Deprecated: use sub package.
 func BuildAll(ctx context.Context) error {
 	deprecated()
@@ -79,7 +75,6 @@ func BuildAll(ctx context.Context) error {
 	return nil
 }
 
-// Build binary using settings from system env.
 // Deprecated: use sub package.
 func Build(ctx context.Context, name string) error {
 	deprecated()
@@ -87,7 +82,6 @@ func Build(ctx context.Context, name string) error {
 	return err
 }
 
-// BuildWithInfo builds binary using settings from system env and returns additional build information.
 // Deprecated: use sub package.
 func BuildWithInfo(ctx context.Context, name string) (BuildInfo, error) {
 	deprecated()
@@ -104,7 +98,6 @@ func BuildWithInfo(ctx context.Context, name string) (BuildInfo, error) {
 	return BuildForWithInfo(ctx, goos, goarch, name)
 }
 
-// BuildDefault binary and SHA256 sum using settings from system env.
 // Deprecated: use sub package.
 func BuildWithSHA(ctx context.Context, goos, goarch, name string) {
 	deprecated()
@@ -114,7 +107,6 @@ func BuildWithSHA(ctx context.Context, goos, goarch, name string) {
 	})
 }
 
-// BuildDefault binary and SHA256 sum using settings from system env
 // Deprecated: use sub package.
 func BuildWithSHAWithInfo(ctx context.Context, goos, goarch, name string) (BuildInfo, error) {
 	deprecated()
@@ -126,7 +118,6 @@ func BuildWithSHAWithInfo(ctx context.Context, goos, goarch, name string) (Build
 	return info, SHA256Sum(ctx, info.BinPath)
 }
 
-// BuildFor builds binary for wanted architecture using default directory schema for output path.
 // Deprecated: use sub package.
 func BuildFor(ctx context.Context, goos, goarch, name string) error {
 	deprecated()
@@ -134,8 +125,6 @@ func BuildFor(ctx context.Context, goos, goarch, name string) error {
 	return err
 }
 
-// BuildForWithInfo builds binary for wanted architecture using default directory schema for output path
-// and returns additional build information.
 // Deprecated: use sub package.
 func BuildForWithInfo(ctx context.Context, goos, goarch, name string) (BuildInfo, error) {
 	deprecated()
@@ -150,57 +139,51 @@ func BuildForWithInfo(ctx context.Context, goos, goarch, name string) (BuildInfo
 	return res, GoWith(ctx, env, "build", "-o", binaryPath, cmdPath)
 }
 
-// BuildForLinux builds binary for amd64 based linux systems.
 // Deprecated: use sub package.
 func BuildForLinux(ctx context.Context, name string) {
 	deprecated()
 	BuildWithSHA(ctx, "linux", "amd64", name)
 }
 
-// BuildForLinuxWithInfo builds binary for amd64 based linux systems and returns additional build information.
 // Deprecated: use sub package.
 func BuildForLinuxWithInfo(ctx context.Context, name string) (BuildInfo, error) {
 	deprecated()
 	return BuildWithSHAWithInfo(ctx, "linux", "amd64", name)
 }
 
-// BuildForMac builds binary for amd64 based mac systems.
+// Deprecated: use sub package.
 func BuildForMac(ctx context.Context, name string) {
 	BuildWithSHA(ctx, "darwin", "amd64", name)
 }
 
-// BuildForMacWithInfo builds binary for amd64 based Mac systems and returns additional build information.
 // Deprecated: use sub package.
 func BuildForMacWithInfo(ctx context.Context, name string) (BuildInfo, error) {
 	deprecated()
 	return BuildWithSHAWithInfo(ctx, "darwin", "amd64", name)
 }
 
-// BuildForArmMac builds binary for arm64 based mac systems.
+// Deprecated: use sub package.
 func BuildForArmMac(ctx context.Context, name string) {
 	BuildWithSHA(ctx, "darwin", "arm64", name)
 }
 
-// BuildForArmMacWithInfo builds binary for amd64 based Mac systems and returns additional build information.
 // Deprecated: use sub package.
 func BuildForArmMacWithInfo(ctx context.Context, name string) (BuildInfo, error) {
 	deprecated()
 	return BuildWithSHAWithInfo(ctx, "darwin", "arm64", name)
 }
 
-// BuildForWindows builds binary for amd64 based windows systems.
+// Deprecated: use sub package.
 func BuildForWindows(ctx context.Context, name string) {
 	BuildWithSHA(ctx, "windows", "amd64", name)
 }
 
-// BuildForWindowsWithInfo builds binary for amd64 based Windows systems and returns additional build information.
 // Deprecated: use sub package.
 func BuildForWindowsWithInfo(ctx context.Context, name string) (BuildInfo, error) {
 	deprecated()
 	return BuildWithSHAWithInfo(ctx, "windows", "amd64", name)
 }
 
-// Run executes app binary from default path.
 // Deprecated: use sub package.
 func Run(ctx context.Context, name string, args ...string) error {
 	deprecated()
@@ -213,14 +196,12 @@ func Run(ctx context.Context, name string, args ...string) error {
 	return sh.RunV(binaryPath, args...)
 }
 
-// GoList lists all packages in given target.
 // Deprecated: use sub package.
 func GoList(ctx context.Context, target string) ([]string, error) {
 	deprecated()
 	return golang.ListPackages(ctx, target)
 }
 
-// BinDir returns path in format of target/bin/{GOOS}/{GOARCH}
 // Deprecated: use sub package.
 func BinDir() (string, error) {
 	deprecated()
@@ -237,30 +218,24 @@ func BinDir() (string, error) {
 	return path.Join(TargetDir, "bin", goos, goarch), nil
 }
 
-// Ensure runs Tidy checks that all dependencies are up to date
-// Deprecated: use Tidy instead
+// Deprecated: use sub package.
 func Ensure(ctx context.Context) error {
 	deprecated()
 	return golang.Tidy(ctx)
 }
 
-// EnsureInSync checks that all dependencies are up to date
-// useful in CI/CD pipelines to validate that dependencies match go.mod
-// Deprecated: use TidyAndVerifyNoChanges instead
+// Deprecated: use sub package.
 func EnsureInSync(ctx context.Context) error {
 	deprecated()
 	return golang.TidyAndVerify(ctx)
 }
 
-// Tidy runs go mod tidy
 // Deprecated: use sub package.
 func Tidy(ctx context.Context) error {
 	deprecated()
 	return golang.Tidy(ctx)
 }
 
-// TidyAndVerifyNoChanges runs go mod tidy and verifies that there are no changes to go.mod or go.sum
-// useful in CI/CD pipelines to validate that dependencies match go.mod
 // Deprecated: use sub package.
 func TidyAndVerifyNoChanges(ctx context.Context) error {
 	deprecated()
