@@ -19,13 +19,15 @@ const (
 	CombinedCoverProfile    = "./target/tests/cover/combined/cover.txt"
 )
 
-// IntegrationTest executes integration tests in 4 phases:
+// IntegrationTestRunner executes integration tests in 4 phases:
 //
 //  1. Build application binary with coverage collection support.
 //  2. Start application binary in background.
-//  3. Execute integration tests.
+//  3. Execute testFn.
 //  4. Send SIGINT to application and wait for it to exit.
-func IntegrationTest(ctx context.Context, name, testPkg, coverDir string, runArgs ...string) error {
+//
+// For example usage see golang.IntegrationTest function.
+func IntegrationTestRunner(ctx context.Context, name, coverDir string, testFn func(ctx context.Context) error, runArgs ...string) error {
 	buildInfo, err := BuildForTesting(ctx, name)
 	if err != nil {
 		return fmt.Errorf("builing application failed: %w", err)
@@ -36,7 +38,7 @@ func IntegrationTest(ctx context.Context, name, testPkg, coverDir string, runArg
 		return fmt.Errorf("starting application failed: %w", err)
 	}
 
-	if err := RunIntegrationTests(ctx, testPkg); err != nil {
+	if err := testFn(ctx); err != nil {
 		_ = stop()
 		return fmt.Errorf("running integration tests failed: %w", err)
 	}
@@ -45,6 +47,18 @@ func IntegrationTest(ctx context.Context, name, testPkg, coverDir string, runArg
 		return fmt.Errorf("running application failed: %w", err)
 	}
 	return nil
+}
+
+// IntegrationTest executes integration tests in 4 phases:
+//
+//  1. Build application binary with coverage collection support.
+//  2. Start application binary in background.
+//  3. Execute integration tests.
+//  4. Send SIGINT to application and wait for it to exit.
+func IntegrationTest(ctx context.Context, name, testPkg, coverDir string, runArgs ...string) error {
+	return IntegrationTestRunner(ctx, name, coverDir, func(ctx context.Context) error {
+		return RunIntegrationTests(ctx, testPkg)
+	}, runArgs...)
 }
 
 // UnitTest runs all tests and collects coverage in coverDir.
