@@ -7,7 +7,7 @@ toolchain go1.21.4
 require (
 	github.com/99designs/aws-vault/v7 v7.2.0
 	github.com/99designs/keyring v1.2.2
-	github.com/alecthomas/kingpin/v2 v2.3.2
+	github.com/alecthomas/kingpin/v2 v2.4.0
 	github.com/aws/aws-sdk-go-v2 v1.23.0
 	github.com/getsops/sops/v3 v3.8.1
 	github.com/golangci/golangci-lint v1.55.2
