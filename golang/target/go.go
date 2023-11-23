@@ -34,6 +34,12 @@ func (Go) CrossBuild(ctx context.Context) error {
 	return err
 }
 
+// Build build binary with race detection and coverage collections
+func (Go) TestBuild(ctx context.Context) error {
+	_, err := golang.WithSHA(golang.BuildForTesting(ctx, BuildTarget))
+	return err
+}
+
 // Run build binary and execute it
 func (Go) Run(ctx context.Context) error {
 	info, err := golang.WithSHA(golang.Build(ctx, BuildTarget))
