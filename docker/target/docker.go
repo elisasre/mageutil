@@ -29,3 +29,13 @@ func (Docker) Push(ctx context.Context) error {
 func (Docker) Build(ctx context.Context) error {
 	return docker.BuildDefault(ctx, ImageName, ProjectUrl)
 }
+
+// Up start containers in daemon mode
+func (Docker) Up(ctx context.Context) error {
+	return docker.Docker(ctx, "compose", "up", "-d")
+}
+
+// Down stops containers in daemon mode
+func (Docker) Down(ctx context.Context) error {
+	return docker.Docker(ctx, "compose", "down", "-v", "--remove-orphans")
+}

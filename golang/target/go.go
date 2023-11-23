@@ -18,6 +18,7 @@ var (
 	BuildMatrix            = golang.DefaultBuildMatrix
 	RunArgs                = []string{}
 	IntegrationTestRunArgs = []string{}
+	RunEnvs                = map[string]string{}
 )
 
 type Go mg.Namespace
@@ -46,8 +47,7 @@ func (Go) Run(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-
-	return sh.RunV(info.BinPath, RunArgs...)
+	return sh.RunWithV(RunEnvs, info.BinPath, RunArgs...)
 }
 
 // Test run unit and integration tests

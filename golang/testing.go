@@ -13,7 +13,6 @@ import (
 // Default values used by mageutil/golang/target.Go targets.
 const (
 	IntegrationTestPkg          = "./integrationtests"
-	TestBinDir                  = "./target/tests/bin/"
 	UnitTestCoverDir            = "./target/tests/cover/unit/"
 	UnitTestCoverProfile        = "./target/tests/cover/unit/cover.txt"
 	IntegrationTestCoverDir     = "./target/tests/cover/int/"
