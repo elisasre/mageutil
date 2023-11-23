@@ -51,12 +51,20 @@ func (Go) Test(ctx context.Context) {
 
 // UnitTest run all unit tests
 func (Go) UnitTest(ctx context.Context) error {
-	return golang.UnitTest(ctx, golang.UnitTestCoverDir)
+	err := golang.UnitTest(ctx, golang.UnitTestCoverDir)
+	if err != nil {
+		return err
+	}
+	return golang.CreateCoverProfile(ctx, golang.UnitTestCoverProfile, golang.UnitTestCoverDir)
 }
 
 // IntegrationTest run integration tests
 func (Go) IntegrationTest(ctx context.Context) error {
-	return golang.IntegrationTest(ctx, BuildTarget, golang.IntegrationTestPkg, golang.IntegrationTestCoverDir, IntegrationTestRunArgs...)
+	err := golang.IntegrationTest(ctx, BuildTarget, golang.IntegrationTestPkg, golang.IntegrationTestCoverDir, IntegrationTestRunArgs...)
+	if err != nil {
+		return err
+	}
+	return golang.CreateCoverProfile(ctx, golang.IntegrationTestCoverProfile, golang.IntegrationTestCoverDir)
 }
 
 // CoverProfile convert binary coverage into text format
