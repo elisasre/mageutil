@@ -12,11 +12,13 @@ import (
 
 // Default values used by mageutil/golang/target.Go targets.
 const (
-	IntegrationTestPkg      = "./integrationtests"
-	TestBinDir              = "./target/tests/bin/"
-	UnitTestCoverDir        = "./target/tests/cover/unit/"
-	IntegrationTestCoverDir = "./target/tests/cover/int/"
-	CombinedCoverProfile    = "./target/tests/cover/combined/cover.txt"
+	IntegrationTestPkg          = "./integrationtests"
+	TestBinDir                  = "./target/tests/bin/"
+	UnitTestCoverDir            = "./target/tests/cover/unit/"
+	UnitTestCoverProfile        = "./target/tests/cover/unit/cover.txt"
+	IntegrationTestCoverDir     = "./target/tests/cover/int/"
+	IntegrationTestCoverProfile = "./target/tests/cover/int/cover.txt"
+	CombinedCoverProfile        = "./target/tests/cover/combined/cover.txt"
 )
 
 // IntegrationTestRunner executes integration tests in 4 phases:
