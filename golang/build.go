@@ -72,11 +72,13 @@ func WithSHA(info BuildInfo, err error) (BuildInfo, error) {
 }
 
 // BuildForTesting builds binary that is instrumented for coverage collection and race detection.
-func BuildForTesting(ctx context.Context, target string) (BuildInfo, error) {
-	/*
-		env := map[string]string{
+func BuildForTesting(ctx context.Context, target string, e2e bool, binDir string) (BuildInfo, error) {
+	var env map[string]string
+	if !e2e {
+		env = map[string]string{
 			"CGO_ENABLED": "1",
-		}*/
+		}
+	}
 
 	pkgs, err := ListPackages(ctx, "./...")
 	if err != nil {
@@ -84,7 +86,10 @@ func BuildForTesting(ctx context.Context, target string) (BuildInfo, error) {
 	}
 
 	args := []string{"-cover", "-covermode", "atomic", "-coverpkg=" + strings.Join(pkgs, ",")}
-	return build(ctx, nil, BinDir, target, args...)
+	if !e2e {
+		args = append([]string{"-race"}, args...)
+	}
+	return build(ctx, env, binDir, target, args...)
 }
 
 // BuildFromMatrixWithSHA is a higher level build utility function doing cross compilation with sha calculation.
