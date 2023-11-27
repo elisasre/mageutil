@@ -18,6 +18,7 @@ var (
 	BuildMatrix            = golang.DefaultBuildMatrix
 	RunArgs                = []string{}
 	IntegrationTestRunArgs = []string{}
+	RunEnvs                = map[string]string{}
 )
 
 type Go mg.Namespace
@@ -34,9 +35,15 @@ func (Go) CrossBuild(ctx context.Context) error {
 	return err
 }
 
-// Build build binary with race detection and coverage collections
+// TestBuild build binary with race detection and coverage collections
 func (Go) TestBuild(ctx context.Context) error {
-	_, err := golang.WithSHA(golang.BuildForTesting(ctx, BuildTarget))
+	_, err := golang.WithSHA(golang.BuildForTesting(ctx, BuildTarget, false, golang.TestBinDir))
+	return err
+}
+
+// E2eBuild build binary with coverage collections
+func (Go) E2eBuild(ctx context.Context) error {
+	_, err := golang.WithSHA(golang.BuildForTesting(ctx, BuildTarget, true, golang.BinDir))
 	return err
 }
 
@@ -46,8 +53,7 @@ func (Go) Run(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-
-	return sh.RunV(info.BinPath, RunArgs...)
+	return sh.RunWithV(RunEnvs, info.BinPath, RunArgs...)
 }
 
 // Test run unit and integration tests

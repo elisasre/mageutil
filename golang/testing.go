@@ -30,7 +30,7 @@ const (
 //
 // For example usage see golang.IntegrationTest function.
 func IntegrationTestRunner(ctx context.Context, name, coverDir string, testFn func(ctx context.Context) error, runArgs ...string) error {
-	buildInfo, err := BuildForTesting(ctx, name)
+	buildInfo, err := BuildForTesting(ctx, name, false, TestBinDir)
 	if err != nil {
 		return fmt.Errorf("builing application failed: %w", err)
 	}
