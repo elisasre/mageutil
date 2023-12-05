@@ -1,18 +1,34 @@
 //go:build integration
 
-package main
+package integrationtests_test
 
 import (
 	"io"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"testing"
+	"time"
 
+	it "github.com/elisasre/go-common/integrationtest"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
 const baseUrl = "http://127.0.0.1:8080"
+
+func TestMain(m *testing.M) {
+	itr := it.NewIntegrationTestRunner(
+		it.OptBase("../"),
+		it.OptTarget("./cmd/godemo"),
+		it.OptCoverDir(it.IntegrationTestCoverDir),
+		it.OptWaitHTTPReady(baseUrl+"/ready", time.Second*10),
+		it.OptTestMain(m),
+	)
+	if err := itr.InitAndRun(); err != nil {
+		log.Fatal(err)
+	}
+}
 
 func TestApp(t *testing.T) {
 	tests := []struct {
