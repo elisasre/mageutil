@@ -2,7 +2,9 @@
 package git
 
 import (
+	"bytes"
 	"context"
+	"errors"
 
 	"github.com/magefile/mage/sh"
 )
@@ -26,4 +28,17 @@ func Diff(ctx context.Context, args ...string) error {
 // If change is detected error is returned.
 func DiffFilesWithExit(ctx context.Context, args ...string) error {
 	return Diff(ctx, append([]string{"--exit-code", "--"}, args...)...)
+}
+
+// Untracked runs git ls-files --exclude-standard --others arg1 arg2...
+// If untracked file is detected error is returned.
+func Untracked(ctx context.Context, args ...string) error {
+	out, err := sh.Output("git", append([]string{"ls-files", "--exclude-standard", "--others"}, args...)...)
+	if err != nil {
+		return err
+	}
+	if len(bytes.TrimSpace([]byte(out))) > 0 {
+		return errors.New("untracked files found")
+	}
+	return nil
 }
