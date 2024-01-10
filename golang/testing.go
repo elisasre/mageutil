@@ -8,6 +8,8 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+
+	"github.com/magefile/mage/mg"
 )
 
 // Default values used by mageutil/golang/target.Go targets.
@@ -75,8 +77,14 @@ func UnitTest(ctx context.Context, coverDir string) error {
 		return err
 	}
 
+	args := []string{"-race", "-cover", "-covermode", "atomic", "./...", "-test.gocoverdir=" + dir}
+	if mg.Verbose() {
+		args = append([]string{"-v"}, args...)
+	}
+	args = append([]string{"test"}, args...)
+
 	env := map[string]string{"CGO_ENABLED": "1"}
-	return GoWith(ctx, env, "test", "-race", "-cover", "-covermode", "atomic", "./...", "-test.gocoverdir="+dir)
+	return GoWith(ctx, env, args...)
 }
 
 // RunIntegrationTests runs tests inside given package with integration tag.
@@ -88,8 +96,14 @@ func RunIntegrationTests(ctx context.Context, integrationTestPkg string) error {
 		return nil
 	}
 
+	args := []string{"-tags=integration", "-count=1", integrationTestPkg}
+	if mg.Verbose() {
+		args = append([]string{"-v"}, args...)
+	}
+	args = append([]string{"test"}, args...)
+
 	env := map[string]string{"CGO_ENABLED": "1"}
-	return GoWith(ctx, env, "test", "-tags=integration", "-count=1", integrationTestPkg)
+	return GoWith(ctx, env, args...)
 }
 
 // StartAppForIntegrationTests starts application for integration testing in background.
