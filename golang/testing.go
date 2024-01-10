@@ -65,7 +65,7 @@ func IntegrationTest(ctx context.Context, name, testPkg, coverDir string, runArg
 
 // UnitTest runs all tests and collects coverage in coverDir.
 func UnitTest(ctx context.Context, coverDir string) error {
-	err := os.MkdirAll(coverDir, 0755)
+	err := os.MkdirAll(coverDir, 0o755)
 	if err != nil {
 		return err
 	}
@@ -88,12 +88,13 @@ func RunIntegrationTests(ctx context.Context, integrationTestPkg string) error {
 		return nil
 	}
 
-	return Go(ctx, "test", "-tags=integration", "-count=1", integrationTestPkg)
+	env := map[string]string{"CGO_ENABLED": "1"}
+	return GoWith(ctx, env, "test", "-tags=integration", "-count=1", integrationTestPkg)
 }
 
 // StartAppForIntegrationTests starts application for integration testing in background.
 func StartAppForIntegrationTests(ctx context.Context, bin, coverDir string, args ...string) (stop func() error, err error) {
-	err = os.MkdirAll(coverDir, 0755)
+	err = os.MkdirAll(coverDir, 0o755)
 	if err != nil {
 		return nil, err
 	}
@@ -120,7 +121,7 @@ func StartAppForIntegrationTests(ctx context.Context, bin, coverDir string, args
 
 // CreateCoverProfile creates combined coverage profile in text format.
 func CreateCoverProfile(ctx context.Context, output string, inputDirs ...string) error {
-	err := os.MkdirAll(filepath.Dir(output), 0755)
+	err := os.MkdirAll(filepath.Dir(output), 0o755)
 	if err != nil {
 		return err
 	}
