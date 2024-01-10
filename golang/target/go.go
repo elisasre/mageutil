@@ -72,7 +72,7 @@ func (Go) UnitTest(ctx context.Context) error {
 
 // IntegrationTest run integration tests
 func (Go) IntegrationTest(ctx context.Context) error {
-	err := golang.IntegrationTest(ctx, BuildTarget, golang.IntegrationTestPkg, golang.IntegrationTestCoverDir, IntegrationTestRunArgs...)
+	err := golang.RunIntegrationTests(ctx, golang.IntegrationTestPkg)
 	if err != nil {
 		return err
 	}
