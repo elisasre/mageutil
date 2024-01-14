@@ -5,7 +5,7 @@ go 1.21.0
 toolchain go1.21.6
 
 require (
-	github.com/elisasre/go-common v1.3.4
+	github.com/elisasre/go-common v1.3.5
 	github.com/elisasre/mageutil v1.4.5
 	github.com/gin-gonic/gin v1.9.1
 	github.com/hashicorp/go-multierror v1.1.1
