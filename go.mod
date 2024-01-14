@@ -15,7 +15,7 @@ require (
 	github.com/google/yamlfmt v0.10.0
 	github.com/magefile/mage v1.15.0
 	github.com/swaggo/swag v1.16.2
-	golang.org/x/tools v0.16.1
+	golang.org/x/tools v0.17.0
 	golang.org/x/vuln v1.0.1
 	k8s.io/klog/v2 v2.110.1
 )
