@@ -38,7 +38,7 @@ func init() {
 	os.Setenv(mg.VerboseEnv, "1")
 	os.Setenv("CGO_ENABLED", "0")
 
-	docker.ImageName = "quay.io/elisaoyj/sre-godemo"
+	docker.ImageName = "europe-north1-docker.pkg.dev/sose-sre-5737/sre-public/godemo"
 	docker.ProjectUrl = "https://github.com/elisasre/mageutil/tree/main/godemo"
 	ui.NpmCmd = npm.NewCmd("--prefix=./ui/")
 	cdk.NpmCmd = npm.NewCmd("--prefix=./manifests/cdk/")
