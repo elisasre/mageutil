@@ -321,8 +321,8 @@ github.com/docopt/docopt-go v0.0.0-20180111231733-ee0de3bc6815/go.mod h1:WwZ+bS3
 github.com/dvsekhvalnov/jose2go v0.0.0-20170216131308-f21a8cedbbae/go.mod h1:7BvyPhdbLxMXIYTFPLsyJRFMsKmOZnQmzh6Gb+uquuM=
 github.com/elazarl/goproxy v0.0.0-20180725130230-947c36da3153 h1:yUdfgN0XgIJw7foRItutHYUIhlcKzcSf5vDpdhQAKTc=
 github.com/elazarl/goproxy v0.0.0-20180725130230-947c36da3153/go.mod h1:/Zj4wYkgs4iZTTu3o/KG3Itv/qCCa8VVMlb3i9OVuzc=
-github.com/elisasre/go-common v1.3.5 h1:yDzrdbD+cu+y2pRdPD3gXXNUWpFRrocJn0eZbGWOVzM=
-github.com/elisasre/go-common v1.3.5/go.mod h1:IqHbrE1e8+Dg3XV19sS46WUDLqjZUZweRPggwm9m068=
+github.com/elisasre/go-common v1.3.8 h1:dE7phzm+bWPDoiqUpWQ1jPJFeGYTmEKRwBIK2+4taPw=
+github.com/elisasre/go-common v1.3.8/go.mod h1:TKPhJHyY2a2XxhW9esJ//T4j7axuzHiRiuZAKe6LnIo=
 github.com/emicklei/go-restful/v3 v3.10.1 h1:rc42Y5YTp7Am7CS630D7JmhRjq4UlEUuEKfrDac4bSQ=
 github.com/emicklei/go-restful/v3 v3.10.1/go.mod h1:6n3XBCmQQb25CM2LCACGz8ukIrRry+4bhvbpWn3mrbc=
 github.com/emirpasic/gods v1.12.0/go.mod h1:YfzfFFoVP/catgzJb4IKIqXjX78Ha8FMSDh3ymbK86o=
