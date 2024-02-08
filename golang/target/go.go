@@ -14,11 +14,10 @@ import (
 )
 
 var (
-	BuildTarget            = ""
-	BuildMatrix            = golang.DefaultBuildMatrix
-	RunArgs                = []string{}
-	IntegrationTestRunArgs = []string{}
-	RunEnvs                = map[string]string{}
+	BuildTarget = ""
+	BuildMatrix = golang.DefaultBuildMatrix
+	RunArgs     = []string{}
+	RunEnvs     = map[string]string{}
 )
 
 type Go mg.Namespace
