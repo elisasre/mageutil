@@ -12,7 +12,7 @@ require (
 	github.com/getsops/sops/v3 v3.8.1
 	github.com/golangci/golangci-lint v1.56.0
 	github.com/google/go-licenses v1.6.0
-	github.com/google/yamlfmt v0.10.0
+	github.com/google/yamlfmt v0.11.0
 	github.com/magefile/mage v1.15.0
 	github.com/swaggo/swag v1.16.3
 	golang.org/x/tools v0.17.0
@@ -224,6 +224,7 @@ require (
 	github.com/ryancurrah/gomodguard v1.3.0 // indirect
 	github.com/ryanrolds/sqlclosecheck v0.5.1 // indirect
 	github.com/ryanuber/go-glob v1.0.0 // indirect
+	github.com/sabhiram/go-gitignore v0.0.0-20210923224102-525f6e181f06 // indirect
 	github.com/sagikazarmark/locafero v0.4.0 // indirect
 	github.com/sagikazarmark/slog-shim v0.1.0 // indirect
 	github.com/sanposhiho/wastedassign/v2 v2.0.7 // indirect
