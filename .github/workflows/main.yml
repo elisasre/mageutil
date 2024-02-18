@@ -114,7 +114,7 @@ jobs:
         with:
           fetch-depth: 1
 
-      - uses: elisa-actions/release-drafter@v5
+      - uses: elisa-actions/release-drafter@v6
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
