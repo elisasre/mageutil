@@ -7,6 +7,7 @@ import (
 	"flag"
 	"io"
 	"os"
+	"strings"
 
 	"github.com/google/go-licenses/licenses"
 	"k8s.io/klog/v2"
@@ -31,19 +32,19 @@ func Run(ctx context.Context, w io.Writer, targets ...string) error {
 }
 
 type libraryData struct {
-	Name        string
-	LicenseURL  string
-	LicenseName string
-	LicensePath string
-	Version     string
+	Name         string
+	LicenseURLs  []string
+	LicenseNames []string
+	LicenseFile  string
+	Version      string
 }
 
-// LicenseText reads and returns the contents of LicensePath, if set or an empty string if not.
+// LicenseText reads and returns the contents of LicenseFile, if set or an empty string if not.
 func (lib libraryData) LicenseText() (string, error) {
-	if lib.LicensePath == "" {
+	if lib.LicenseFile == "" {
 		return "", nil
 	}
-	data, err := os.ReadFile(lib.LicensePath)
+	data, err := os.ReadFile(lib.LicenseFile)
 	if err != nil {
 		return "", err
 	}
@@ -53,12 +54,11 @@ func (lib libraryData) LicenseText() (string, error) {
 func reportMain(w io.Writer, args ...string) error {
 	// Defaults from original source
 	var (
-		confidenceThreshold          = 0.9
-		includeTests                 = false
-		ignore              []string = nil
+		includeTests          = false
+		ignore       []string = nil
 	)
 
-	classifier, err := licenses.NewClassifier(confidenceThreshold)
+	classifier, err := licenses.NewClassifier()
 	if err != nil {
 		return err
 	}
@@ -75,24 +75,26 @@ func reportMain(w io.Writer, args ...string) error {
 			version = UNKNOWN
 		}
 		libData := libraryData{
-			Name:        lib.Name(),
-			Version:     version,
-			LicenseURL:  UNKNOWN,
-			LicenseName: UNKNOWN,
+			Name:         lib.Name(),
+			Version:      version,
+			LicenseURLs:  []string{},
+			LicenseNames: []string{},
 		}
-		if lib.LicensePath != "" {
-			libData.LicensePath = lib.LicensePath
-			name, _, err := classifier.Identify(lib.LicensePath)
-			if err == nil {
-				libData.LicenseName = name
-			} else {
-				klog.Errorf("Error identifying license in %q: %v", lib.LicensePath, err)
-			}
-			url, err := lib.FileURL(context.Background(), lib.LicensePath)
-			if err == nil {
-				libData.LicenseURL = url
-			} else {
-				klog.Warningf("Error discovering license URL: %s", err)
+		if lib.LicenseFile != "" {
+			libData.LicenseFile = lib.LicenseFile
+			licenses, err := classifier.Identify(lib.LicenseFile)
+			for _, license := range licenses {
+				if err == nil {
+					libData.LicenseNames = append(libData.LicenseNames, license.Name)
+				} else {
+					klog.Errorf("Error identifying license in %q: %v", lib.LicenseFile, err)
+				}
+				url, err := lib.FileURL(context.Background(), lib.LicenseFile)
+				if err == nil {
+					libData.LicenseURLs = append(libData.LicenseURLs, url)
+				} else {
+					klog.Warningf("Error discovering license URL: %s", err)
+				}
 			}
 		}
 		reportData = append(reportData, libData)
@@ -104,7 +106,7 @@ func reportMain(w io.Writer, args ...string) error {
 func reportCSV(libs []libraryData, w io.Writer) error {
 	writer := csv.NewWriter(w)
 	for _, lib := range libs {
-		if err := writer.Write([]string{lib.Name, lib.LicenseURL, lib.LicenseName}); err != nil {
+		if err := writer.Write([]string{lib.Name, strings.Join(lib.LicenseURLs, ", "), strings.Join(lib.LicenseNames, ", ")}); err != nil {
 			return err
 		}
 	}
