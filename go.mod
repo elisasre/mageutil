@@ -8,7 +8,7 @@ require (
 	github.com/99designs/aws-vault/v7 v7.2.0
 	github.com/99designs/keyring v1.2.2
 	github.com/alecthomas/kingpin/v2 v2.4.0
-	github.com/aws/aws-sdk-go-v2 v1.24.1
+	github.com/aws/aws-sdk-go-v2 v1.25.0
 	github.com/getsops/sops/v3 v3.8.1
 	github.com/golangci/golangci-lint v1.56.1
 	github.com/google/go-licenses v1.6.0
@@ -69,7 +69,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sso v1.18.7 // indirect
 	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.21.7 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sts v1.26.7 // indirect
-	github.com/aws/smithy-go v1.19.0 // indirect
+	github.com/aws/smithy-go v1.20.0 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bkielbasa/cyclop v1.2.1 // indirect
 	github.com/blang/semver v3.5.1+incompatible // indirect
