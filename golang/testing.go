@@ -31,6 +31,8 @@ const (
 //  4. Send SIGINT to application and wait for it to exit.
 //
 // For example usage see golang.IntegrationTest function.
+//
+// NOTE: RunIntegrationTests model is now preferred and used by target since it gives more control to test code.
 func IntegrationTestRunner(ctx context.Context, name, coverDir string, testFn func(ctx context.Context) error, runArgs ...string) error {
 	buildInfo, err := BuildForTesting(ctx, name, false, TestBinDir)
 	if err != nil {
@@ -59,6 +61,8 @@ func IntegrationTestRunner(ctx context.Context, name, coverDir string, testFn fu
 //  2. Start application binary in background.
 //  3. Execute integration tests.
 //  4. Send SIGINT to application and wait for it to exit.
+//
+// NOTE: RunIntegrationTests model is now preferred and used by target since it gives more control to test code.
 func IntegrationTest(ctx context.Context, name, testPkg, coverDir string, runArgs ...string) error {
 	return IntegrationTestRunner(ctx, name, coverDir, func(ctx context.Context) error {
 		return RunIntegrationTests(ctx, testPkg)

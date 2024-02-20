@@ -38,7 +38,6 @@ func init() {
 
 	golang.BuildTarget = "./cmd/myapp"
 	golang.RunArgs = []string{"--loglevel", "0", "--development", "true"}
-	golang.IntegrationTestRunArgs = []string{"--loglevel", "0", "--development", "true"}
 	docker.ImageName = "docker.io/myorg/myapp"
 	docker.ProjectUrl = "https://github.com/myorg/myapp"
 }
@@ -66,3 +65,13 @@ Targets:
   go:viewCoverage       open test coverage in browser
   go:vulnCheck          runs golang.org/x/vuln/scan for all packages
   ```
+
+## Integration tests
+
+Running `mage go:integrationTest` has couple expectations from test code:
+
+1. Test files must be placed under `./integrationtests`
+2. Test must produce coverage files in binary format
+3. Coverage files must be placed under `./target/tests/cover/int/`
+
+To comply with these rules library like [this](https://pkg.go.dev/github.com/elisasre/go-common@v1.4.6/integrationtest) could be used.
