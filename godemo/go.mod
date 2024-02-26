@@ -87,7 +87,7 @@ require (
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/denis-tingaikin/go-header v0.4.3 // indirect
 	github.com/distribution/reference v0.5.0 // indirect
-	github.com/docker/buildx v0.12.0 // indirect
+	github.com/docker/buildx v0.12.0-rc2.0.20231219140829-617f538cb315 // indirect
 	github.com/docker/cli v25.0.3+incompatible // indirect
 	github.com/docker/compose/v2 v2.24.6 // indirect
 	github.com/docker/distribution v2.8.3+incompatible // indirect
@@ -371,6 +371,7 @@ require (
 	honnef.co/go/tools v0.4.6 // indirect
 	k8s.io/api v0.29.2 // indirect
 	k8s.io/apimachinery v0.29.2 // indirect
+	k8s.io/apiserver v0.26.7 // indirect
 	k8s.io/client-go v0.29.2 // indirect
 	k8s.io/klog/v2 v2.120.1 // indirect
 	k8s.io/kube-openapi v0.0.0-20231010175941-2dd684a91f00 // indirect
