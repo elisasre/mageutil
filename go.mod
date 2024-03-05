@@ -2,7 +2,7 @@ module github.com/elisasre/mageutil
 
 go 1.22
 
-toolchain go1.22.0
+toolchain go1.22.1
 
 require (
 	github.com/99designs/aws-vault/v7 v7.2.0
