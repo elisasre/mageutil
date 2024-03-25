@@ -25,5 +25,5 @@ func Run(ctx context.Context, args ...string) error {
 		info.Commit = fmt.Sprintf("(unknown, mod sum: %q)", buildInfo.Main.Sum)
 		info.Date = "(unknown)"
 	}
-	return commands.NewExecutor(info).Execute()
+	return commands.Execute(info)
 }
