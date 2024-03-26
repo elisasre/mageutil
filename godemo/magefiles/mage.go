@@ -10,6 +10,8 @@ import (
 	"github.com/magefile/mage/mg"
 
 	//mage:import
+	_ "github.com/elisasre/mageutil/cyclonedx/target"
+	//mage:import
 	_ "github.com/elisasre/mageutil/git/target"
 	//mage:import
 	_ "github.com/elisasre/mageutil/golangcilint/target"
