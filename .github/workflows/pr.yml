@@ -59,6 +59,8 @@ jobs:
         working-directory: ./godemo
       - run: mage go:crossBuild
         working-directory: ./godemo
+      - run: mage go:sbom
+        working-directory: ./godemo
       - run: mage docker:build
         working-directory: ./godemo
       - run: mage docker:push
@@ -85,12 +87,16 @@ jobs:
         working-directory: ./godemo
       - run: test -x godemo/target/bin/linux/amd64/godemo
       - run: test -f godemo/target/bin/linux/amd64/godemo.sha256
+      - run: test -f godemo/target/bin/linux/amd64/godemo.bom.json
       - run: test -x godemo/target/bin/darwin/amd64/godemo
       - run: test -f godemo/target/bin/linux/amd64/godemo.sha256
+      - run: test -f godemo/target/bin/linux/amd64/godemo.bom.json
       - run: test -x godemo/target/bin/darwin/arm64/godemo
       - run: test -f godemo/target/bin/linux/amd64/godemo.sha256
+      - run: test -f godemo/target/bin/linux/amd64/godemo.bom.json
       - run: test -x godemo/target/bin/windows/amd64/godemo
       - run: test -f godemo/target/bin/windows/amd64/godemo.sha256
+      - run: test -f godemo/target/bin/windows/amd64/godemo.bom.json
       - run: test -f godemo/target/testbin/godemo
       - run: test -d godemo/target/tests/cover/unit/
       - run: test -d godemo/target/tests/cover/int/
