@@ -16,7 +16,7 @@ require (
 	github.com/google/go-licenses v1.6.0
 	github.com/google/yamlfmt v0.11.0
 	github.com/magefile/mage v1.15.0
-	github.com/rs/zerolog v1.31.0
+	github.com/rs/zerolog v1.32.0
 	github.com/swaggo/swag v1.16.3
 	golang.org/x/tools v0.19.0
 	golang.org/x/vuln v1.0.4
