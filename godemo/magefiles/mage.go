@@ -3,18 +3,21 @@
 package main
 
 import (
+	"context"
+	"fmt"
 	"os"
 
+	"github.com/elisasre/mageutil"
 	goutil "github.com/elisasre/mageutil/golang"
 	"github.com/elisasre/mageutil/npm"
 	"github.com/magefile/mage/mg"
 
 	//mage:import
-	_ "github.com/elisasre/mageutil/cyclonedx/target"
-	//mage:import
 	_ "github.com/elisasre/mageutil/git/target"
 	//mage:import
 	_ "github.com/elisasre/mageutil/golangcilint/target"
+	//mage:import
+	cdx "github.com/elisasre/mageutil/cyclonedx/target"
 	//mage:import
 	docker "github.com/elisasre/mageutil/docker/target"
 	//mage:import
@@ -49,4 +52,29 @@ func init() {
 	golang.BuildTarget = "./cmd/godemo"
 	golang.BuildMatrix = append(golang.BuildMatrix, goutil.BuildPlatform{OS: "windows", Arch: "amd64"})
 	lambda.BuildTargets = []string{"./cmd/godemo"}
+
+	// Target overwriting
+	golang.BuildFn = mg.F(customBuild)
+
+	// Add Pre and Post hooks
+	cdx.SBOMFn = mageutil.SerialFns{
+		mg.F(preSBOM),
+		cdx.SBOMFn,
+		mg.F(postSBOM),
+	}
+}
+
+func preSBOM(context.Context)  { fmt.Println("Running pre hook") }
+func postSBOM(context.Context) { fmt.Println("Running post hook") }
+
+// customBuild overwrites default GoBuild target.
+func customBuild(ctx context.Context) error {
+	fmt.Println("Running custom build")
+	info, err := goutil.WithSHA(goutil.Build(ctx, golang.BuildTarget))
+	if err != nil {
+		return err
+	}
+
+	fmt.Printf("%+v\n", info)
+	return nil
 }

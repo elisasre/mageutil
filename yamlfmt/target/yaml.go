@@ -12,16 +12,22 @@ import (
 	"github.com/magefile/mage/mg"
 )
 
-var YamlFiles = []string{}
-
 type Yaml mg.Namespace
 
 // Fmt formats yaml files
-func (Yaml) Fmt(ctx context.Context) error {
-	return yamlfmt.Fmt(ctx, YamlFiles...)
-}
+func (Yaml) Fmt(ctx context.Context) error { return FmtFn.Run(ctx) }
 
 // Lint lints yaml files
-func (Yaml) Lint(ctx context.Context) error {
-	return yamlfmt.Lint(ctx, YamlFiles...)
-}
+func (Yaml) Lint(ctx context.Context) error { return LintFn.Run(ctx) }
+
+var YamlFiles = []string{}
+
+var (
+	FmtFn mg.Fn = mg.F(func(ctx context.Context) error {
+		return yamlfmt.Fmt(ctx, YamlFiles...)
+	})
+
+	LintFn mg.Fn = mg.F(func(ctx context.Context) error {
+		return yamlfmt.Lint(ctx, YamlFiles...)
+	})
+)

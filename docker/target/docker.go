@@ -15,6 +15,21 @@ import (
 
 type Docker mg.Namespace
 
+// Push pushes all tags for image
+func (Docker) Push(ctx context.Context) error { return PushFn.Run(ctx) }
+
+// Build builds docker image
+func (Docker) Build(ctx context.Context) error { return BuildFn.Run(ctx) }
+
+// Up start containers in daemon mode
+func (Docker) Up(ctx context.Context) error { return UpFn.Run(ctx) }
+
+// Down stops containers in daemon mode
+func (Docker) Down(ctx context.Context) error { return DownFn.Run(ctx) }
+
+// Recreate teardowns and recreates containers in daemon mode
+func (Docker) Recreate(ctx context.Context) error { return RecreateFn.Run(ctx) }
+
 var (
 	ImageName      = ""
 	ProjectUrl     = "" // Used for OCI label.
@@ -23,31 +38,28 @@ var (
 	Dockerfile     = docker.DefaultDockerfile
 )
 
-// Push pushes all tags for image
-func (Docker) Push(ctx context.Context) error {
-	return docker.PushAllTags(ctx, ImageName)
-}
+var (
+	PushFn mg.Fn = mg.F(func(ctx context.Context) error {
+		return docker.PushAllTags(ctx, ImageName)
+	})
 
-// Build builds docker image
-func (Docker) Build(ctx context.Context) error {
-	return docker.BuildDefaultWithDockerfile(ctx, ImageName, &docker.Labels{
-		URL:     ProjectUrl,
-		Authors: ProjectAuthors,
-		Vendor:  docker.DefaultVendor,
-	}, Dockerfile)
-}
+	BuildFn mg.Fn = mg.F(func(ctx context.Context) error {
+		return docker.BuildDefaultWithDockerfile(ctx, ImageName, &docker.Labels{
+			URL:     ProjectUrl,
+			Authors: ProjectAuthors,
+			Vendor:  docker.DefaultVendor,
+		}, Dockerfile)
+	})
 
-// Up start containers in daemon mode
-func (Docker) Up(ctx context.Context) error {
-	return docker.Docker(ctx, "compose", "up", "-d", "--wait")
-}
+	UpFn mg.Fn = mg.F(func(ctx context.Context) error {
+		return docker.Docker(ctx, "compose", "up", "-d", "--wait")
+	})
 
-// Down stops containers in daemon mode
-func (Docker) Down(ctx context.Context) error {
-	return docker.Docker(ctx, "compose", "down", "-v", "--remove-orphans")
-}
+	DownFn mg.Fn = mg.F(func(ctx context.Context) error {
+		return docker.Docker(ctx, "compose", "down", "-v", "--remove-orphans")
+	})
 
-// Recreate teardowns and recreates containers in daemon mode
-func (Docker) Recreate(ctx context.Context) {
-	mg.SerialCtxDeps(ctx, Docker.Down, Docker.Up)
-}
+	RecreateFn mg.Fn = mg.F(func(ctx context.Context) {
+		mg.SerialCtxDeps(ctx, Docker.Down, Docker.Up)
+	})
+)

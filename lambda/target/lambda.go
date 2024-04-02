@@ -19,6 +19,8 @@ var (
 type Lambda mg.Namespace
 
 // BuildAll builds lambda bootstrap binaries and calculates sha sums for them
-func (Lambda) BuildAll(ctx context.Context) error {
+func (Lambda) BuildAll(ctx context.Context) error { return BuildAllFn.Run(ctx) }
+
+var BuildAllFn mg.Fn = mg.F(func(ctx context.Context) error {
 	return lambda.BuildAll(ctx, BuildTargets, GOARCH)
-}
+})
