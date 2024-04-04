@@ -22,8 +22,6 @@ import (
 	//mage:import
 	_ "github.com/elisasre/mageutil/golangcilint/target"
 	//mage:import
-	_ "github.com/elisasre/mageutil/govulncheck/target"
-	//mage:import
 	_ "github.com/elisasre/mageutil/golicenses/target"
 	//mage:import
 	docker "github.com/elisasre/mageutil/docker/target"
@@ -63,7 +61,6 @@ Targets:
   go:tidyAndVerify      verify that go.mod matches imports
   go:unitTest           run all unit tests
   go:viewCoverage       open test coverage in browser
-  go:vulnCheck          runs golang.org/x/vuln/scan for all packages
   ```
 
 ## Integration tests
