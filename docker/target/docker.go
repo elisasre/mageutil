@@ -32,7 +32,7 @@ func (Docker) Build(ctx context.Context) error {
 
 // Up start containers in daemon mode
 func (Docker) Up(ctx context.Context) error {
-	return docker.Docker(ctx, "compose", "up", "-d")
+	return docker.Docker(ctx, "compose", "up", "-d", "--wait")
 }
 
 // Down stops containers in daemon mode
