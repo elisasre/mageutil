@@ -48,10 +48,15 @@ func PushAllTags(ctx context.Context, imageName string) error {
 
 // BuildDefault builds image with sane defaults.
 func BuildDefault(ctx context.Context, imageName, url string) error {
+	return BuildDefaultWithDockerfile(ctx, imageName, url, DefaultDockerfile)
+}
+
+// BuildDefaultWithDockerfile builds image from custom Dockerfile location
+func BuildDefaultWithDockerfile(ctx context.Context, imageName, url string, dockerfile string) error {
 	fullTags := Tags(imageName)
 	extraCtx := map[string]string{"bin": DefaultExtraCtx}
 	labels := DefaultLabels(imageName, url, "")
-	return Build(ctx, DefaultPlatform, DefaultDockerfile, DefaultBuildCtx, fullTags, extraCtx, labels)
+	return Build(ctx, DefaultPlatform, dockerfile, DefaultBuildCtx, fullTags, extraCtx, labels)
 }
 
 // Build is a short hand for docker buildx build with sane default flags.

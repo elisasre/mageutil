@@ -18,6 +18,7 @@ type Docker mg.Namespace
 var (
 	ImageName  = ""
 	ProjectUrl = "" // Used for OCI label.
+	Dockerfile = docker.DefaultDockerfile
 )
 
 // Push pushes all tags for image
@@ -27,7 +28,7 @@ func (Docker) Push(ctx context.Context) error {
 
 // Build builds docker image
 func (Docker) Build(ctx context.Context) error {
-	return docker.BuildDefault(ctx, ImageName, ProjectUrl)
+	return docker.BuildDefaultWithDockerfile(ctx, ImageName, ProjectUrl, Dockerfile)
 }
 
 // Up start containers in daemon mode
