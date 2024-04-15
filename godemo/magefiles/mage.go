@@ -29,6 +29,8 @@ import (
 	swaggo "github.com/elisasre/mageutil/swaggo/target"
 	//mage:import
 	golang "github.com/elisasre/mageutil/golang/target"
+	//mage:import
+	lambda "github.com/elisasre/mageutil/lambda/target"
 )
 
 const AppName = "godemo"
@@ -48,4 +50,5 @@ func init() {
 	swaggo.OutputDir = "docs"
 	golang.BuildTarget = "./cmd/godemo"
 	golang.BuildMatrix = append(golang.BuildMatrix, goutil.BuildPlatform{OS: "windows", Arch: "amd64"})
+	lambda.BuildTargets = []string{"./cmd/godemo"}
 }
