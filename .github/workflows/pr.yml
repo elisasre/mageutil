@@ -56,6 +56,8 @@ jobs:
         working-directory: ./godemo
       - run: mage go:crossBuild
         working-directory: ./godemo
+      - run: mage lambda:buildAll
+        working-directory: ./godemo
       - run: mage go:sbom
         working-directory: ./godemo
       - run: mage docker:build
@@ -95,6 +97,7 @@ jobs:
       - run: test -f godemo/target/bin/windows/amd64/godemo.sha256
       - run: test -f godemo/target/bin/windows/amd64/godemo.bom.json
       - run: test -f godemo/target/testbin/godemo
+      - run: test -f godemo/target/bin/linux/amd64/lambda/godemo/bootstrap
       - run: test -d godemo/target/tests/cover/unit/
       - run: test -d godemo/target/tests/cover/int/
       - run: test -f godemo/target/tests/cover/combined/cover.txt
