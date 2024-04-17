@@ -20,7 +20,7 @@ var (
 	OutputDir = ""
 )
 
-// OpenAPI generates OpenAPI files using swaggo.
+// OpenAPI generates OpenAPI files using swaggo
 func (Docs) OpenAPI(ctx context.Context) error {
 	return swaggo.GenerateDocs(ctx, SearchDir, ApiFile, OutputDir)
 }

@@ -12,7 +12,7 @@ import (
 
 type Go mg.Namespace
 
-// Lint runs golangci-lint for all go files.
+// Lint runs golangci-lint for all go files
 func (Go) Lint(ctx context.Context) error {
 	return golangcilint.Run(ctx, "run", "./...")
 }

@@ -18,7 +18,7 @@ var (
 
 type Lambda mg.Namespace
 
-// BuildAll builds lambda bootstrap binaries and calculates sha sums for them.
+// BuildAll builds lambda bootstrap binaries and calculates sha sums for them
 func (Lambda) BuildAll(ctx context.Context) error {
 	return lambda.BuildAll(ctx, BuildTargets, GOARCH)
 }
