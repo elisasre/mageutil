@@ -18,7 +18,7 @@ require (
 	github.com/magefile/mage v1.15.0
 	github.com/rs/zerolog v1.32.0
 	github.com/swaggo/swag v1.16.3
-	golang.org/x/vuln v1.0.4
+	golang.org/x/vuln v1.1.0
 	k8s.io/klog/v2 v2.120.1
 )
 
