@@ -16,3 +16,8 @@ type Go mg.Namespace
 func (Go) Lint(ctx context.Context) error {
 	return golangcilint.Run(ctx, "run", "./...")
 }
+
+// LintAndFix runs golangci-lint for all go files with --fix flag
+func (Go) LintAndFix(ctx context.Context) error {
+	return golangcilint.Run(ctx, "run", "--fix", "./...")
+}
