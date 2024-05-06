@@ -11,19 +11,21 @@ import (
 
 // Fmt formats yaml files using default config.
 func Fmt(ctx context.Context, paths ...string) error {
-	return Run(ctx, command.OperationFormat, paths...)
+	return Run(ctx, yamlfmt.OperationFormat, paths...)
 }
 
 // Lint lints yaml files using default config.
 func Lint(ctx context.Context, paths ...string) error {
-	return Run(ctx, command.OperationLint, paths...)
+	return Run(ctx, yamlfmt.OperationLint, paths...)
 }
 
-func Run(_ context.Context, op command.Operation, paths ...string) error {
-	conf := command.NewConfig()
-	conf.LineEnding = yamlfmt.LineBreakStyleLF
-	conf.Extensions = []string{"yaml", "yml"}
-	conf.Include = paths
+func Run(_ context.Context, op yamlfmt.Operation, paths ...string) error {
+	conf := command.Config{
+		FormatterConfig: command.NewFormatterConfig(),
+		LineEnding:      yamlfmt.LineBreakStyleLF,
+		Extensions:      []string{"yaml", "yml"},
+		Include:         paths,
+	}
 
 	c := &command.Command{
 		Operation: op,
