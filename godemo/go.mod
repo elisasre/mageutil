@@ -18,7 +18,7 @@ require (
 	4d63.com/gocheckcompilerdirectives v1.2.1 // indirect
 	4d63.com/gochecknoglobals v0.2.1 // indirect
 	dario.cat/mergo v1.0.0 // indirect
-	github.com/4meepo/tagalign v1.3.3 // indirect
+	github.com/4meepo/tagalign v1.3.4 // indirect
 	github.com/Abirdcfly/dupword v0.0.14 // indirect
 	github.com/AdaLogics/go-fuzz-headers v0.0.0-20230811130428-ced1acdcaa24 // indirect
 	github.com/AlecAivazis/survey/v2 v2.3.7 // indirect
@@ -117,7 +117,7 @@ require (
 	github.com/fvbommel/sortorder v1.0.2 // indirect
 	github.com/fzipp/gocyclo v0.6.0 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.3 // indirect
-	github.com/ghostiam/protogetter v0.3.5 // indirect
+	github.com/ghostiam/protogetter v0.3.6 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-critic/go-critic v0.11.3 // indirect
 	github.com/go-enry/go-license-detector/v4 v4.3.0 // indirect
@@ -152,7 +152,7 @@ require (
 	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/golangci/dupl v0.0.0-20180902072040-3e9179ac440a // indirect
 	github.com/golangci/gofmt v0.0.0-20231019111953-be8c47862aaa // indirect
-	github.com/golangci/golangci-lint v1.58.0 // indirect
+	github.com/golangci/golangci-lint v1.58.1 // indirect
 	github.com/golangci/misspell v0.5.1 // indirect
 	github.com/golangci/modinfo v0.3.4 // indirect
 	github.com/golangci/plugin-module-register v0.1.1 // indirect
@@ -372,7 +372,7 @@ require (
 	golang.org/x/term v0.20.0 // indirect
 	golang.org/x/text v0.15.0 // indirect
 	golang.org/x/time v0.5.0 // indirect
-	golang.org/x/tools v0.20.0 // indirect
+	golang.org/x/tools v0.21.0 // indirect
 	gonum.org/v1/gonum v0.7.0 // indirect
 	google.golang.org/genproto v0.0.0-20240205150955-31a09d347014 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20240205150955-31a09d347014 // indirect
