@@ -10,7 +10,7 @@ require (
 	github.com/CycloneDX/cyclonedx-go v0.8.0
 	github.com/CycloneDX/cyclonedx-gomod v1.7.0
 	github.com/alecthomas/kingpin/v2 v2.4.0
-	github.com/aws/aws-sdk-go-v2 v1.26.1
+	github.com/aws/aws-sdk-go-v2 v1.27.0
 	github.com/getsops/sops/v3 v3.8.1
 	github.com/golangci/golangci-lint v1.58.1
 	github.com/google/go-licenses v1.6.0
