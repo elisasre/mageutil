@@ -18,7 +18,7 @@ require (
 	github.com/magefile/mage v1.15.0
 	github.com/rs/zerolog v1.33.0
 	github.com/swaggo/swag v1.16.3
-	golang.org/x/vuln v1.1.0
+	golang.org/x/vuln v1.1.1
 	k8s.io/klog/v2 v2.120.1
 )
 
@@ -307,7 +307,7 @@ require (
 	golang.org/x/term v0.20.0 // indirect
 	golang.org/x/text v0.15.0 // indirect
 	golang.org/x/time v0.5.0 // indirect
-	golang.org/x/tools v0.21.0 // indirect
+	golang.org/x/tools v0.21.1-0.20240514024235-59d9797072e7 // indirect
 	gonum.org/v1/gonum v0.7.0 // indirect
 	google.golang.org/api v0.163.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
