@@ -399,7 +399,7 @@ require (
 	k8s.io/apimachinery v0.30.1 // indirect
 	k8s.io/apiserver v0.29.2 // indirect
 	k8s.io/client-go v0.30.1 // indirect
-	k8s.io/klog/v2 v2.120.1 // indirect
+	k8s.io/klog/v2 v2.130.0 // indirect
 	k8s.io/kube-openapi v0.0.0-20240228011516-70dd3763d340 // indirect
 	k8s.io/utils v0.0.0-20230726121419-3b25d923346b // indirect
 	mvdan.cc/gofumpt v0.6.0 // indirect

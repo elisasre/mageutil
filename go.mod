@@ -19,7 +19,7 @@ require (
 	github.com/rs/zerolog v1.33.0
 	github.com/swaggo/swag v1.16.3
 	golang.org/x/vuln v1.1.2
-	k8s.io/klog/v2 v2.120.1
+	k8s.io/klog/v2 v2.130.0
 )
 
 require (
