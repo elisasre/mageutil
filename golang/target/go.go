@@ -22,29 +22,39 @@ var (
 
 type Go mg.Namespace
 
+var (
+	GoBuild = func(ctx context.Context) error {
+		_, err := golang.WithSHA(golang.Build(ctx, BuildTarget))
+		return err
+	}
+
+	GoCrossBuild = func(ctx context.Context) error {
+		_, err := golang.BuildFromMatrixWithSHA(ctx, nil, BuildMatrix, BuildTarget)
+		return err
+	}
+
+	GoTestBuild = func(ctx context.Context) error {
+		_, err := golang.WithSHA(golang.BuildForTesting(ctx, BuildTarget, false, golang.TestBinDir))
+		return err
+	}
+
+	GoE2eBuild = func(ctx context.Context) error {
+		_, err := golang.WithSHA(golang.BuildForTesting(ctx, BuildTarget, true, golang.BinDir))
+		return err
+	}
+)
+
 // Build builds binary and calculates sha sum for it
-func (Go) Build(ctx context.Context) error {
-	_, err := golang.WithSHA(golang.Build(ctx, BuildTarget))
-	return err
-}
+func (Go) Build(ctx context.Context) error { return GoBuild(ctx) }
 
 // CrossBuild builds binary for build matrix
-func (Go) CrossBuild(ctx context.Context) error {
-	_, err := golang.BuildFromMatrixWithSHA(ctx, nil, BuildMatrix, BuildTarget)
-	return err
-}
+func (Go) CrossBuild(ctx context.Context) error { return GoCrossBuild(ctx) }
 
 // TestBuild builds binary with race detection and coverage collections
-func (Go) TestBuild(ctx context.Context) error {
-	_, err := golang.WithSHA(golang.BuildForTesting(ctx, BuildTarget, false, golang.TestBinDir))
-	return err
-}
+func (Go) TestBuild(ctx context.Context) error { return GoTestBuild(ctx) }
 
 // E2eBuild builds binary with coverage collections
-func (Go) E2eBuild(ctx context.Context) error {
-	_, err := golang.WithSHA(golang.BuildForTesting(ctx, BuildTarget, true, golang.BinDir))
-	return err
-}
+func (Go) E2eBuild(ctx context.Context) error { return GoE2eBuild(ctx) }
 
 // Run builds binary and executes it
 func (Go) Run(ctx context.Context) error {

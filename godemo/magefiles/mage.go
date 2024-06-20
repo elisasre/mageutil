@@ -3,6 +3,8 @@
 package main
 
 import (
+	"context"
+	"fmt"
 	"os"
 
 	goutil "github.com/elisasre/mageutil/golang"
@@ -51,4 +53,19 @@ func init() {
 	golang.BuildTarget = "./cmd/godemo"
 	golang.BuildMatrix = append(golang.BuildMatrix, goutil.BuildPlatform{OS: "windows", Arch: "amd64"})
 	lambda.BuildTargets = []string{"./cmd/godemo"}
+
+	// Target overwrites
+	golang.GoBuild = customBuild
+}
+
+// customBuild overwrites default GoBuild target.
+func customBuild(ctx context.Context) error {
+	fmt.Println("Running custom build")
+	info, err := goutil.WithSHA(goutil.Build(ctx, golang.BuildTarget))
+	if err != nil {
+		return err
+	}
+
+	fmt.Printf("%+v\n", info)
+	return nil
 }
