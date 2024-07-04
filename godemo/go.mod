@@ -2,7 +2,7 @@ module godemo
 
 go 1.22.0
 
-toolchain go1.22.4
+toolchain go1.22.5
 
 require (
 	github.com/elisasre/go-common v1.4.23
