@@ -10,7 +10,7 @@ require (
 	github.com/CycloneDX/cyclonedx-go v0.9.0
 	github.com/CycloneDX/cyclonedx-gomod v1.7.0
 	github.com/alecthomas/kingpin/v2 v2.4.0
-	github.com/aws/aws-sdk-go-v2 v1.30.1
+	github.com/aws/aws-sdk-go-v2 v1.30.3
 	github.com/getsops/sops/v3 v3.9.0
 	github.com/golangci/golangci-lint v1.59.1
 	github.com/google/go-licenses v1.6.0
@@ -189,7 +189,6 @@ require (
 	github.com/jingyugao/rowserrcheck v1.1.1 // indirect
 	github.com/jirfag/go-printf-func-name v0.0.0-20200119135958-7558a9eaa5af // indirect
 	github.com/jjti/go-spancheck v0.6.1 // indirect
-	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/julz/importas v0.1.0 // indirect
 	github.com/karamaru-alpha/copyloopvar v1.1.0 // indirect
