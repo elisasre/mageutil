@@ -10,7 +10,7 @@ import (
 	"testing"
 	"time"
 
-	it "github.com/elisasre/go-common/integrationtest"
+	it "github.com/elisasre/go-common/v2/integrationtest"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
