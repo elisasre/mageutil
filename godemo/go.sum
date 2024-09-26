@@ -87,8 +87,8 @@ github.com/BurntSushi/toml v1.4.1-0.20240526193622-a339e1f7089c/go.mod h1:ukJfTF
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
 github.com/Crocmagnon/fatcontext v0.4.0 h1:4ykozu23YHA0JB6+thiuEv7iT6xq995qS1vcuWZq0tg=
 github.com/Crocmagnon/fatcontext v0.4.0/go.mod h1:ZtWrXkgyfsYPzS6K3O88va6t2GEglG93vnII/F94WC0=
-github.com/CycloneDX/cyclonedx-go v0.9.0 h1:inaif7qD8bivyxp7XLgxUYtOXWtDez7+j72qKTMQTb8=
-github.com/CycloneDX/cyclonedx-go v0.9.0/go.mod h1:NE/EWvzELOFlG6+ljX/QeMlVt9VKcTwu8u0ccsACEsw=
+github.com/CycloneDX/cyclonedx-go v0.9.1 h1:yffaWOZsv77oTJa/SdVZYdgAgFioCeycBUKkqS2qzQM=
+github.com/CycloneDX/cyclonedx-go v0.9.1/go.mod h1:NE/EWvzELOFlG6+ljX/QeMlVt9VKcTwu8u0ccsACEsw=
 github.com/CycloneDX/cyclonedx-gomod v1.7.0 h1:DWr6kudRuqB+sA/VQZk78wxEdOSquttR41MiMO4xt+A=
 github.com/CycloneDX/cyclonedx-gomod v1.7.0/go.mod h1:v3RhXmrz5m0OveaUSGaHnARfjFVHdvf/2O2JyIiSQks=
 github.com/Djarvur/go-err113 v0.0.0-20210108212216-aea10b59be24 h1:sHglBQTwgx+rWPdisA5ynNEsoARbiCBOyGcJM4/OzsM=
