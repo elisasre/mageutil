@@ -105,7 +105,7 @@ func DefaultLabels(imageName, url, desc string) map[string]string {
 		OCILabelCreated:     time.Now().String(),
 		OCILabelSource:      url,
 		OCILabelLicenses:    "",
-		OCILabelAuthors:     "SoSe/SRE",
+		OCILabelAuthors:     "DiSe/SRE",
 		OCILabelVendor:      "Elisa",
 		OCILabelRevision:    "",
 	}

@@ -11,7 +11,7 @@ const docTemplate = `{
         "title": "{{.Title}}",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
-            "name": "Software Services / SRE Team",
+            "name": "Digital Services / SRE Team",
             "url": "http://www.elisa.fi",
             "email": "devops@elisa.fi"
         },
