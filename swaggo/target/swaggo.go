@@ -24,3 +24,8 @@ var (
 func (Docs) OpenAPI(ctx context.Context) error {
 	return swaggo.GenerateDocs(ctx, SearchDir, ApiFile, OutputDir)
 }
+
+// OpenAPIAndVerify generates OpenAPI files using swaggo and verifies output against the version control
+func (Docs) OpenAPIAndVerify(ctx context.Context) error {
+	return swaggo.GenerateDocsAndVerify(ctx, SearchDir, ApiFile, OutputDir)
+}
