@@ -68,6 +68,8 @@ jobs:
           DOCKER_IMAGE_TAGS: sha-${{ github.event.pull_request.head.sha }}
       - run: mage docs:openAPI
         working-directory: ./godemo
+      - run: mage docs:openAPIAndVerify
+        working-directory: ./godemo
       - run: |
           if ($(mage yaml:lint)) ; then
             echo "mage yaml:lint should have failed!"
