@@ -56,7 +56,7 @@ func BuildDefault(ctx context.Context, imageName, url string) error {
 func BuildDefaultWithDockerfile(ctx context.Context, imageName, url, authors string, dockerfile string) error {
 	fullTags := Tags(imageName)
 	extraCtx := map[string]string{"bin": DefaultExtraCtx}
-	labels := DefaultLabels(imageName, url, authors, "")
+	labels := DefaultLabels(imageName, url, "", authors)
 	return Build(ctx, DefaultPlatform, dockerfile, DefaultBuildCtx, fullTags, extraCtx, labels)
 }
 
