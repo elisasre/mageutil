@@ -13,7 +13,7 @@ import (
 // @description Demo service
 // @termsOfService http://swagger.io/terms/
 
-// @contact.name Software Services / SRE Team
+// @contact.name Digital Services / SRE Team
 // @contact.url http://www.elisa.fi
 // @contact.email devops@elisa.fi
 

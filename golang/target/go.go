@@ -88,7 +88,7 @@ func (Go) ViewCoverage(ctx context.Context) error {
 	return golang.Go(ctx, "tool", "cover", "-html", golang.CombinedCoverProfile)
 }
 
-// TestAndCover run sall tests and opens coverage in browser
+// TestAndCover runs all tests and opens coverage in browser
 func (Go) TestAndCover(ctx context.Context) {
 	mg.SerialCtxDeps(ctx, Go.UnitTest, Go.IntegrationTest, Go.CoverProfile, Go.ViewCoverage)
 }

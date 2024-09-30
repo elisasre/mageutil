@@ -16,9 +16,10 @@ import (
 type Docker mg.Namespace
 
 var (
-	ImageName  = ""
-	ProjectUrl = "" // Used for OCI label.
-	Dockerfile = docker.DefaultDockerfile
+	ImageName      = ""
+	ProjectUrl     = "" // Used for OCI label.
+	ProjectAuthors = docker.DefaultAuthors
+	Dockerfile     = docker.DefaultDockerfile
 )
 
 // Push pushes all tags for image
@@ -28,7 +29,7 @@ func (Docker) Push(ctx context.Context) error {
 
 // Build builds docker image
 func (Docker) Build(ctx context.Context) error {
-	return docker.BuildDefaultWithDockerfile(ctx, ImageName, ProjectUrl, Dockerfile)
+	return docker.BuildDefaultWithDockerfile(ctx, ImageName, ProjectUrl, ProjectAuthors, Dockerfile)
 }
 
 // Up start containers in daemon mode
