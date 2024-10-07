@@ -41,3 +41,8 @@ func (Docker) Up(ctx context.Context) error {
 func (Docker) Down(ctx context.Context) error {
 	return docker.Docker(ctx, "compose", "down", "-v", "--remove-orphans")
 }
+
+// Recreate teardowns and recreates containers in daemon mode
+func (Docker) Recreate(ctx context.Context) {
+	mg.SerialCtxDeps(ctx, Docker.Down, Docker.Up)
+}
