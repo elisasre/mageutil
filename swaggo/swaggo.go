@@ -4,8 +4,10 @@ package swaggo
 import (
 	"context"
 	"fmt"
+	"os"
 
 	"github.com/elisasre/mageutil/git"
+	"github.com/magefile/mage/sh"
 	"github.com/swaggo/swag"
 	"github.com/swaggo/swag/gen"
 )
@@ -45,4 +47,22 @@ func GenerateDocsAndVerify(ctx context.Context, searchDir, apiFile, outputDir st
 		return fmt.Errorf("%s is not in sync with the version control", outputDir)
 	}
 	return nil
+}
+
+// LintDocs lints the OpenAPI docs against Elisa's OpenAPI specification ruleset.
+func LintDocs(ctx context.Context, severity, ruleset, outputDir string) error {
+	return sh.RunV(
+		"docker",
+		"run",
+		"--rm",
+		"--volume", fmt.Sprintf("%s:/data", os.Getenv("PWD")),
+		"stoplight/spectral:latest",
+		"lint",
+		"--fail-on-unmatched-globs",
+		"--ruleset", ruleset,
+		"--format", "text",
+		"--fail-severity", severity,
+		"--verbose",
+		fmt.Sprintf("/data/%s/swagger.yaml", outputDir),
+	)
 }

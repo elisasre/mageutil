@@ -15,9 +15,11 @@ import (
 type Docs mg.Namespace
 
 var (
-	SearchDir = ""
-	ApiFile   = ""
-	OutputDir = ""
+	SearchDir    = ""
+	ApiFile      = ""
+	OutputDir    = ""
+	LintRuleset  = "https://sre-media.csf.elisa.fi/spectral/elisa-oas.yaml"
+	LintSeverity = "error"
 )
 
 // OpenAPI generates OpenAPI files using swaggo
@@ -28,4 +30,9 @@ func (Docs) OpenAPI(ctx context.Context) error {
 // OpenAPIAndVerify generates OpenAPI files using swaggo and verifies output against the version control
 func (Docs) OpenAPIAndVerify(ctx context.Context) error {
 	return swaggo.GenerateDocsAndVerify(ctx, SearchDir, ApiFile, OutputDir)
+}
+
+// OpenAPIAndLint generates OpenAPI files using swaggo and lints output against OpenAPI specification ruleset
+func (Docs) OpenAPIAndLint(ctx context.Context) {
+	mg.SerialCtxDeps(ctx, Docs.OpenAPI, mg.F(swaggo.LintDocs, LintSeverity, LintRuleset, OutputDir))
 }
