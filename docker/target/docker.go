@@ -19,6 +19,7 @@ var (
 	ImageName      = ""
 	ProjectUrl     = "" // Used for OCI label.
 	ProjectAuthors = docker.DefaultAuthors
+	ProjectVendor  = docker.DefaultVendor
 	Dockerfile     = docker.DefaultDockerfile
 )
 
@@ -29,7 +30,11 @@ func (Docker) Push(ctx context.Context) error {
 
 // Build builds docker image
 func (Docker) Build(ctx context.Context) error {
-	return docker.BuildDefaultWithDockerfile(ctx, ImageName, ProjectUrl, ProjectAuthors, Dockerfile)
+	return docker.BuildDefaultWithDockerfile(ctx, ImageName, &docker.Labels{
+		URL:     ProjectUrl,
+		Authors: ProjectAuthors,
+		Vendor:  docker.DefaultVendor,
+	}, Dockerfile)
 }
 
 // Up start containers in daemon mode
