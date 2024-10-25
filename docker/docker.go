@@ -106,13 +106,6 @@ type Labels struct {
 
 // DefaultLabels provides labels for organization.
 func DefaultLabels(imageName string, l *Labels) map[string]string {
-	if l == nil {
-		l = &Labels{
-			Authors: DefaultAuthors,
-			Vendor:  DefaultVendor,
-		}
-	}
-
 	if l.Authors == "" {
 		l.Authors = DefaultAuthors
 	}
