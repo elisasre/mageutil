@@ -28,6 +28,7 @@ const (
 	DefaultPlatform   = "linux/amd64"
 	DefaultDockerfile = "Dockerfile"
 	DefaultAuthors    = "DiSe/SRE"
+	DefaultVendor     = "Elisa"
 	DefaultBuildCtx   = "."
 	DefaultExtraCtx   = "./target/bin/linux/amd64/"
 )
@@ -48,15 +49,15 @@ func PushAllTags(ctx context.Context, imageName string) error {
 }
 
 // BuildDefault builds image with sane defaults.
-func BuildDefault(ctx context.Context, imageName, url string) error {
-	return BuildDefaultWithDockerfile(ctx, imageName, url, DefaultAuthors, DefaultDockerfile)
+func BuildDefault(ctx context.Context, imageName string, l *Labels) error {
+	return BuildDefaultWithDockerfile(ctx, imageName, l, DefaultDockerfile)
 }
 
 // BuildDefaultWithDockerfile builds image from custom Dockerfile location
-func BuildDefaultWithDockerfile(ctx context.Context, imageName, url, authors string, dockerfile string) error {
+func BuildDefaultWithDockerfile(ctx context.Context, imageName string, l *Labels, dockerfile string) error {
 	fullTags := Tags(imageName)
 	extraCtx := map[string]string{"bin": DefaultExtraCtx}
-	labels := DefaultLabels(imageName, url, "", authors)
+	labels := DefaultLabels(imageName, l)
 	return Build(ctx, DefaultPlatform, dockerfile, DefaultBuildCtx, fullTags, extraCtx, labels)
 }
 
@@ -96,18 +97,33 @@ func Tags(imageName string, tags ...string) []string {
 	return fullTags
 }
 
-// DefaultLabels provides labels for Elisa organization.
-func DefaultLabels(imageName, url, desc, authors string) map[string]string {
+type Labels struct {
+	Authors string
+	Vendor  string
+	URL     string
+	Desc    string
+}
+
+// DefaultLabels provides labels for organization.
+func DefaultLabels(imageName string, l *Labels) map[string]string {
+	if l.Authors == "" {
+		l.Authors = DefaultAuthors
+	}
+
+	if l.Vendor == "" {
+		l.Vendor = DefaultVendor
+	}
+
 	return map[string]string{
 		OCILabelTitle:       path.Base(imageName),
-		OCILabelURL:         url,
+		OCILabelURL:         l.URL,
 		OCILabelVersion:     "",
-		OCILabelDescription: desc,
+		OCILabelDescription: l.Desc,
 		OCILabelCreated:     time.Now().String(),
-		OCILabelSource:      url,
+		OCILabelSource:      l.URL,
 		OCILabelLicenses:    "",
-		OCILabelAuthors:     authors,
-		OCILabelVendor:      "Elisa",
+		OCILabelAuthors:     l.Authors,
+		OCILabelVendor:      l.Vendor,
 		OCILabelRevision:    "",
 	}
 }
