@@ -7,6 +7,9 @@ package target
 
 import (
 	"context"
+	"errors"
+	"fmt"
+	"os"
 
 	"github.com/elisasre/mageutil/golang"
 	"github.com/magefile/mage/mg"
@@ -101,4 +104,29 @@ func (Go) Tidy(ctx context.Context) error {
 // TidyAndVerify verifies that go.mod matches imports
 func (Go) TidyAndVerify(ctx context.Context) error {
 	return golang.TidyAndVerify(ctx)
+}
+
+// RegenIntegrationTestArtifacts regenerates the integration test artifacts
+func (Go) RegenIntegrationTestArtifacts(ctx context.Context) {
+	os.Setenv("OVERRIDE_TEST_DATA", "true")
+	mg.SerialCtxDeps(ctx,
+		mg.F(sh.Rm, "./integrationtests/testdata"),
+		Go.IntegrationTest,
+	)
+}
+
+// IntegrationTestAndValidate runs the integration tests and checks that testdata artifacts are unchanged
+func (Go) IntegrationTestAndValidate(ctx context.Context) error {
+	mg.SerialCtxDeps(ctx, Go.RegenIntegrationTestArtifacts)
+	out, err := sh.Output("git", "status", "--porcelain", "--", "./integrationtests/testdata/")
+	if err != nil {
+		return err
+	}
+
+	if len(out) > 0 {
+		fmt.Println(out)
+		return errors.New("testdata artifacts have changed")
+	}
+
+	return nil
 }
