@@ -12,7 +12,7 @@ require (
 	github.com/getsops/sops/v3 v3.9.1
 	github.com/golangci/golangci-lint v1.61.0
 	github.com/google/go-licenses v1.6.0
-	github.com/google/yamlfmt v0.13.0
+	github.com/google/yamlfmt v0.14.0
 	github.com/magefile/mage v1.15.0
 	github.com/rs/zerolog v1.33.0
 	github.com/swaggo/swag v1.16.4
