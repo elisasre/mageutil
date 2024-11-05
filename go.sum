@@ -539,8 +539,8 @@ github.com/google/uuid v1.1.2/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+
 github.com/google/uuid v1.3.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/google/uuid v1.6.0 h1:NIvaJDMOsjHA8n1jAhLSgzrAzy1Hgr+hNrb57e+94F0=
 github.com/google/uuid v1.6.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
-github.com/google/yamlfmt v0.13.0 h1:OS8cjQNhRhEP437e1axMgZiwrYu60mWLtvb4/jtQCtE=
-github.com/google/yamlfmt v0.13.0/go.mod h1:y8JNH/2TqTaCSUjk/zhn0lYlibMvS0R+pbVUDo8oz9o=
+github.com/google/yamlfmt v0.14.0 h1:30Hm8+VfNqMhWfbkjqkHMyo1zzbxMFM6+2oz7Cey1BQ=
+github.com/google/yamlfmt v0.14.0/go.mod h1:KnrVZqRVSE3HUpaI9FfoaxYA71izVleMWPYX8s1S0KM=
 github.com/googleapis/enterprise-certificate-proxy v0.0.0-20220520183353-fd19c99a87aa/go.mod h1:17drOmN3MwGY7t0e+Ei9b45FFGA3fBs3x36SsCg1hq8=
 github.com/googleapis/enterprise-certificate-proxy v0.1.0/go.mod h1:17drOmN3MwGY7t0e+Ei9b45FFGA3fBs3x36SsCg1hq8=
 github.com/googleapis/enterprise-certificate-proxy v0.3.4 h1:XYIDZApgAnrN1c855gTgghdIA6Stxb52D5RnLI1SLyw=
