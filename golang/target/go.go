@@ -17,17 +17,18 @@ import (
 )
 
 var (
-	BuildTarget = ""
-	BuildMatrix = golang.DefaultBuildMatrix
-	RunArgs     = []string{}
-	RunEnvs     = map[string]string{}
+	BuildTarget    = ""
+	ExtraBuildArgs = []string{}
+	BuildMatrix    = golang.DefaultBuildMatrix
+	RunArgs        = []string{}
+	RunEnvs        = map[string]string{}
 )
 
 type Go mg.Namespace
 
 // Build builds binary and calculates sha sum for it
 func (Go) Build(ctx context.Context) error {
-	_, err := golang.WithSHA(golang.Build(ctx, BuildTarget))
+	_, err := golang.WithSHA(golang.Build(ctx, BuildTarget, ExtraBuildArgs...))
 	return err
 }
 
@@ -51,7 +52,7 @@ func (Go) E2eBuild(ctx context.Context) error {
 
 // Run builds binary and executes it
 func (Go) Run(ctx context.Context) error {
-	info, err := golang.WithSHA(golang.Build(ctx, BuildTarget))
+	info, err := golang.WithSHA(golang.Build(ctx, BuildTarget, ExtraBuildArgs...))
 	if err != nil {
 		return err
 	}
