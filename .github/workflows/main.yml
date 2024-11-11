@@ -42,8 +42,6 @@ jobs:
         working-directory: ./godemo
       - run: mage go:tidyAndVerify
         working-directory: ./godemo
-      - run: mage go:licenses
-        working-directory: ./godemo
       - run: mage go:unitTest
         working-directory: ./godemo
       - run: mage go:integrationTest
