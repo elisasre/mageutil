@@ -14,6 +14,8 @@ import (
 type Git mg.Namespace
 
 // Clean removes all untracked files from workspace
-func (Git) Clean(ctx context.Context) error {
+func (Git) Clean(ctx context.Context) error { return CleanFn.Run(ctx) }
+
+var CleanFn mg.Fn = mg.F(func(ctx context.Context) error {
 	return git.Clean(ctx, "-Xdf")
-}
+})

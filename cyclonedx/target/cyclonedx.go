@@ -9,13 +9,15 @@ import (
 
 type Go mg.Namespace
 
+// SBOM generates a sbom for all binaries under target/bin
+func (Go) SBOM(ctx context.Context) error { return SBOMFn.Run(ctx) }
+
 var (
 	SbomTargets []string
 	BinRoot     = "target/bin/"
 )
 
-// SBOM generates a sbom for all binaries under target/bin
-func (Go) SBOM(ctx context.Context) error {
+var SBOMFn mg.Fn = mg.F(func(ctx context.Context) error {
 	if len(SbomTargets) == 0 {
 		targets, err := cyclonedx.FindTargets(BinRoot)
 		if err != nil {
@@ -31,4 +33,4 @@ func (Go) SBOM(ctx context.Context) error {
 
 	mg.CtxDeps(ctx, fns...)
 	return nil
-}
+})
