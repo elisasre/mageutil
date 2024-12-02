@@ -17,3 +17,17 @@ jobs:
       image-tags: sha-${{ github.event.pull_request.head.sha }}
     secrets:
       gar-json-key: ${{ secrets.GAR_JSON_KEY }}
+
+  automerge:
+    needs: [build]
+    permissions:
+      pull-requests: write
+      contents: write
+    runs-on: elisa-normal
+    timeout-minutes: 15
+    steps:
+      - name: Automerge dependabot PR
+        uses: elisa-actions/github-action-merge-dependabot@v3
+        with:
+          target: minor
+          github-token: ${{ secrets.DOPS_SRE_PAT }}
