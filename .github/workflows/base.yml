@@ -14,7 +14,7 @@ on:
 
 defaults:
   run:
-    working-directory: ./godemo
+    working-directory: ./testdata/godemo
 
 jobs:
   base-build:
@@ -46,12 +46,21 @@ jobs:
 
       - name: Verify dependencies
         run: |
+          cd ../../
           go mod tidy
-          git diff --exit-code -- ../go.mod ../go.sum ./go.mod ./go.sum || (echo "Deps are not up to date: run 'go mod tidy' before commit" && exit 1)
+          git diff --exit-code -- ./go.mod ./go.sum || (echo "Deps are not up to date: run 'go mod tidy' before commit" && exit 1)
+          
+      - name: Prepare demo project
+        run: go mod tidy
+
+      - name: Verify tidy check
+        run: |
+          if mage go:tidyAndVerify; then
+            echo "mage go:tidyAndVerify should have failed"
+            exit 1
+          fi
 
       - run: mage go:lint
-      - run: mage go:tidy
-      - run: mage go:tidyAndVerify
       
       - name: Unit tests
         run: |

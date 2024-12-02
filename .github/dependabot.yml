@@ -10,8 +10,3 @@ updates:
   schedule:
     interval: "weekly"
     day: "sunday"
-- package-ecosystem: "gomod"
-  directory: "/godemo"
-  schedule:
-    interval: "weekly"
-    day: "sunday"
