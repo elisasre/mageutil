@@ -47,7 +47,7 @@ var (
 		return docker.BuildDefaultWithDockerfile(ctx, ImageName, &docker.Labels{
 			URL:     ProjectUrl,
 			Authors: ProjectAuthors,
-			Vendor:  docker.DefaultVendor,
+			Vendor:  ProjectVendor,
 		}, Dockerfile)
 	})
 
