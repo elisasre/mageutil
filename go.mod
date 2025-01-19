@@ -8,7 +8,7 @@ require (
 	github.com/CycloneDX/cyclonedx-go v0.9.2
 	github.com/CycloneDX/cyclonedx-gomod v1.9.0
 	github.com/alecthomas/kingpin/v2 v2.4.0
-	github.com/aws/aws-sdk-go-v2 v1.32.8
+	github.com/aws/aws-sdk-go-v2 v1.33.0
 	github.com/getsops/sops/v3 v3.9.3
 	github.com/golangci/golangci-lint v1.63.4
 	github.com/google/yamlfmt v0.15.0
