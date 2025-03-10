@@ -81,7 +81,7 @@ func UnitTest(ctx context.Context, coverDir string) error {
 		return err
 	}
 
-	args := []string{"-race", "-cover", "-covermode", "atomic", "./...", "-test.gocoverdir=" + dir}
+	args := []string{"-tags=unit", "-race", "-cover", "-covermode", "atomic", "./...", "-test.gocoverdir=" + dir}
 	if mg.Verbose() {
 		args = append([]string{"-v"}, args...)
 	}
