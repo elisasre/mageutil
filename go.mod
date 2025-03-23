@@ -13,7 +13,7 @@ require (
 	github.com/golangci/golangci-lint v1.64.7
 	github.com/google/yamlfmt v0.16.0
 	github.com/magefile/mage v1.15.0
-	github.com/rs/zerolog v1.33.0
+	github.com/rs/zerolog v1.34.0
 	github.com/swaggo/swag v1.16.4
 	golang.org/x/vuln v1.1.4
 )
