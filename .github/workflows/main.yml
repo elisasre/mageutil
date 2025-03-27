@@ -15,6 +15,7 @@ jobs:
       image-tags: sha-${{ github.event.pull_request.head.sha }}
     secrets:
       gar-json-key: ${{ secrets.GAR_JSON_KEY }}
+      mattermost-webhook-url: ${{ secrets.MATTERMOST_WEBHOOK_URL }}
 
   release-drafter:
     runs-on: elisa-normal

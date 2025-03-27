@@ -14,8 +14,10 @@ import (
 
 	//mage:import
 	_ "github.com/elisasre/mageutil/git/target"
-	//mage:import
-	_ "github.com/elisasre/mageutil/golangcilint/target"
+	//mage:import go
+	_ "github.com/elisasre/mageutil/tool/govulncheck"
+	//mage:import go
+	_ "github.com/elisasre/mageutil/tool/golangcilint"
 	//mage:import
 	cdx "github.com/elisasre/mageutil/cyclonedx/target"
 	//mage:import
@@ -24,10 +26,10 @@ import (
 	cdk "github.com/elisasre/mageutil/cdk/target"
 	//mage:import
 	ui "github.com/elisasre/mageutil/npm/target"
-	//mage:import
-	yaml "github.com/elisasre/mageutil/yamlfmt/target"
-	//mage:import
-	swaggo "github.com/elisasre/mageutil/swaggo/target"
+	//mage:import yaml
+	yaml "github.com/elisasre/mageutil/tool/yamlfmt"
+	//mage:import docs
+	swaggo "github.com/elisasre/mageutil/tool/swaggo"
 	//mage:import
 	golang "github.com/elisasre/mageutil/golang/target"
 	//mage:import
