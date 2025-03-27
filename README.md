@@ -2,11 +2,16 @@
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/elisasre/mageutil.svg)](https://pkg.go.dev/github.com/elisasre/mageutil) ![build](https://github.com/elisasre/mageutil/actions/workflows/main.yml/badge.svg)
 
-Mageutil provides ready made targets and helper functions for [Magefile](<https://magefile.org/>). For usage please refer to [documentation](<https://magefile.org/importing/>) provided by Magefile. For autocompletions see [completions](<https://github.com/elisasre/mageutil/tree/main/completions>).
+Mageutil provides ready made targets and helper functions for [Magefile](https://magefile.org/). For usage please refer to [documentation](https://magefile.org/importing/) provided by Magefile. For autocompletions see [completions](https://github.com/elisasre/mageutil/tree/main/completions).
+
+### tool pkg
+
+Each package under tool uses `go tool` to execute actual commands. This allows using the "native" implementation without maintaining the main package wrapper code in this repo.
 
 ### Example
 
 Example magefile:
+
 ```go
 //go:build mage
 
@@ -42,6 +47,7 @@ func init() {
 ```
 
 Output with example magefile:
+
 ```sh
 $ mage
 
@@ -61,7 +67,7 @@ Targets:
   go:tidyAndVerify      verify that go.mod matches imports
   go:unitTest           run all unit tests
   go:viewCoverage       open test coverage in browser
-  ```
+```
 
 ## Integration tests
 
