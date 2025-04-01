@@ -1,6 +1,7 @@
 module github.com/elisasre/mageutil
 
 go 1.24.0
+
 require (
 	github.com/99designs/aws-vault/v7 v7.2.0
 	github.com/99designs/keyring v1.2.2
