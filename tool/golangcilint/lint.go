@@ -10,7 +10,7 @@ import (
 	"github.com/magefile/mage/mg"
 )
 
-const ToolName = "github.com/golangci/golangci-lint/cmd/golangci-lint"
+const ToolName = "github.com/golangci/golangci-lint/v2/cmd/golangci-lint"
 
 // Lint runs golangci-lint for all go files
 func Lint(ctx context.Context) error { return LintFn.Run(ctx) }
