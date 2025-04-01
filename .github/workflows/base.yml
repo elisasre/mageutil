@@ -128,7 +128,7 @@ jobs:
           docker images | grep 'europe-north1-docker.pkg.dev/sose-sre-5737/sre-public/godemo'
 
       - name: Notify failure on main
-        if: ${{ github.event_name }} != pull_request && failure()
+        if: ${{ github.event_name != 'pull_request' }}  && failure()
         env:
           MATTERMOST_WEBHOOK_URL: ${{ secrets.mattermost-webhook-url }}
           MATTERMOST_TEXT: "${{ github.repository }} [${{ github.event.ref }}](${{ github.event.repository.html_url }}/tree/${{ github.event.ref }}) build failed."
