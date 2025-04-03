@@ -6,7 +6,33 @@ Mageutil provides ready made targets and helper functions for [Magefile](https:/
 
 ### tool pkg
 
-Each package under tool uses `go tool` to execute actual commands. This allows using the "native" implementation without maintaining the main package wrapper code in this repo.
+Each package under tool uses `go tool` to execute actual commands. This allows using the "native" implementation without maintaining the main package wrapper code in this repo. To import tool commands under mage namespace check [importing options](https://magefile.org/importing/).
+
+#### Migrating from non tool packages
+
+1. change import path in your `magefile.go`
+2. add namespace to import comment eg. `//mage:import go`
+    - in case of golangci-lint read also [v2 migration guide](https://golangci-lint.run/product/migration-guide/)
+3. run added mage commands locally eg. `mage go:lint`
+4. run `go mod tidy`
+
+**From:**
+
+```go
+import (
+	//mage:import
+	_ "github.com/elisasre/mageutil/golangcilint/target"
+)
+```
+
+**To:**
+
+```go
+import (
+	//mage:import go
+	_ "github.com/elisasre/mageutil/tool/golangcilint"
+)
+```
 
 ### Example
 
@@ -24,10 +50,8 @@ import (
 
 	//mage:import
 	_ "github.com/elisasre/mageutil/git/target"
-	//mage:import
-	_ "github.com/elisasre/mageutil/golangcilint/target"
-	//mage:import
-	_ "github.com/elisasre/mageutil/golicenses/target"
+	//mage:import go
+	_ "github.com/elisasre/mageutil/tool/golangcilint"
 	//mage:import
 	docker "github.com/elisasre/mageutil/docker/target"
 	//mage:import
@@ -59,8 +83,8 @@ Targets:
   go:coverProfile       convert binary coverage into text format
   go:crossBuild         build binary for build matrix
   go:integrationTest    run integration tests
-  go:licenses           reports licenses used by dependencies
-  go:lint               runs golangci-lint for all go files.
+  go:lint               runs golangci-lint for all go files
+  go:lintAndFix         runs golangci-lint for all go files with --fix flag
   go:run                build binary and execute it
   go:test               run unit and integration tests
   go:tidy               run go mod tidy
