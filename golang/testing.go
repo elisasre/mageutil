@@ -23,6 +23,18 @@ const (
 	CombinedCoverProfile        = "./target/tests/cover/combined/cover.txt"
 )
 
+var DefaultTestCmd = GoTest
+
+type Cmd func(ctx context.Context, env map[string]string, args ...string) error
+
+func GoTest(ctx context.Context, env map[string]string, args ...string) error {
+	if mg.Verbose() {
+		args = append([]string{"-v"}, args...)
+	}
+	args = append([]string{"test"}, args...)
+	return GoWith(ctx, env, args...)
+}
+
 // IntegrationTestRunner executes integration tests in 4 phases:
 //
 //  1. Build application binary with coverage collection support.
@@ -71,6 +83,11 @@ func IntegrationTest(ctx context.Context, name, testPkg, coverDir string, runArg
 
 // UnitTest runs all tests and collects coverage in coverDir.
 func UnitTest(ctx context.Context, coverDir string) error {
+	return UnitTestWithCmd(ctx, coverDir, DefaultTestCmd)
+}
+
+// UnitTestUnitTestWithCmd allows setting custom `go test` command.`
+func UnitTestWithCmd(ctx context.Context, coverDir string, cmd Cmd) error {
 	err := os.MkdirAll(coverDir, 0o755)
 	if err != nil {
 		return err
@@ -82,18 +99,18 @@ func UnitTest(ctx context.Context, coverDir string) error {
 	}
 
 	args := []string{"-tags=unit", "-race", "-cover", "-covermode", "atomic", "./...", "-test.gocoverdir=" + dir}
-	if mg.Verbose() {
-		args = append([]string{"-v"}, args...)
-	}
-	args = append([]string{"test"}, args...)
-
 	env := map[string]string{"CGO_ENABLED": "1"}
-	return GoWith(ctx, env, args...)
+	return cmd(ctx, env, args...)
 }
 
 // RunIntegrationTests runs tests inside given package with integration tag.
 // To prevent caching -count=1 argument is also provided.
 func RunIntegrationTests(ctx context.Context, integrationTestPkg string) error {
+	return RunIntegrationTestsWithCmd(ctx, integrationTestPkg, DefaultTestCmd)
+}
+
+// RunIntegrationTestsWithCmd allows setting custom `go test` command.
+func RunIntegrationTestsWithCmd(ctx context.Context, integrationTestPkg string, cmd Cmd) error {
 	_, err := os.Stat(IntegrationTestPkg)
 	if errors.Is(err, os.ErrNotExist) {
 		fmt.Println("No integration tests to run")
@@ -101,13 +118,8 @@ func RunIntegrationTests(ctx context.Context, integrationTestPkg string) error {
 	}
 
 	args := []string{"-tags=integration", "-count=1", integrationTestPkg}
-	if mg.Verbose() {
-		args = append([]string{"-v"}, args...)
-	}
-	args = append([]string{"test"}, args...)
-
 	env := map[string]string{"CGO_ENABLED": "1"}
-	return GoWith(ctx, env, args...)
+	return cmd(ctx, env, args...)
 }
 
 // StartAppForIntegrationTests starts application for integration testing in background.

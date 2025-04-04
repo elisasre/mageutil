@@ -10,14 +10,27 @@ import (
 	"golang.org/x/mod/modfile"
 )
 
+type Tool struct {
+	name string
+}
+
+func New(name string) Tool {
+	return Tool{name: name}
+}
+
 // Exec checks if the tool is installed and runs it with the given arguments.
 // If tool isn't installed, it will be installed first.
-func Exec(_ context.Context, name string, args ...string) error {
-	if err := VerifyInstallation(name); err != nil {
+func (t *Tool) Exec(ctx context.Context, args ...string) error {
+	return t.ExecWith(ctx, nil, args...)
+}
+
+// ExecWith runs Exec with provied environment variables.
+func (t *Tool) ExecWith(_ context.Context, env map[string]string, args ...string) error {
+	if err := VerifyInstallation(t.name); err != nil {
 		return fmt.Errorf("verify installation: %w", err)
 	}
-	args = append([]string{"tool", name}, args...)
-	return sh.RunV("go", args...)
+	args = append([]string{"tool", t.name}, args...)
+	return sh.RunWithV(env, "go", args...)
 }
 
 // VerifyInstallation checks if the tool is installed and installs it if not.
