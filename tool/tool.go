@@ -47,7 +47,6 @@ func VerifyInstallation(name string) error {
 
 	// Check if the tool is in the go.mod file
 	for _, t := range f.Tool {
-		fmt.Println(t)
 		if t.Path == name {
 			return nil
 		}
