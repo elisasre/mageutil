@@ -40,13 +40,14 @@ func VerifyInstallation(name string) error {
 		return fmt.Errorf("read go.mod: %w", err)
 	}
 
-	f, err := modfile.ParseLax("go.mod", data, nil)
+	f, err := modfile.Parse("go.mod", data, nil)
 	if err != nil {
 		return fmt.Errorf("parse go.mod: %w", err)
 	}
 
 	// Check if the tool is in the go.mod file
 	for _, t := range f.Tool {
+		fmt.Println(t)
 		if t.Path == name {
 			return nil
 		}
