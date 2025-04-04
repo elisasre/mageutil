@@ -12,6 +12,8 @@ import (
 
 const ToolName = "github.com/google/yamlfmt/cmd/yamlfmt"
 
+var Tool = tool.New(ToolName)
+
 var YamlFiles = []string{}
 
 // Fmt yaml files
@@ -21,15 +23,12 @@ func Fmt(ctx context.Context) error { return FmtFn.Run(ctx) }
 func Lint(ctx context.Context) error { return LintFn.Run(ctx) }
 
 var (
-	Exec = func(ctx context.Context, args ...string) error {
-		return tool.Exec(ctx, ToolName, args...)
-	}
 	FmtFn mg.Fn = mg.F(func(ctx context.Context) error {
-		return Exec(ctx, YamlFiles...)
+		return Tool.Exec(ctx, YamlFiles...)
 	})
 
 	LintFn mg.Fn = mg.F(func(ctx context.Context) error {
 		args := append([]string{"-lint"}, YamlFiles...)
-		return Exec(ctx, args...)
+		return Tool.Exec(ctx, args...)
 	})
 )

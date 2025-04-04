@@ -12,6 +12,8 @@ import (
 
 const ToolName = "github.com/golangci/golangci-lint/v2/cmd/golangci-lint"
 
+var Tool = tool.New(ToolName)
+
 // Lint runs golangci-lint for all go files
 func Lint(ctx context.Context) error { return LintFn.Run(ctx) }
 
@@ -19,14 +21,11 @@ func Lint(ctx context.Context) error { return LintFn.Run(ctx) }
 func LintAndFix(ctx context.Context) error { return LintAndFixFn.Run(ctx) }
 
 var (
-	Exec = func(ctx context.Context, args ...string) error {
-		return tool.Exec(ctx, ToolName, args...)
-	}
 	LintFn mg.Fn = mg.F(func(ctx context.Context) error {
-		return Exec(ctx, "run", "./...")
+		return Tool.Exec(ctx, "run", "./...")
 	})
 
 	LintAndFixFn mg.Fn = mg.F(func(ctx context.Context) error {
-		return Exec(ctx, "run", "--fix", "./...")
+		return Tool.Exec(ctx, "run", "--fix", "./...")
 	})
 )

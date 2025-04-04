@@ -12,14 +12,11 @@ import (
 
 const ToolName = "golang.org/x/vuln/cmd/govulncheck"
 
+var Tool = tool.New(ToolName)
+
 // VulnCheck runs golang.org/x/vuln/scan for all packages
 func VulnCheck(ctx context.Context) error { return VulnCheckFn.Run(ctx) }
 
-var (
-	Exec = func(ctx context.Context, args ...string) error {
-		return tool.Exec(ctx, ToolName, args...)
-	}
-	VulnCheckFn mg.Fn = mg.F(func(ctx context.Context) error {
-		return Exec(ctx, "./...")
-	})
-)
+var VulnCheckFn mg.Fn = mg.F(func(ctx context.Context) error {
+	return Tool.Exec(ctx, "./...")
+})
