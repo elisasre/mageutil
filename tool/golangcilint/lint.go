@@ -19,11 +19,14 @@ func Lint(ctx context.Context) error { return LintFn.Run(ctx) }
 func LintAndFix(ctx context.Context) error { return LintAndFixFn.Run(ctx) }
 
 var (
+	Exec = func(ctx context.Context, args ...string) error {
+		return tool.Exec(ctx, ToolName, args...)
+	}
 	LintFn mg.Fn = mg.F(func(ctx context.Context) error {
-		return tool.Exec(ctx, ToolName, "run", "./...")
+		return Exec(ctx, "run", "./...")
 	})
 
 	LintAndFixFn mg.Fn = mg.F(func(ctx context.Context) error {
-		return tool.Exec(ctx, ToolName, "run", "--fix", "./...")
+		return Exec(ctx, "run", "--fix", "./...")
 	})
 )

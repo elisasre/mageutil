@@ -21,12 +21,15 @@ func Fmt(ctx context.Context) error { return FmtFn.Run(ctx) }
 func Lint(ctx context.Context) error { return LintFn.Run(ctx) }
 
 var (
+	Exec = func(ctx context.Context, args ...string) error {
+		return tool.Exec(ctx, ToolName, args...)
+	}
 	FmtFn mg.Fn = mg.F(func(ctx context.Context) error {
-		return tool.Exec(ctx, ToolName, YamlFiles...)
+		return Exec(ctx, YamlFiles...)
 	})
 
 	LintFn mg.Fn = mg.F(func(ctx context.Context) error {
 		args := append([]string{"-lint"}, YamlFiles...)
-		return tool.Exec(ctx, ToolName, args...)
+		return Exec(ctx, args...)
 	})
 )

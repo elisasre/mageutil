@@ -27,15 +27,17 @@ var (
 )
 
 var (
+	Exec = func(ctx context.Context, args ...string) error {
+		return tool.Exec(ctx, ToolName, args...)
+	}
 	OpenAPIFn mg.Fn = mg.F(func(ctx context.Context) error {
-		return tool.Exec(ctx, ToolName, "init",
+		return Exec(ctx, "init",
 			"--parseVendor", "--parseInternal", "--parseDependency",
 			"-d", SearchDir,
 			"-g", ApiFile,
 			"-o", OutputDir,
 		)
 	})
-
 	OpenAPIAndVerifyFn mg.Fn = mg.F(func(ctx context.Context) error {
 		if err := OpenAPI(ctx); err != nil {
 			return fmt.Errorf("generate docs: %w", err)
