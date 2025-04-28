@@ -147,12 +147,10 @@ func RunIntegrationTestsWithCmd(ctx context.Context, integrationTestPkg string, 
 		return nil
 	}
 
-	parallelCount := 1
+	args := []string{"-tags=integration", "-count=1", integrationTestPkg}
 	if parallel {
-		parallelCount = GetParallelCount()
+		args = []string{"-tags=integration", fmt.Sprintf("-parallel=%d", GetParallelCount()), "-count=1", integrationTestPkg}
 	}
-
-	args := []string{"-tags=integration", fmt.Sprintf("-parallel=%d", parallelCount), "-count=1", integrationTestPkg}
 	env := map[string]string{"CGO_ENABLED": "1"}
 	return cmd(ctx, env, args...)
 }
