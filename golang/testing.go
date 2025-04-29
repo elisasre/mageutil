@@ -7,6 +7,8 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
+	"strconv"
 	"strings"
 
 	"github.com/magefile/mage/mg"
@@ -22,6 +24,9 @@ const (
 	IntegrationTestCoverProfile = "./target/tests/cover/int/cover.txt"
 	CombinedCoverProfile        = "./target/tests/cover/combined/cover.txt"
 )
+
+// to keep the backward compatibility
+var ParallelEnabled = false
 
 var DefaultTestCmd = GoTest
 
@@ -103,14 +108,39 @@ func UnitTestWithCmd(ctx context.Context, coverDir string, cmd Cmd) error {
 	return cmd(ctx, env, args...)
 }
 
+// GetParallelCount returns the number of parallel tests to run.
+// It uses the number of available CPUs as a base and adjusts it based on
+// the system's capabilities and environment variables.
+func GetParallelCount() int {
+	// Calculate optimal parallel test count based on available CPUs
+	// A good practice is to use CPU count or CPU count-1 for test parallelism
+	parallelCount := runtime.NumCPU()
+
+	// For machines with many cores, we might want to limit parallelism
+	// to avoid overwhelming the system or hitting resource limits
+	if parallelCount > 8 {
+		parallelCount = parallelCount - 2 // Leave some cores for system processes
+	} else if parallelCount > 1 {
+		parallelCount = parallelCount - 1 // On smaller systems, leave one core free
+	}
+
+	// Check if GOMAXPROCS is set to override the parallel count
+	if maxProcsEnv := os.Getenv("GOMAXPROCS"); maxProcsEnv != "" {
+		if maxProcs, err := strconv.Atoi(maxProcsEnv); err == nil && maxProcs > 0 {
+			parallelCount = maxProcs
+		}
+	}
+	return parallelCount
+}
+
 // RunIntegrationTests runs tests inside given package with integration tag.
 // To prevent caching -count=1 argument is also provided.
 func RunIntegrationTests(ctx context.Context, integrationTestPkg string) error {
-	return RunIntegrationTestsWithCmd(ctx, integrationTestPkg, DefaultTestCmd)
+	return RunIntegrationTestsWithCmd(ctx, integrationTestPkg, ParallelEnabled, DefaultTestCmd)
 }
 
 // RunIntegrationTestsWithCmd allows setting custom `go test` command.
-func RunIntegrationTestsWithCmd(ctx context.Context, integrationTestPkg string, cmd Cmd) error {
+func RunIntegrationTestsWithCmd(ctx context.Context, integrationTestPkg string, parallel bool, cmd Cmd) error {
 	_, err := os.Stat(IntegrationTestPkg)
 	if errors.Is(err, os.ErrNotExist) {
 		fmt.Println("No integration tests to run")
@@ -118,6 +148,9 @@ func RunIntegrationTestsWithCmd(ctx context.Context, integrationTestPkg string, 
 	}
 
 	args := []string{"-tags=integration", "-count=1", integrationTestPkg}
+	if parallel {
+		args = []string{"-tags=integration", fmt.Sprintf("-parallel=%d", GetParallelCount()), "-count=1", integrationTestPkg}
+	}
 	env := map[string]string{"CGO_ENABLED": "1"}
 	return cmd(ctx, env, args...)
 }
