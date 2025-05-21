@@ -136,7 +136,7 @@ func SHA256Sum(input, output string) error {
 	if err != nil {
 		return err
 	}
-	defer f.Close()
+	defer sumFile.Close()
 
 	_, err = fmt.Fprintf(sumFile, "%s *%s\n", hexSum, input)
 	if err != nil {
