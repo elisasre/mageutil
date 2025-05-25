@@ -11,7 +11,7 @@ require (
 	github.com/aws/aws-sdk-go-v2 v1.36.3
 	github.com/getsops/sops/v3 v3.10.2
 	github.com/golangci/golangci-lint v1.64.8
-	github.com/google/yamlfmt v0.16.0
+	github.com/google/yamlfmt v0.17.0
 	github.com/magefile/mage v1.15.0
 	github.com/rs/zerolog v1.34.0
 	github.com/swaggo/swag v1.16.4
@@ -93,7 +93,6 @@ require (
 	github.com/blizzy78/varnamelen v0.8.0 // indirect
 	github.com/bmatcuk/doublestar/v4 v4.8.1 // indirect
 	github.com/bombsimon/wsl/v4 v4.5.0 // indirect
-	github.com/braydonk/yaml v0.9.0 // indirect
 	github.com/breml/bidichk v0.3.2 // indirect
 	github.com/breml/errchkjson v0.4.0 // indirect
 	github.com/butuzov/ireturn v0.3.1 // indirect
