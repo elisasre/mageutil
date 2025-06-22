@@ -8,7 +8,7 @@ require (
 	github.com/CycloneDX/cyclonedx-go v0.9.2
 	github.com/CycloneDX/cyclonedx-gomod v1.9.0
 	github.com/alecthomas/kingpin/v2 v2.4.0
-	github.com/aws/aws-sdk-go-v2 v1.36.4
+	github.com/aws/aws-sdk-go-v2 v1.36.5
 	github.com/getsops/sops/v3 v3.10.2
 	github.com/golangci/golangci-lint v1.64.8
 	github.com/google/yamlfmt v0.17.1
@@ -86,7 +86,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sso v1.25.3 // indirect
 	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.30.1 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sts v1.33.19 // indirect
-	github.com/aws/smithy-go v1.22.3 // indirect
+	github.com/aws/smithy-go v1.22.4 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bkielbasa/cyclop v1.2.3 // indirect
 	github.com/blang/semver v3.5.1+incompatible // indirect
