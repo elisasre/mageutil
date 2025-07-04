@@ -23,6 +23,8 @@ jobs:
       contents: read
     runs-on: elisa-normal
     timeout-minutes: 15
+    env:
+      GOPROXY: "https://go-mirror.csf.elisa.fi,https://proxy.golang.org, direct"
     steps:
       - uses: actions/checkout@v4
 
