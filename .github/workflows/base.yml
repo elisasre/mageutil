@@ -53,6 +53,8 @@ jobs:
       - name: Prepare demo project
         run: go mod tidy
 
+      - run: mage docs:openAPI
+
       - name: Verify tidy check
         run: |
           if mage go:tidyAndVerify; then
