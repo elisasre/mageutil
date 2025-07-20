@@ -14,7 +14,7 @@ require (
 	github.com/google/yamlfmt v0.17.1
 	github.com/magefile/mage v1.15.0
 	github.com/rs/zerolog v1.34.0
-	github.com/swaggo/swag v1.16.4
+	github.com/swaggo/swag v1.16.5
 	golang.org/x/mod v0.25.0
 	golang.org/x/vuln v1.1.4
 )
