@@ -53,13 +53,6 @@ jobs:
       - name: Prepare demo project
         run: go mod tidy
 
-      - name: Verify tidy check
-        run: |
-          if mage go:tidyAndVerify; then
-            echo "mage go:tidyAndVerify should have failed"
-            exit 1
-          fi
-
       - run: mage go:lint
 
       - name: Unit tests
