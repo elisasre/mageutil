@@ -22,10 +22,10 @@ func LintAndFix(ctx context.Context) error { return LintAndFixFn.Run(ctx) }
 
 var (
 	LintFn mg.Fn = mg.F(func(ctx context.Context) error {
-		return Tool.Exec(ctx, "run", "./...")
+		return Tool.ExecWith(ctx, map[string]string{"CGO_ENABLED": "1"}, "run", "./...")
 	})
 
 	LintAndFixFn mg.Fn = mg.F(func(ctx context.Context) error {
-		return Tool.Exec(ctx, "run", "--fix", "./...")
+		return Tool.ExecWith(ctx, map[string]string{"CGO_ENABLED": "1"}, "run", "--fix", "./...")
 	})
 )
