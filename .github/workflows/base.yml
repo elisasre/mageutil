@@ -24,7 +24,7 @@ jobs:
     runs-on: elisa-normal
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - uses: elisa-actions/setup-go-and-mage@v1
         with:
