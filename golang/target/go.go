@@ -82,7 +82,7 @@ var (
 	})
 
 	CrossBuildFn mg.Fn = mg.F(func(ctx context.Context) error {
-		_, err := golang.BuildFromMatrixWithSHA(ctx, nil, BuildMatrix, BuildTarget)
+		_, err := golang.BuildFromMatrixWithSHA(ctx, nil, BuildMatrix, BuildTarget, ExtraBuildArgs...)
 		return err
 	})
 
