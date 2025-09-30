@@ -53,6 +53,8 @@ jobs:
       - name: Prepare demo project
         run: go mod tidy
 
+      - run: mage action:lint
+
       - run: mage go:lint
 
       - name: Unit tests
@@ -101,7 +103,7 @@ jobs:
       - run: mage docs:openAPIAndVerify
       - name: YAML lint
         run: |
-          if ($(mage yaml:lint)) ; then
+          if (mage yaml:lint) ; then
             echo "mage yaml:lint should have failed!"
             exit 1
           fi
