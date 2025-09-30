@@ -34,6 +34,8 @@ import (
 	golang "github.com/elisasre/mageutil/golang/target"
 	//mage:import
 	lambda "github.com/elisasre/mageutil/lambda/target"
+	//mage:import action
+	_ "github.com/elisasre/mageutil/tool/actionlint"
 )
 
 const AppName = "godemo"
