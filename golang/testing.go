@@ -28,6 +28,11 @@ const (
 // to keep the backward compatibility
 var ParallelEnabled = false
 
+// TestTimeout sets the timeout for test execution.
+// Empty string (default) means no timeout flag is added, maintaining backward compatibility.
+// Set to a duration string like "30m", "1h", etc. to enable timeout.
+var TestTimeout = ""
+
 var DefaultTestCmd = GoTest
 
 type Cmd func(ctx context.Context, env map[string]string, args ...string) error
@@ -147,10 +152,14 @@ func RunIntegrationTestsWithCmd(ctx context.Context, integrationTestPkg string, 
 		return nil
 	}
 
-	args := []string{"-tags=integration", "-count=1", integrationTestPkg}
+	args := []string{"-tags=integration", "-count=1"}
 	if parallel {
-		args = []string{"-tags=integration", fmt.Sprintf("-parallel=%d", GetParallelCount()), "-count=1", integrationTestPkg}
+		args = append(args, fmt.Sprintf("-parallel=%d", GetParallelCount()))
 	}
+	if TestTimeout != "" {
+		args = append(args, fmt.Sprintf("-timeout=%s", TestTimeout))
+	}
+	args = append(args, integrationTestPkg)
 	env := map[string]string{"CGO_ENABLED": "1"}
 	return cmd(ctx, env, args...)
 }
