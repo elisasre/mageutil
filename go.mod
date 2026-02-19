@@ -31,7 +31,7 @@ require (
 	cloud.google.com/go/storage v1.57.0 // indirect
 	dario.cat/mergo v1.0.1 // indirect
 	filippo.io/age v1.2.1 // indirect
-	filippo.io/edwards25519 v1.1.0 // indirect
+	filippo.io/edwards25519 v1.1.1 // indirect
 	github.com/99designs/go-keychain v0.0.0-20191008050251-8e49817e8af4 // indirect
 	github.com/Azure/azure-sdk-for-go/sdk/azcore v1.19.1 // indirect
 	github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.12.0 // indirect
