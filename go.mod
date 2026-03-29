@@ -11,7 +11,7 @@ require (
 	github.com/aws/aws-sdk-go-v2 v1.41.4
 	github.com/getsops/sops/v3 v3.12.2
 	github.com/google/yamlfmt v0.21.0
-	github.com/magefile/mage v1.16.1
+	github.com/magefile/mage v1.17.0
 	github.com/rs/zerolog v1.34.0
 	github.com/swaggo/swag v1.16.6
 	golang.org/x/mod v0.34.0
