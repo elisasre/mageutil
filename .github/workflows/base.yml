@@ -26,7 +26,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: elisa-actions/setup-go-and-mage@v1
+      - uses: elisa-actions/setup-go-and-mage@v2
         with:
           modFile: /home/runner/_work/mageutil/mageutil/go.mod
 
