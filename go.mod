@@ -14,7 +14,7 @@ require (
 	github.com/magefile/mage v1.17.2
 	github.com/rs/zerolog v1.35.1
 	github.com/swaggo/swag v1.16.6
-	golang.org/x/mod v0.36.0
+	golang.org/x/mod v0.37.0
 	golang.org/x/vuln v1.3.0
 )
 
@@ -177,11 +177,11 @@ require (
 	golang.org/x/oauth2 v0.36.0 // indirect
 	golang.org/x/sync v0.20.0 // indirect
 	golang.org/x/sys v0.44.0 // indirect
-	golang.org/x/telemetry v0.0.0-20260421165255-392afab6f40e // indirect
+	golang.org/x/telemetry v0.0.0-20260508192327-42602be52be6 // indirect
 	golang.org/x/term v0.43.0 // indirect
 	golang.org/x/text v0.37.0 // indirect
 	golang.org/x/time v0.15.0 // indirect
-	golang.org/x/tools v0.44.0 // indirect
+	golang.org/x/tools v0.45.0 // indirect
 	gonum.org/v1/gonum v0.17.0 // indirect
 	google.golang.org/api v0.278.0 // indirect
 	google.golang.org/genproto v0.0.0-20260427160629-7cedc36a6bc4 // indirect
