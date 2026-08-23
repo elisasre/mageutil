@@ -15,7 +15,7 @@ require (
 	github.com/rs/zerolog v1.35.1
 	github.com/swaggo/swag v1.16.6
 	golang.org/x/mod v0.40.0
-	golang.org/x/vuln v1.6.0
+	golang.org/x/vuln v1.7.0
 )
 
 require (
