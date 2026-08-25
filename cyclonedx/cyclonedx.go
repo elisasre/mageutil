@@ -35,7 +35,7 @@ func AnalyzeBin(ctx context.Context, binPath string, w io.Writer) error {
 	logger := zerolog.New(os.Stderr).Level(zerolog.WarnLevel)
 	generator, err := bin.NewGenerator(binPath,
 		bin.WithLogger(logger),
-		bin.WithLicenseDetector(local.NewDetector(logger)),
+		bin.WithLicenseDetector(local.NewDetector(logger, local.DefaultMinDetectionConfidence)),
 		bin.WithIncludeStdlib(true),
 	)
 	if err != nil {

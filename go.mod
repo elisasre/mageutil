@@ -1,12 +1,12 @@
 module github.com/elisasre/mageutil
 
-go 1.25.8
+go 1.26.0
 
 require (
 	github.com/99designs/aws-vault/v7 v7.2.0
 	github.com/99designs/keyring v1.2.2
 	github.com/CycloneDX/cyclonedx-go v0.11.0
-	github.com/CycloneDX/cyclonedx-gomod v1.10.0
+	github.com/CycloneDX/cyclonedx-gomod v1.11.0
 	github.com/alecthomas/kingpin/v2 v2.4.0
 	github.com/aws/aws-sdk-go-v2 v1.43.6
 	github.com/getsops/sops/v3 v3.13.3
